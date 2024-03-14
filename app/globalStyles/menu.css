@@ -106,7 +106,8 @@
 .nav-menu__close.open,
 .nav-menu__lang.open,
 .nav-menu__bg.open,
-.nav-menu__logo.open {
+.nav-menu__logo.open,
+.nav-menu__list.open {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition:
@@ -151,6 +152,112 @@
     color 0.2s ease-in-out;
   border-color: var(--primary-purple-night) !important;
   color: var(--transparent-90);
+}
+
+.nav-menu__list {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  width: 60%;
+}
+
+.nav-menu__list__item:not(:last-child) {
+  margin-bottom: 48px;
+}
+
+.nav-menu__list__item {
+  position: relative;
+}
+
+.nav-menu__list__item__btn {
+  color: #777c85;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 32px;
+  transition: 0.2s ease-in-out;
+}
+
+.nav-menu__list__item__btn:hover {
+  transition: 0.2s ease-in-out;
+  color: #e8e9ea;
+}
+
+.nav-menu__accordion {
+  position: absolute;
+  right: 0;
+  top: 15px;
+  width: 35%;
+}
+
+.nav-menu__accordion__item {
+  position: relative;
+  z-index: 3;
+}
+
+.nav-menu__accordion__item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.nav-menu__accordion__item__list {
+  padding-top: 16px !important;
+  padding-left: 30px !important;
+}
+
+.nav-menu__accordion__item__title {
+  position: relative;
+  color: #777c85;
+  font-size: 16px;
+  font-weight: 400;
+  transition: 0.2s ease-in-out color;
+}
+
+.nav-menu__accordion__item:first-child
+  .nav-menu__accordion__item__title::before {
+  content: '';
+  position: absolute;
+  background-image: url(/img/menu-line.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 224px;
+  height: 2px;
+  top: 10px;
+  left: -250px;
+}
+
+.nav-menu__accordion__item__title:hover {
+  transition: 0.2s ease-in-out color;
+  color: #e8e9ea;
+}
+
+.nav-menu__accordion__item__list__item:not(:last-child) {
+  margin-bottom: 8px !important;
+}
+
+.nav-menu__accordion__item__list__item__link {
+  color: #e8e9ea;
+  font-size: 16px;
+  font-weight: 400;
+  transition: 0.2s ease-in-out color;
+  text-decoration: none;
+}
+
+.nav-menu__accordion__item__link {
+  color: #777c85;
+  font-size: 16px;
+  font-weight: 400;
+  transition: 0.2s ease-in-out color;
+  text-decoration: none;
+}
+
+.nav-menu__accordion__item__link:hover {
+  transition: 0.2s ease-in-out color;
+  color: #e8e9ea;
+}
+
+.nav-menu__accordion__item__list__item__link:hover {
+  color: var(--primary-purple-night);
+  transition: 0.2s ease-in-out color;
 }
 
 @keyframes menu-animation {
