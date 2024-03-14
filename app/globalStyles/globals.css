@@ -55,7 +55,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  color: #e8e9ae;
+  color: #e8e9ea;
   background-color: #1d2533;
 }
 
@@ -75,5 +75,11 @@ body {
   padding: 0;
   cursor: pointer;
   border: none;
-  border-color: transparent;
+  background-color: transparent;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
