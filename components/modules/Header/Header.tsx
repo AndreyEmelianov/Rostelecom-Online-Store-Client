@@ -6,6 +6,7 @@ import { Logo } from '@/components/elements/Logo/Logo'
 import { useLang } from '@/hooks/useLang'
 import { openMenu, openSearchModal } from '@/context/modals'
 import { addOverflowHiddenToBody } from '@/lib/utils/common'
+import CartPopup from './CartPopup/CartPopup'
 
 export const Header = () => {
   const { translations, lang } = useLang()
@@ -50,10 +51,7 @@ export const Header = () => {
             />
           </li>
           <li className='header__links__item'>
-            <Link
-              href='/cart'
-              className='header__links__item__btn header__links__item__btn--cart'
-            />
+            <CartPopup />
           </li>
           <li className='header__links__item header__links__item--profile'>
             <Link

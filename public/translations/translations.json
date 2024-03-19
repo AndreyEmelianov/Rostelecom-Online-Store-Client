@@ -3,7 +3,8 @@
     "common": {
       "all_link": "All",
       "more": "More",
-      "oh": "Oh..."
+      "oh": "Oh...",
+      "order_price": "Order price"
     },
     "header": {
       "menu_btn": "Menu",
@@ -62,7 +63,8 @@
     "common": {
       "all_link": "Все",
       "more": "Ещё",
-      "oh": "Ой..."
+      "oh": "Ой...",
+      "order_price": "Сумма заказа"
     },
     "header": {
       "menu_btn": "Меню",
