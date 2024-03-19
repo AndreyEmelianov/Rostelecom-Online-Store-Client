@@ -8,6 +8,7 @@ import { NavbarMobile } from '../modules/NavbarMobile/NavbarMobile'
 import { SearchModal } from '../modules/Header/SearchModal'
 import { $searchModalIsOpen } from '@/context/modals'
 import { handleCloseSearchModal } from '@/lib/utils/common'
+import { Footer } from '../modules/Footer/Footer'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -37,7 +38,7 @@ export const Layout = ({ children }: LayoutProps) => {
         className={`header__search-overlay ${searchModalIsOpen ? 'overlay-active' : ''}`}
         onClick={handleCloseSearchModal}
       />
-      <div>footer</div>
+      <Footer />
     </>
   )
 }
