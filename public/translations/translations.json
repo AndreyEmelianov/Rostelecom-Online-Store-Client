@@ -6,7 +6,11 @@
       "oh": "Oh..."
     },
     "header": {
-      "menu_btn": "Menu"
+      "menu_btn": "Menu",
+      "search_products": "Search for products",
+      "search_infos": "Product name, category, type...",
+      "profile": "Profile",
+      "logout": "Logout"
     },
     "main_menu": {
       "catalog": "Catalog",
@@ -61,7 +65,11 @@
       "oh": "Ой..."
     },
     "header": {
-      "menu_btn": "Меню"
+      "menu_btn": "Меню",
+      "search_products": "Поиск товаров",
+      "search_infos": "Название товара, категория, тип...",
+      "profile": "Профиль",
+      "logout": "Выйти"
     },
     "main_menu": {
       "catalog": "Каталог",

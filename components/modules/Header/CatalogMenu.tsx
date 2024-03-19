@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 import { useState } from 'react'
 import { useUnit } from 'effector-react'
@@ -116,11 +115,11 @@ export const CatalogMenu = () => {
           <motion.aside
             initial={{ width: 0 }}
             animate={{
-              width: 'calc(100% - 48px)',
+              width: '100%',
             }}
             exit={{
               width: 0,
-              transition: { delay: 0.7, duration: 0.3 },
+              transition: { delay: 0.7, duration: 0.15 },
             }}
             className='catalog-menu__aside'
           >
@@ -134,11 +133,6 @@ export const CatalogMenu = () => {
               exit='closed'
               variants={sideVariants}
             >
-              <img
-                className='catalog-menu__bg'
-                src='/img/menu-bg-small.png'
-                alt='menu background'
-              />
               <motion.button
                 className='btn-reset catalog-menu__close'
                 variants={itemVariants}

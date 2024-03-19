@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Menu } from './Menu'
 import { Logo } from '@/components/elements/Logo/Logo'
 import { useLang } from '@/hooks/useLang'
-import { openMenu } from '@/context/modals'
+import { openMenu, openSearchModal } from '@/context/modals'
 import { addOverflowHiddenToBody } from '@/lib/utils/common'
 
 export const Header = () => {
@@ -13,6 +13,11 @@ export const Header = () => {
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
     openMenu()
+  }
+
+  const handleOpenSearchModal = () => {
+    openSearchModal()
+    addOverflowHiddenToBody()
   }
 
   return (
@@ -27,7 +32,10 @@ export const Header = () => {
         </div>
         <ul className='header__links list-reset'>
           <li className='header__links__item'>
-            <button className='header__links__item__btn header__links__item__btn--search btn-reset' />
+            <button
+              className='header__links__item__btn header__links__item__btn--search btn-reset'
+              onClick={handleOpenSearchModal}
+            />
           </li>
           <li className='header__links__item'>
             <Link
