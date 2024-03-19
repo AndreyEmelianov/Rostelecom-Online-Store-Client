@@ -240,6 +240,7 @@
   font-weight: 400;
   transition: 0.2s ease-in-out color;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-menu__accordion__item__link {
