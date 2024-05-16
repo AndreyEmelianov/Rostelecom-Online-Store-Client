@@ -88,6 +88,14 @@ body {
   list-style-type: none;
 }
 
+.section-site-title {
+  margin: 0;
+  margin-bottom: 40px;
+  color: #e8e9ea;
+  font-size: 42px;
+  font-weight: 700;
+}
+
 .header__search-overlay {
   background: #16181b;
   height: 100%;
@@ -117,6 +125,20 @@ body {
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
+}
+
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.duration {
+  transition-duration: 2s;
 }
 
 .swiper-slide-shadow-coverflow {

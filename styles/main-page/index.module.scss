@@ -317,3 +317,222 @@
     top: -20px;
   }
 }
+
+.img_loading {
+  background-color: #2a323f;
+  pointer-events: none;
+}
+
+.allLink {
+  position: absolute;
+  right: 0;
+  top: -65px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 25px;
+  transition: color 0.2s ease-in-out;
+
+  @media (max-width: 490px) {
+    top: -42px;
+  }
+
+  span {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      right: -55px;
+      width: 24px;
+      height: 24px;
+      background-color: #e8e9ea;
+      -webkit-mask: url(/img/simple-arrow.svg) no-repeat 50% 50%;
+      mask: url(/img/simple-arrow.svg) no-repeat 50% 50%;
+      transition: background-color 0.2s ease-in-out;
+    }
+  }
+
+  &:hover span::before {
+    transition: background-color 0.2s ease-in-out;
+    background-color: var(--primary-purple-night);
+  }
+
+  &:hover {
+    color: var(--primary-purple-night);
+    transition: color 0.2s ease-in-out;
+  }
+}
+
+.categories {
+  padding-top: 80px;
+  padding-bottom: 30px;
+
+  @media (max-width: 800px) {
+    padding: 40px 0;
+  }
+
+  @media (max-width: 490px) {
+    padding: 20px 0;
+  }
+
+  &__title {
+    @media (max-width: 800px) {
+      margin-bottom: 32px !important;
+      font-size: 36px !important;
+    }
+
+    @media (max-width: 490px) {
+      margin-bottom: 15px !important;
+      font-size: 32px !important;
+    }
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+
+    @media (max-width: 680px) {
+      flex-direction: column;
+    }
+  }
+
+  &__right {
+    margin-right: 32px;
+    transition: background-color 0.2s ease-in-out;
+
+    @media (max-width: 1100px) {
+      margin-right: 16px;
+    }
+
+    @media (max-width: 680px) {
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 490px) {
+      display: none;
+    }
+  }
+
+  &__left {
+    @media (max-width: 490px) {
+      display: none;
+    }
+
+    &__top {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 32px;
+
+      @media (max-width: 1100px) {
+        margin-bottom: 16px;
+      }
+
+      &__right {
+        margin-right: 32px;
+
+        @media (max-width: 1100px) {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+
+  &__img {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-radius 0.2s ease-in-out;
+
+    @media (max-width: 800px) {
+      border-radius: 26px 0 0 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: 100%;
+      margin-bottom: -4px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      transition: background-color 0.2s ease-in-out;
+
+      @media (max-width: 800px) {
+        background: linear-gradient(
+          180deg,
+          rgba(16, 24, 40, 0) 41.43%,
+          rgba(16, 24, 40, 0.8) 109.57%
+        );
+      }
+    }
+
+    &:hover::before {
+      transition: background-color 0.2s ease-in-out;
+      background-color: rgba(16, 24, 40, 0.55);
+
+      @media (max-width: 800px) {
+        background: transparent;
+      }
+    }
+
+    &:hover {
+      border-radius: 26px 0 0 0;
+      transition: border-radius 0.2s ease-in-out;
+    }
+
+    span {
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      left: 0;
+      color: #e8e9ea;
+      font-size: 22px;
+      font-weight: 400;
+      border-radius: 26px 0px 26px 0px;
+      padding: 16px 32px;
+      background-color: #565c66;
+      box-shadow:
+        0px 2px 4px 0px rgba(0, 0, 0, 0.2),
+        0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+      transition: opacity 0.2s ease-in-out;
+
+      @media (max-width: 800px) {
+        padding: 8px 24px;
+        font-size: 16px;
+        opacity: 1;
+      }
+    }
+
+    &:hover span {
+      transition: opacity 0.2s ease-in-out;
+      opacity: 1;
+    }
+  }
+
+  &__slider {
+    display: block;
+  }
+
+  &__slide {
+    img {
+      height: 357px;
+
+      @media (max-width: 420px) {
+        width: 100%;
+        height: 290px;
+      }
+    }
+  }
+}
