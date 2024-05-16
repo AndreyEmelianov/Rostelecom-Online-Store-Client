@@ -6,6 +6,7 @@ import { AllLink } from '@/components/elements/AllLink/AllLink'
 import { useImgPreloader } from '@/hooks/useImgPreloader'
 import { useLang } from '@/hooks/useLang'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { MainSlider } from '../MainSlider'
 
 import categoryImg1 from '@/public/img/categories-img-1.png'
 import categoryImg2 from '@/public/img/categories-img-2.png'
@@ -20,6 +21,29 @@ export const Categories = () => {
   const imgSpinnerClass = imgSpinner ? styles.img_loading : ''
 
   const isMedia490 = useMediaQuery(490)
+
+  const images = [
+    {
+      src: categoryImg1,
+      id: 1,
+      title: translations[lang].main_page.category_cloth,
+    },
+    {
+      src: categoryImg2,
+      id: 2,
+      title: translations[lang].main_page.category_accessories,
+    },
+    {
+      src: categoryImg3,
+      id: 3,
+      title: translations[lang].main_page.category_souvenirs,
+    },
+    {
+      src: categoryImg4,
+      id: 4,
+      title: translations[lang].main_page.category_office,
+    },
+  ]
 
   return (
     <section className={styles.categories}>
@@ -90,6 +114,7 @@ export const Categories = () => {
               </div>
             </>
           )}
+          {isMedia490 && <MainSlider images={images} />}
         </div>
       </div>
     </section>

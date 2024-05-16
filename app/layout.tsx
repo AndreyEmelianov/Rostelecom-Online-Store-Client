@@ -4,6 +4,8 @@ import { Layout } from '@/components/layouts/Layout'
 
 import './globalStyles/normalize.css'
 import './globalStyles/globals.css'
+import './globalStyles/slick.css'
+import './globalStyles/slick-theme.css'
 import './globalStyles/header.css'
 import './globalStyles/menu.css'
 import './globalStyles/catalog-menu.css'
