@@ -41,8 +41,8 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
               <Image
                 src={item.images[0]}
                 alt={item.name}
-                fill
-                objectFit='contain'
+                width={224}
+                height={275}
               />
             </div>
             <p className={styles.list__item_ad__title}>
