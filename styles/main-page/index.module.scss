@@ -603,3 +603,120 @@
     }
   }
 }
+
+.brands {
+  padding-top: 32px;
+  padding-bottom: 120px;
+
+  &__title {
+    @media (max-width: 800px) {
+      margin-bottom: 32px;
+      font-size: 32px;
+    }
+
+    @media (max-width: 490px) {
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+  }
+
+  &__inner {
+    position: relative;
+
+    .allLink {
+      @media (max-width: 490px) {
+        top: -45px;
+      }
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 32px;
+    width: 100%;
+
+    @media (max-width: 1150px) {
+      grid-column-gap: 24px;
+    }
+
+    @media (max-width: 990px) {
+      grid-gap: 18px;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 370px 370px;
+    }
+
+    @media (max-width: 800px) {
+      grid-gap: 18px;
+      grid-template-rows: 290px 290px;
+    }
+
+    @media (max-width: 590px) {
+      grid-gap: 18px;
+      grid-template-rows: 250px 290px;
+    }
+
+    &__item {
+      position: relative;
+
+      &:first-child {
+        @media (max-width: 990px) {
+          grid-column: 1 / 7;
+        }
+
+        @media (max-width: 590px) {
+          img {
+            height: 250px;
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        @media (max-width: 990px) {
+          grid-column: 7 / 13;
+        }
+
+        @media (max-width: 590px) {
+          img {
+            height: 250px;
+          }
+        }
+      }
+
+      &:last-child {
+        @media (max-width: 990px) {
+          grid-column: 4 / 10;
+        }
+
+        @media (max-width: 590px) {
+          grid-column: 1 / 13;
+
+          img {
+            height: 370px;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 480px;
+
+        @media (max-width: 1340px) {
+          height: 400px;
+        }
+
+        @media (max-width: 1150px) {
+          height: 350px;
+        }
+
+        @media (max-width: 990px) {
+          height: 370px;
+        }
+
+        @media (max-width: 800px) {
+          height: 290px;
+        }
+      }
+    }
+  }
+}
