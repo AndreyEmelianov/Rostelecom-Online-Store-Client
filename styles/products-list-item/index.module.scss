@@ -347,4 +347,25 @@
     color: #a5a8ad;
     font-size: 12px;
   }
+
+  &__color,
+  &__composition {
+    display: block;
+    margin-bottom: 24px;
+    color: #e8e9ea;
+    font-size: 14px;
+  }
+
+  &__size_title {
+    color: #e8e9ea;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  &__count_title {
+    display: block;
+    margin-bottom: 12px;
+    color: #e8e9ea;
+    font-size: 14px;
+  }
 }
