@@ -112,7 +112,8 @@ body::-webkit-scrollbar-thumb:hover {
   font-weight: 700;
 }
 
-.header__search-overlay {
+.header__search-overlay,
+.quick-view-modal-overlay {
   background: #16181b;
   height: 100%;
   left: 0;
@@ -128,6 +129,12 @@ body::-webkit-scrollbar-thumb:hover {
   opacity: 0.6;
   visibility: visible;
   z-index: 101;
+}
+
+.quick-view-modal-overlay.overlay-active {
+  opacity: 0.6;
+  visibility: visible;
+  z-index: 2;
 }
 
 .visually-hidden {
@@ -159,6 +166,10 @@ body::-webkit-scrollbar-thumb:hover {
 
 .slick-slide {
   margin: 0 9px;
+}
+
+.quick-modal-dots li.slick-active button {
+  background-image: url(/img/white-ellipse.svg) !important;
 }
 
 .swiper-slide-shadow-coverflow {
