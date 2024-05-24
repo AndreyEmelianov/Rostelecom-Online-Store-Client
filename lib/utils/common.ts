@@ -1,4 +1,4 @@
-import { closeSearchModal } from '@/context/modals'
+import { closeSearchModal, closeSizeTable } from '@/context/modals'
 
 export const addOverflowHiddenToBody = (paddingRight = '') => {
   const body = document.querySelector('body') as HTMLBodyElement
@@ -60,4 +60,12 @@ export const idGenerator = () => {
     s4() +
     s4()
   )
+}
+
+export const closeSizeTableByCheck = (quickViewModalIsOpen: boolean) => {
+  if (!quickViewModalIsOpen) {
+    removeOverflowHiddenFromBody()
+  }
+
+  closeSizeTable()
 }

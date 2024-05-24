@@ -13,10 +13,10 @@ import { ProductSizeTableBtn } from '../ProductsListItem/ProductSizeTableBtn'
 import { ProductSizesItem } from '../ProductsListItem/ProductSizesItem'
 import { ProductCounter } from '../ProductsListItem/ProductCounter'
 import { AddToCartBtn } from '../ProductsListItem/AddToCartBtn'
+import { ProductsItemActionBtn } from '@/components/elements/ProductsItemActionBtn/ProductsItemActionBtn'
 
 import styles from '@/styles/quick-view-modal/index.module.scss'
 import productStyles from '@/styles/products-list-item/index.module.scss'
-import { ProductsItemActionBtn } from '@/components/elements/ProductsItemActionBtn/ProductsItemActionBtn'
 
 export const QuickViewModal = () => {
   const { product, selectedSize, setSelectedSize } = useCartAction()

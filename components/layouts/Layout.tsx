@@ -6,10 +6,15 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { Header } from '../modules/Header/Header'
 import { NavbarMobile } from '../modules/NavbarMobile/NavbarMobile'
 import { SearchModal } from '../modules/Header/SearchModal'
-import { $quickViewModalIsOpen, $searchModalIsOpen } from '@/context/modals'
+import {
+  $quickViewModalIsOpen,
+  $searchModalIsOpen,
+  $sizeTableIsOpen,
+} from '@/context/modals'
 import { handleCloseSearchModal } from '@/lib/utils/common'
 import { Footer } from '../modules/Footer/Footer'
 import { QuickViewModal } from '../modules/QuickViewModal/QuickViewModal'
+import { SizeTable } from '../modules/SizeTable/SizeTable'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -17,8 +22,9 @@ type LayoutProps = {
 
 export const Layout = ({ children }: LayoutProps) => {
   const isMedia800 = useMediaQuery(800)
-  const searchModalIsOpen = useUnit($searchModalIsOpen)
 
+  const searchModalIsOpen = useUnit($searchModalIsOpen)
+  const sizeTableIsOpen = useUnit($sizeTableIsOpen)
   const quickViewModalIsOpen = useUnit($quickViewModalIsOpen)
 
   return (
@@ -34,6 +40,15 @@ export const Layout = ({ children }: LayoutProps) => {
             exit={{ opacity: 0 }}
           >
             <SearchModal />
+          </motion.div>
+        )}
+        {sizeTableIsOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <SizeTable />
           </motion.div>
         )}
       </AnimatePresence>
