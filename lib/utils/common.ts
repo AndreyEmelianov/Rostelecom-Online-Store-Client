@@ -1,3 +1,4 @@
+import { closeAuthPopup } from '@/context/auth'
 import { closeSearchModal, closeSizeTable } from '@/context/modals'
 
 export const addOverflowHiddenToBody = (paddingRight = '') => {
@@ -68,4 +69,21 @@ export const closeSizeTableByCheck = (quickViewModalIsOpen: boolean) => {
   }
 
   closeSizeTable()
+}
+
+export const handleCloseAuthPopup = () => {
+  removeOverflowHiddenFromBody()
+  closeAuthPopup()
+}
+
+export const closeAuthPopupWhenSomeModalOpened = (
+  quickViewModalIsOpen: boolean,
+  sizeTableIsOpen: boolean
+) => {
+  if (quickViewModalIsOpen || sizeTableIsOpen) {
+    closeAuthPopup()
+    return
+  }
+
+  handleCloseAuthPopup()
 }
