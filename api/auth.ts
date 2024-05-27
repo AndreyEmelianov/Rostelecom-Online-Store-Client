@@ -33,6 +33,7 @@ export const loginFx = createEffect(
 
     if (data.warningMessage) {
       toast.error(data.warningMessage)
+      return
     }
 
     onAuthSuccess('Вход успешно выполнен', data)

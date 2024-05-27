@@ -1,5 +1,6 @@
 'use client'
 import { useUnit } from 'effector-react'
+import { Toaster } from 'react-hot-toast'
 
 import { Layout } from './Layout'
 import {
@@ -42,6 +43,7 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
           className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
           onClick={handleCloseAuthPopup}
         />
+        <Toaster position='top-center' reverseOrder={false} />
       </body>
     </html>
   )
