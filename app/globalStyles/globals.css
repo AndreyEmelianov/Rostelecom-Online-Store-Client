@@ -115,7 +115,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .header__search-overlay,
 .quick-view-modal-overlay,
-.size-table-overlay {
+.size-table-overlay,
+.auth-overlay {
   background: #16181b;
   height: 100%;
   left: 0;
@@ -143,6 +144,12 @@ body::-webkit-scrollbar-thumb:hover {
   opacity: 0.6;
   visibility: visible;
   z-index: 10;
+}
+
+.auth-overlay.overlay-active {
+  opacity: 0.6;
+  visibility: visible;
+  z-index: 100;
 }
 
 .visually-hidden {

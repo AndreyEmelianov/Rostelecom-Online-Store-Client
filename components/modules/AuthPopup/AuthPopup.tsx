@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { useLang } from '@/hooks/useLang'
+import { AuthPopupRegistration } from './AuthPopupRegistration'
+import { AuthPopupLogin } from './AuthPopupLogin'
 
 export const AuthPopup = () => {
   const [isAuthSwitched, setIsAuthSwitched] = useState(false)
@@ -13,10 +14,8 @@ export const AuthPopup = () => {
     setIsRegisterActive((prevState) => !prevState)
   }
 
-  const { lang } = useLang()
-
   return (
-    <div className={`auth-popup`}>
+    <div className={`container auth-popup`}>
       <div>
         <div className='starsec' />
         <div className='starthird' />
@@ -24,7 +23,16 @@ export const AuthPopup = () => {
         <div className='starfifth' />
       </div>
       <div className={`auth-popup__card ${isAuthSwitched ? 'switched' : ''}`}>
-        <div className={`auth-popup__card__inner`}>{}</div>
+        <div className={`auth-popup__card__inner`}>
+          <AuthPopupRegistration
+            toggleAuth={toggleAuth}
+            isSideActive={isRegisterActive}
+          />
+          <AuthPopupLogin
+            toggleAuth={toggleAuth}
+            isSideActive={isLoginActive}
+          />
+        </div>
       </div>
     </div>
   )

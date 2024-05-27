@@ -1,4 +1,5 @@
 'use client'
+import { MutableRefObject, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useUnit } from 'effector-react'
 
@@ -11,10 +12,15 @@ import {
   $searchModalIsOpen,
   $sizeTableIsOpen,
 } from '@/context/modals'
-import { handleCloseSearchModal } from '@/lib/utils/common'
+import {
+  handleCloseAuthPopup,
+  handleCloseSearchModal,
+} from '@/lib/utils/common'
 import { Footer } from '../modules/Footer/Footer'
 import { QuickViewModal } from '../modules/QuickViewModal/QuickViewModal'
 import { SizeTable } from '../modules/SizeTable/SizeTable'
+import { $openAuthPopup } from '@/context/auth'
+import { AuthPopup } from '../modules/AuthPopup/AuthPopup'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -26,6 +32,19 @@ export const Layout = ({ children }: LayoutProps) => {
   const searchModalIsOpen = useUnit($searchModalIsOpen)
   const sizeTableIsOpen = useUnit($sizeTableIsOpen)
   const quickViewModalIsOpen = useUnit($quickViewModalIsOpen)
+  const openAuthPopup = useUnit($openAuthPopup)
+
+  const authWrapperRef = useRef() as MutableRefObject<HTMLDivElement>
+
+  const handleCloseAuthPopupByTarget = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const target = event.target as Element
+
+    if (target === authWrapperRef.current) {
+      handleCloseAuthPopup()
+    }
+  }
 
   return (
     <>
@@ -33,6 +52,19 @@ export const Layout = ({ children }: LayoutProps) => {
       {children}
       {isMedia800 && <NavbarMobile />}
       <AnimatePresence>
+        {openAuthPopup && (
+          <motion.div
+            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            ref={authWrapperRef}
+            onClick={handleCloseAuthPopupByTarget}
+            className='auth-popup-wrapper'
+          >
+            <AuthPopup />
+          </motion.div>
+        )}
         {searchModalIsOpen && (
           <motion.div
             initial={{ opacity: 0, zIndex: 102 }}

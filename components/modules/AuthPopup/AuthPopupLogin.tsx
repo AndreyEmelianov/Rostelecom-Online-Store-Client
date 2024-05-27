@@ -5,42 +5,39 @@ import { useLang } from '@/hooks/useLang'
 import { AuthPopupCloseBtn } from './AuthPopupCloseBtn'
 import { IAuthSideProps, IInputs } from '@/types/auth-popup'
 import { useAuthForm } from '@/hooks/useAuthForm'
-import { registerFx } from '@/api/auth'
-import { handleRegistration } from '@/context/auth'
-import { NameInput } from './NameInput'
+import { loginFx } from '@/api/auth'
+import { handleLogin } from '@/context/auth'
 import { EmailInput } from './EmailInput'
 import { PasswordInput } from './PasswordInput'
 import { AuthPopupSocials } from './AuthPopupSocials'
 
-export const AuthPopupRegistration = ({
+export const AuthPopupLogin = ({
   toggleAuth,
   isSideActive,
 }: IAuthSideProps) => {
   const { lang, translations } = useLang()
 
   const { spinner, errors, register, handleSubmit, handleSignWithOAuth } =
-    useAuthForm(handleRegistration, isSideActive, registerFx.pending)
+    useAuthForm(handleLogin, isSideActive, loginFx.pending)
 
   const submitForm = (data: IInputs) =>
-    handleRegistration({
-      name: data.name,
+    handleLogin({
       email: data.email,
       password: data.password,
       isOAuth: false,
     })
 
   return (
-    <div className='card-front'>
+    <div className='card-back'>
       <AuthPopupCloseBtn />
       <div className='card-body wow-bg'>
         <h3 className='card-body__title'>
-          {translations[lang].auth_popup.registration_title}
+          {translations[lang].auth_popup.login_text}
         </h3>
         <p className='card-body__description'>
-          {translations[lang].auth_popup.registration_description}
+          {translations[lang].auth_popup.login_description}
         </p>
         <form onSubmit={handleSubmit(submitForm)}>
-          <NameInput register={register} errors={errors} />
           <EmailInput register={register} errors={errors} />
           <PasswordInput register={register} errors={errors} />
           <div className='card-body__inner'>
@@ -49,20 +46,20 @@ export const AuthPopupRegistration = ({
                 {spinner ? (
                   <FontAwesomeIcon icon={faSpinner} spin />
                 ) : (
-                  translations[lang].auth_popup.registration_text
+                  translations[lang].auth_popup.login_text
                 )}
               </button>
             </div>
             <div className='inner__bottom'>
               <span className='inner__bottom__text'>
-                {translations[lang].auth_popup.registration_question}
+                {translations[lang].auth_popup.login_question}
               </span>
               <button
                 type='button'
                 className='btn-reset inner__switch'
                 onClick={toggleAuth}
               >
-                {translations[lang].auth_popup.login_text}!
+                {translations[lang].auth_popup.register}
               </button>
             </div>
           </div>
