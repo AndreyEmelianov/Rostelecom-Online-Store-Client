@@ -35,31 +35,29 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      {isClient && (
-        <EarthoOneProvider
-          clientId={`${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`}
-          domain=''
-        >
-          <html lang='en'>
-            <body>
-              <Layout>{children}</Layout>
-              <div
-                className={`quick-view-modal-overlay ${quickViewModalIsOpen ? 'overlay-active' : ''}`}
-                onClick={handleCloseQuickViewModal}
-              />
-              <div
-                className={`size-table-overlay ${sizeTableIsOpen ? 'overlay-active' : ''}`}
-                onClick={handleCloseSizeTable}
-              />
-              <div
-                className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
-                onClick={handleCloseAuthPopup}
-              />
-              <Toaster position='top-center' reverseOrder={false} />
-            </body>
-          </html>
-        </EarthoOneProvider>
-      )}
+      <EarthoOneProvider
+        clientId={`${process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID}`}
+        domain={`${process.env.NEXT_PUBLIC_OAUTH_DOMAIN}`}
+      >
+        <html lang='en'>
+          <body>
+            <Layout>{children}</Layout>
+            <div
+              className={`quick-view-modal-overlay ${quickViewModalIsOpen ? 'overlay-active' : ''}`}
+              onClick={handleCloseQuickViewModal}
+            />
+            <div
+              className={`size-table-overlay ${sizeTableIsOpen ? 'overlay-active' : ''}`}
+              onClick={handleCloseSizeTable}
+            />
+            <div
+              className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
+              onClick={handleCloseAuthPopup}
+            />
+            <Toaster position='top-center' reverseOrder={false} />
+          </body>
+        </html>
+      </EarthoOneProvider>
     </>
   )
 }

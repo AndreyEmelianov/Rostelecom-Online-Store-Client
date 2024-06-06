@@ -13,6 +13,13 @@ export interface IRegisterAndLoginFx {
   isOAuth?: boolean
 }
 
+export interface IOAuthFx {
+  name?: string
+  email?: string
+  password?: string
+  isOAuth?: boolean
+}
+
 export interface IAuthSideProps {
   isSideActive: boolean
   toggleAuth: VoidFunction

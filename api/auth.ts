@@ -14,6 +14,11 @@ export const oauthFx = createEffect(
         email,
       })
 
+      await axiosInstance.post('/api/users/email', {
+        password,
+        email,
+      })
+
       onAuthSuccess('Успешная авторизация!', data)
 
       return data.user
