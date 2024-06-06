@@ -5,8 +5,35 @@ import { axiosInstance } from './apiInstance'
 import { onAuthSuccess } from '@/lib/utils/auth'
 import { IRegisterAndLoginFx } from '@/types/auth-popup'
 
+export const oauthFx = createEffect(
+  async ({ name, password, email }: IRegisterAndLoginFx) => {
+    try {
+      const { data } = await axiosInstance.post('/api/users/oauth', {
+        name,
+        password,
+        email,
+      })
+
+      onAuthSuccess('Успешная авторизация!', data)
+
+      return data.user
+    } catch (error) {
+      toast.error((error as Error).message)
+    }
+  }
+)
+
 export const registerFx = createEffect(
-  async ({ name, email, password }: IRegisterAndLoginFx) => {
+  async ({ name, email, password, isOAuth }: IRegisterAndLoginFx) => {
+    if (isOAuth) {
+      await oauthFx({
+        name,
+        email,
+        password,
+      })
+      return
+    }
+
     const { data } = await axiosInstance.post('/api/users/register', {
       name,
       email,
@@ -25,7 +52,15 @@ export const registerFx = createEffect(
 )
 
 export const loginFx = createEffect(
-  async ({ email, password }: IRegisterAndLoginFx) => {
+  async ({ email, password, isOAuth }: IRegisterAndLoginFx) => {
+    if (isOAuth) {
+      await oauthFx({
+        email,
+        password,
+      })
+      return
+    }
+
     const { data } = await axiosInstance.post('/api/users/login', {
       email,
       password,
