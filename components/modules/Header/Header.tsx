@@ -1,5 +1,8 @@
 'use client'
 import Link from 'next/link'
+import { useUnit } from 'effector-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { Menu } from './Menu'
 import { Logo } from '@/components/elements/Logo/Logo'
@@ -10,9 +13,14 @@ import {
   handleOpenAuthPopup,
 } from '@/lib/utils/common'
 import CartPopup from './CartPopup/CartPopup'
+import HeaderProfile from './HeaderProfile'
+import { $isAuth } from '@/context/auth'
 
 export const Header = () => {
   const { translations, lang } = useLang()
+
+  const isAuth = useUnit($isAuth)
+  const loginCheckSpinner = false
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
@@ -57,14 +65,16 @@ export const Header = () => {
             <CartPopup />
           </li>
           <li className='header__links__item header__links__item--profile'>
-            <button
-              className='btn-reset header__links__item__btn header__links__item__btn--profile'
-              onClick={handleOpenAuthPopup}
-            />
-            {/* <Link
-              href='/profile'
-              className='header__links__item__btn header__links__item__btn--profile'
-            /> */}
+            {isAuth ? (
+              <HeaderProfile />
+            ) : loginCheckSpinner ? (
+              <FontAwesomeIcon icon={faSpinner} spin />
+            ) : (
+              <button
+                className='btn-reset header__links__item__btn header__links__item__btn--profile'
+                onClick={handleOpenAuthPopup}
+              />
+            )}
           </li>
         </ul>
       </div>
