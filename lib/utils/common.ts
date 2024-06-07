@@ -1,5 +1,6 @@
-import { closeAuthPopup, openAuthPopup } from '@/context/auth'
+import { closeAuthPopup, openAuthPopup, setIsAuth } from '@/context/auth'
 import { closeSearchModal, closeSizeTable } from '@/context/modals'
+import { loginCheck } from '@/context/user'
 
 export const addOverflowHiddenToBody = (paddingRight = '') => {
   const body = document.querySelector('body') as HTMLBodyElement
@@ -91,4 +92,25 @@ export const closeAuthPopupWhenSomeModalOpened = (
   }
 
   handleCloseAuthPopup()
+}
+
+export const isUserAuth = () => {
+  const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
+
+  if (!auth?.accessToken) {
+    setIsAuth(false)
+    return false
+  }
+
+  return true
+}
+
+export const triggerLoginCheck = () => {
+  if (!isUserAuth()) {
+    return
+  }
+
+  const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
+
+  loginCheck({ jwt: auth.accessToken })
 }

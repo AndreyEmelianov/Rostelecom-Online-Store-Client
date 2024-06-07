@@ -4,6 +4,8 @@ import toast from 'react-hot-toast'
 import { axiosInstance } from './apiInstance'
 import { onAuthSuccess } from '@/lib/utils/auth'
 import { IRegisterAndLoginFx } from '@/types/auth-popup'
+import { setIsAuth } from '@/context/auth'
+import { handleJWTError } from '@/lib/utils/errors'
 
 export const oauthFx = createEffect(
   async ({ name, password, email }: IRegisterAndLoginFx) => {
@@ -81,3 +83,24 @@ export const loginFx = createEffect(
     return data
   }
 )
+
+export const loginCheckFx = createEffect(async ({ jwt }: { jwt: string }) => {
+  try {
+    const { data } = await axiosInstance.get('/api/users/login-check', {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+
+    if (data?.error) {
+      handleJWTError(data.error.name, {
+        repeatRequestMethodName: 'loginCheckFx',
+      })
+      return
+    }
+
+    setIsAuth(true)
+
+    return data.user
+  } catch (error) {
+    toast.error((error as Error).message)
+  }
+})

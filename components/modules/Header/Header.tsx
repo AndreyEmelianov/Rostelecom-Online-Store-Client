@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { useUnit } from 'effector-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,16 +12,22 @@ import { openMenu, openSearchModal } from '@/context/modals'
 import {
   addOverflowHiddenToBody,
   handleOpenAuthPopup,
+  triggerLoginCheck,
 } from '@/lib/utils/common'
 import CartPopup from './CartPopup/CartPopup'
 import HeaderProfile from './HeaderProfile'
 import { $isAuth } from '@/context/auth'
+import { loginCheckFx } from '@/api/auth'
+import { $user } from '@/context/user'
 
 export const Header = () => {
   const { translations, lang } = useLang()
 
   const isAuth = useUnit($isAuth)
-  const loginCheckSpinner = false
+  const loginCheckSpinner = useUnit(loginCheckFx.pending)
+  const user = useUnit($user)
+
+  console.log(user)
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
@@ -31,6 +38,10 @@ export const Header = () => {
     openSearchModal()
     addOverflowHiddenToBody()
   }
+
+  useEffect(() => {
+    triggerLoginCheck()
+  }, [])
 
   return (
     <header className='header'>
