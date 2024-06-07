@@ -1,23 +1,37 @@
 /* eslint-disable indent */
 import Link from 'next/link'
 import Image from 'next/image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { useLang } from '@/hooks/useLang'
 import { IProductsListItemProps } from '@/types/modules'
 import { ProductSubtitle } from '@/components/elements/ProductSubtitle/ProductSubtitle'
-import { addOverflowHiddenToBody, formatPrice } from '@/lib/utils/common'
+import {
+  addOverflowHiddenToBody,
+  formatPrice,
+  isItemInList,
+} from '@/lib/utils/common'
 import { ProductLabel } from './ProductLabel'
 import { ProductsItemActionBtn } from '@/components/elements/ProductsItemActionBtn/ProductsItemActionBtn'
 import { ProductAvailable } from '@/components/elements/ProductAvailable/ProductAvailable'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { openQuickViewModal } from '@/context/modals'
 import { setCurrentProduct } from '@/context/goods'
+import { productWithoutSizes } from '@/constants/product'
+import { useCartAction } from '@/hooks/useCartAction'
+import { addProductToCartBySizeTable } from '@/lib/utils/cart'
 
 import styles from '@/styles/products-list-item/index.module.scss'
 import stylesAd from '@/styles/ad/index.module.scss'
 
 export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
   const { lang, translations } = useLang()
+
+  const { addToCartSpinner, currentCartByAuth, setAddToCartSpinner } =
+    useCartAction()
+
+  const isProductInCart = isItemInList(currentCartByAuth, item._id)
 
   const isTitleForNew = title === translations[lang].main_page.new_title
 
@@ -28,6 +42,9 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
     openQuickViewModal()
     setCurrentProduct(item)
   }
+
+  const addToCart = () =>
+    addProductToCartBySizeTable(item, 1, '', setAddToCartSpinner)
 
   return (
     <>
@@ -124,9 +141,29 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
               {formatPrice(+item.price)} ₽
             </span>
           </div>
-          <button className={`btn-reset ${styles.list__item__cart}`}>
-            {translations[lang].product.to_cart}
-          </button>
+          {productWithoutSizes.includes(item.type) ? (
+            <button
+              className={`btn-reset ${styles.list__item__cart} ${isProductInCart ? styles.list__item__cart_added : ''}`}
+              style={addToCartSpinner ? { minWidth: 125, height: 48 } : {}}
+              onClick={addToCart}
+              disabled={addToCartSpinner}
+            >
+              {addToCartSpinner ? (
+                <FontAwesomeIcon icon={faSpinner} spin color='#fff' />
+              ) : isProductInCart ? (
+                translations[lang].product.in_cart
+              ) : (
+                translations[lang].product.to_cart
+              )}
+            </button>
+          ) : (
+            <button
+              className={`btn-reset ${styles.list__item__cart}`}
+              onClick={addToCart}
+            >
+              {translations[lang].product.to_cart}
+            </button>
+          )}
         </li>
       )}
     </>

@@ -1,7 +1,8 @@
 /* eslint-disable indent */
 import { loginCheckFx, refreshTokenFx } from '@/api/auth'
-import { getCartItemFx } from '@/api/cart'
+import { addProductToCartFx, getCartItemsFx } from '@/api/cart'
 import { JWTError } from '@/constants/jwt'
+import { IAddProductToCartFx } from '@/types/cart'
 
 export const handleJWTError = async (
   errorName: string,
@@ -15,7 +16,8 @@ export const handleJWTError = async (
     const newTokens = await refreshTokenFx({ jwt: auth.refreshToken })
 
     if (repeatRequestAfterRefreshToken) {
-      const { repeatRequestMethodName } = repeatRequestAfterRefreshToken
+      const { repeatRequestMethodName, payload } =
+        repeatRequestAfterRefreshToken
 
       switch (repeatRequestMethodName) {
         case 'loginCheckFx':
@@ -24,8 +26,14 @@ export const handleJWTError = async (
           })
           break
 
-        case 'getCartItemFx':
-          return getCartItemFx({
+        case 'getCartItemsFx':
+          return getCartItemsFx({
+            jwt: newTokens.accessToken,
+          })
+
+        case 'addProductToCartFx':
+          return addProductToCartFx({
+            ...(payload as IAddProductToCartFx),
             jwt: newTokens.accessToken,
           })
       }

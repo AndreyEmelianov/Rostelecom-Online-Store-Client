@@ -19,6 +19,9 @@ import HeaderProfile from './HeaderProfile'
 import { $isAuth } from '@/context/auth'
 import { loginCheckFx } from '@/api/auth'
 import { $user } from '@/context/user'
+import { useCartByAuth } from '@/hooks/useCartByAuth'
+import { setCartFromLS } from '@/context/cart'
+import { setLang } from '@/context/lang'
 
 export const Header = () => {
   const { translations, lang } = useLang()
@@ -27,7 +30,8 @@ export const Header = () => {
   const loginCheckSpinner = useUnit(loginCheckFx.pending)
   const user = useUnit($user)
 
-  console.log(user)
+  const currentCartByAuth = useCartByAuth()
+  console.log(currentCartByAuth)
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
@@ -40,6 +44,20 @@ export const Header = () => {
   }
 
   useEffect(() => {
+    const lang = JSON.parse(localStorage.getItem('rostelecom-lang') as string)
+
+    if (lang) {
+      if (lang === 'ru' || lang === 'en') {
+        setLang(lang)
+      }
+    }
+
+    const cart = JSON.parse(localStorage.getItem('rostelekomCart') as string)
+
+    if (cart) {
+      setCartFromLS(cart)
+    }
+
     triggerLoginCheck()
   }, [])
 

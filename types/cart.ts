@@ -12,3 +12,13 @@ export interface ICartItem {
   color: string
   inStock: string
 }
+
+export interface IAddProductToCartFx {
+  productId: string
+  clientId: string
+  category: string
+  size: string
+  count: number
+  jwt: string
+  setSpinner: (arg0: boolean) => void
+}
