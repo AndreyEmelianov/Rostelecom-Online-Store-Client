@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import { loginCheckFx } from '@/api/auth'
+import { loginCheckFx, refreshTokenFx } from '@/api/auth'
 import { JWTError } from '@/constants/jwt'
 
 export const handleJWTError = async (
@@ -11,11 +11,10 @@ export const handleJWTError = async (
 ) => {
   if (errorName === JWTError.EXPIRED_JWT_TOKEN) {
     const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
-    const newTokens = { accessToken: '' }
+    const newTokens = await refreshTokenFx({ jwt: auth.refreshToken })
 
     if (repeatRequestAfterRefreshToken) {
-      const { repeatRequestMethodName, payload } =
-        repeatRequestAfterRefreshToken
+      const { repeatRequestMethodName } = repeatRequestAfterRefreshToken
 
       switch (repeatRequestMethodName) {
         case 'loginCheckFx':

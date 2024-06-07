@@ -104,3 +104,11 @@ export const loginCheckFx = createEffect(async ({ jwt }: { jwt: string }) => {
     toast.error((error as Error).message)
   }
 })
+
+export const refreshTokenFx = createEffect(async ({ jwt }: { jwt: string }) => {
+  const { data } = await axiosInstance.post('/api/users/refresh', { jwt })
+
+  localStorage.setItem('rostelekomAuth', JSON.stringify(data))
+
+  return data
+})
