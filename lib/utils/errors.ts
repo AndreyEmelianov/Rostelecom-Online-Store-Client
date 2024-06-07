@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { loginCheckFx, refreshTokenFx } from '@/api/auth'
+import { getCartItemFx } from '@/api/cart'
 import { JWTError } from '@/constants/jwt'
 
 export const handleJWTError = async (
@@ -22,6 +23,11 @@ export const handleJWTError = async (
             jwt: newTokens.accessToken,
           })
           break
+
+        case 'getCartItemFx':
+          return getCartItemFx({
+            jwt: newTokens.accessToken,
+          })
       }
     }
   }

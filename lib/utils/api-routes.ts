@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server'
 import { Db, MongoClient } from 'mongodb'
 import jwt, { VerifyErrors } from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
@@ -137,3 +138,28 @@ export const isValidAccessToken = async (token: string | undefined) => {
 
 export const parseJwt = (token: string) =>
   JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+
+export const getDataFromDbByCollection = async (
+  clientPromise: Promise<MongoClient>,
+  req: Request,
+  collection: string
+) => {
+  const { db, token, validatedTokenResult } = await getAuthRouteData(
+    clientPromise,
+    req,
+    false
+  )
+
+  if (validatedTokenResult.status !== 200) {
+    return NextResponse.json(validatedTokenResult)
+  }
+
+  const user = await findUserByEmail(db, parseJwt(token as string).email)
+
+  const items = await db
+    .collection(collection)
+    .find({ userId: user?._id })
+    .toArray()
+
+  return NextResponse.json(items)
+}
