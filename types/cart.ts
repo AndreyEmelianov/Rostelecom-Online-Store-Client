@@ -7,6 +7,7 @@ export interface ICartItem {
   productId: string
   name: string
   image: string
+  category: string
   count: string | number
   price: string
   totalPrice: string
@@ -32,4 +33,10 @@ export interface IAddProductsFromLSToCartFx {
 
 export interface IUpdateCartItemCountFx extends IBaseEffectProps {
   count: number
+}
+
+export interface IDeleteCartItemBtnProps {
+  className?: string
+  btnDisabled: boolean
+  callback: VoidFunction
 }
