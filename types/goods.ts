@@ -1,3 +1,5 @@
+import { ICartItem } from './cart'
+
 export interface ILoadOneProductFx {
   productId: string
   category: string
@@ -18,4 +20,14 @@ export interface IProductCounterProps {
 export interface IAddToCartBtnProps {
   text: string
   className?: string
+  btnDisabled?: boolean
+  minWidth?: number
+  addToCartSpinner: boolean
+  handleAddToCart: VoidFunction
+}
+
+export interface IProductCountBySizeProps {
+  products: ICartItem[]
+  size: string
+  withCartIcon?: boolean
 }
