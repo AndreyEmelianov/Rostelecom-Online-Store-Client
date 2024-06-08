@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import toast from 'react-hot-toast'
 
 import { ICartItem } from '@/types/cart'
@@ -53,12 +54,17 @@ export const addCartItemToLS = (
   )
 
   if (existingItem) {
-    const updatedCount =
+    const updatedCountWithSize =
       existingItem.count !== count ? count : +existingItem.count + 1
 
     const updatedCart = cartFromLS.map((item) =>
       item.productId === existingItem.productId && item.size === selectedSize
-        ? { ...existingItem, count: updatedCount }
+        ? {
+            ...existingItem,
+            count: selectedSize.length
+              ? updatedCountWithSize
+              : +existingItem.count + 1,
+          }
         : item
     )
 

@@ -19,7 +19,16 @@ import styles from '@/styles/quick-view-modal/index.module.scss'
 import productStyles from '@/styles/products-list-item/index.module.scss'
 
 export const QuickViewModal = () => {
-  const { product, selectedSize, setSelectedSize } = useCartAction()
+  const {
+    product,
+    selectedSize,
+    cartItemBySize,
+    addToCartSpinner,
+    updateCountSpinner,
+    allCurrentCartItemCount,
+    handleAddToCart,
+    setSelectedSize,
+  } = useCartAction()
 
   const images = useProductImages(product)
 
@@ -29,6 +38,8 @@ export const QuickViewModal = () => {
     removeOverflowHiddenFromBody()
     closeQuickViewModal()
   }
+
+  const addToCart = () => handleAddToCart(+(cartItemBySize?.count || 1))
 
   return (
     <div className={`${styles.modal}`}>
@@ -114,6 +125,13 @@ export const QuickViewModal = () => {
               )}
               <AddToCartBtn
                 text={translations[lang].product.to_cart}
+                handleAddToCart={addToCart}
+                addToCartSpinner={addToCartSpinner || updateCountSpinner}
+                btnDisabled={
+                  addToCartSpinner ||
+                  updateCountSpinner ||
+                  allCurrentCartItemCount === +product.inStock
+                }
                 className={styles.modal__right__bottom__add}
               />
             </div>

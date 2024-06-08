@@ -1,9 +1,9 @@
 import { useUnit } from 'effector-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { $currentProduct } from '@/context/goods'
 import { useCartByAuth } from './useCartByAuth'
-import { isItemInList, isUserAuth } from '@/lib/utils/common'
+import { isUserAuth } from '@/lib/utils/common'
 import {
   addCartItemToLS,
   addItemToCart,
@@ -27,36 +27,37 @@ export const useCartAction = (isSizeTable = false) => {
     (item) => item.size === selectedSize
   )
 
-  const isProductInCart = isItemInList(currentCartByAuth, product._id)
+  const existingItem = currentCartByAuth.find(
+    (item) => item.productId === product._id && item.size === selectedSize
+  )
+  const [count, setCount] = useState(+(existingItem?.count as string) || 1)
 
   const handleAddToCart = (countFromCounter?: number) => {
-    if (isProductInCart) {
+    if (existingItem) {
       if (!isUserAuth()) {
         addCartItemToLS(product, selectedSize, countFromCounter || 1)
         return
       }
 
-      if (cartItemBySize) {
-        const auth = JSON.parse(
-          localStorage.getItem('rostelekomAuth') as string
-        )
+      const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
 
-        const count = !!countFromCounter
-          ? +cartItemBySize.count !== countFromCounter
-            ? countFromCounter
-            : +cartItemBySize.count + 1
-          : +cartItemBySize.count + 1
+      const updateCountWithSize = !!countFromCounter
+        ? +existingItem.count !== countFromCounter
+          ? countFromCounter
+          : +existingItem.count + 1
+        : +existingItem.count + 1
 
-        updateCartItemCount({
-          id: cartItemBySize._id as string,
-          jwt: auth.accessToken,
-          count,
-          setSpinner: setUpdateCountSpinner,
-        })
+      updateCartItemCount({
+        id: existingItem._id as string,
+        jwt: auth.accessToken,
+        count: selectedSize.length
+          ? updateCountWithSize
+          : +existingItem.count + 1,
+        setSpinner: setUpdateCountSpinner,
+      })
 
-        addCartItemToLS(product, selectedSize, count)
-        return
-      }
+      addCartItemToLS(product, selectedSize, count)
+      return
     }
 
     if (isSizeTable) {
@@ -77,6 +78,11 @@ export const useCartAction = (isSizeTable = false) => {
     )
   }
 
+  const allCurrentCartItemCount = useMemo(
+    () => currentCartItems.reduce((acc, { count }) => acc + +count, 0),
+    [currentCartItems]
+  )
+
   return {
     product,
     selectedSize,
@@ -84,8 +90,11 @@ export const useCartAction = (isSizeTable = false) => {
     currentCartItems,
     currentCartByAuth,
     cartItemBySize,
-    isProductInCart,
+    existingItem,
     updateCountSpinner,
+    count,
+    allCurrentCartItemCount,
+    setCount,
     setSelectedSize,
     handleAddToCart,
     setAddToCartSpinner,
