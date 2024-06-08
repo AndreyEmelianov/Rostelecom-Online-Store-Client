@@ -9,7 +9,7 @@ export interface IProductSizesItemProps {
   currentSize: [string, boolean]
   selectedSize: string
   setSelectedSize: (arg0: string) => void
-  currentCartItems: []
+  currentCartItems: ICartItem[]
 }
 
 export interface IProductCounterProps {

@@ -56,7 +56,7 @@ export const useCartAction = (isSizeTable = false) => {
         setSpinner: setUpdateCountSpinner,
       })
 
-      addCartItemToLS(product, selectedSize, count)
+      addCartItemToLS(product, selectedSize, countFromCounter || 1)
       return
     }
 

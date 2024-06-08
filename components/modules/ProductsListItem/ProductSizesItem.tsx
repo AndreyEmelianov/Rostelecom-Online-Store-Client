@@ -1,5 +1,6 @@
 'use client'
 import { IProductSizesItemProps } from '@/types/goods'
+import { ProductCountBySize } from './ProductCountBySize'
 
 import styles from '@/styles/quick-view-modal/index.module.scss'
 
@@ -7,7 +8,7 @@ export const ProductSizesItem = ({
   currentSize,
   selectedSize,
   setSelectedSize,
-  // currentCartItems,
+  currentCartItems,
 }: IProductSizesItemProps) => {
   const handleSelectedSize = () => setSelectedSize(currentSize[0])
 
@@ -25,6 +26,11 @@ export const ProductSizesItem = ({
             : 'rgba(255, 255,255, 0.10)',
       }}
     >
+      <ProductCountBySize
+        size={currentSize[0]}
+        products={currentCartItems}
+        withCartIcon={false}
+      />
       <button className={`btn-reset`} onClick={handleSelectedSize}>
         {currentSize[0].toLocaleUpperCase()}
       </button>

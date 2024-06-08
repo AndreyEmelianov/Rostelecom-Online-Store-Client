@@ -23,6 +23,7 @@ export const QuickViewModal = () => {
     product,
     selectedSize,
     cartItemBySize,
+    currentCartItems,
     addToCartSpinner,
     updateCountSpinner,
     allCurrentCartItemCount,
@@ -97,7 +98,7 @@ export const QuickViewModal = () => {
                     currentSize={[key, value]}
                     selectedSize={selectedSize}
                     setSelectedSize={setSelectedSize}
-                    currentCartItems={[]}
+                    currentCartItems={currentCartItems}
                   />
                 ))}
               </ul>

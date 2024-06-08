@@ -31,7 +31,6 @@ export const Header = () => {
   const user = useUnit($user)
 
   const currentCartByAuth = useCartByAuth()
-  console.log(currentCartByAuth)
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
