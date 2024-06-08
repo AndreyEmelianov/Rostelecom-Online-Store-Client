@@ -115,3 +115,20 @@ export const addProductToCartBySizeTable = (
 
   handleShowSizeTable(product)
 }
+
+export const updateCartItemCountInLS = (cartItemId: string, count: number) => {
+  let cart: ICartItem[] = JSON.parse(
+    localStorage.getItem('rostelekomCart') as string
+  )
+
+  if (!cart) {
+    cart = []
+  }
+
+  const updatedCart = cart.map((item) =>
+    item.clientId === cartItemId ? { ...item, count } : item
+  )
+
+  localStorage.setItem('rostelekomCart', JSON.stringify(updatedCart))
+  setCartFromLS(updatedCart as ICartItem[])
+}

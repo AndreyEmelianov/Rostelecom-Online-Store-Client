@@ -15,6 +15,13 @@ export interface IProductSizesItemProps {
 export interface IProductCounterProps {
   className: string
   count: number
+  initialCount?: number
+  totalCount?: number
+  cartItem: ICartItem
+  updateCountAsync: boolean
+  setCount: (arg0: number) => void
+  increasePrice?: VoidFunction
+  decreasePrice?: VoidFunction
 }
 
 export interface IAddToCartBtnProps {

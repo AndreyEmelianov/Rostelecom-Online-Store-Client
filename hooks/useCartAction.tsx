@@ -23,6 +23,7 @@ export const useCartAction = (isSizeTable = false) => {
   const currentCartItems = currentCartByAuth.filter(
     (item) => item.productId === product._id
   )
+
   const cartItemBySize = currentCartItems.find(
     (item) => item.size === selectedSize
   )

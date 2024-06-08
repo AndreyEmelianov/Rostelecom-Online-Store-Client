@@ -14,6 +14,7 @@ import { ProductSizesItem } from '../ProductsListItem/ProductSizesItem'
 import { ProductCounter } from '../ProductsListItem/ProductCounter'
 import { AddToCartBtn } from '../ProductsListItem/AddToCartBtn'
 import { ProductsItemActionBtn } from '@/components/elements/ProductsItemActionBtn/ProductsItemActionBtn'
+import { ICartItem } from '@/types/cart'
 
 import styles from '@/styles/quick-view-modal/index.module.scss'
 import productStyles from '@/styles/products-list-item/index.module.scss'
@@ -22,11 +23,13 @@ export const QuickViewModal = () => {
   const {
     product,
     selectedSize,
-    cartItemBySize,
     currentCartItems,
     addToCartSpinner,
     updateCountSpinner,
     allCurrentCartItemCount,
+    existingItem,
+    count,
+    setCount,
     handleAddToCart,
     setSelectedSize,
   } = useCartAction()
@@ -40,7 +43,7 @@ export const QuickViewModal = () => {
     closeQuickViewModal()
   }
 
-  const addToCart = () => handleAddToCart(+(cartItemBySize?.count || 1))
+  const addToCart = () => handleAddToCart(count)
 
   return (
     <div className={`${styles.modal}`}>
@@ -113,15 +116,23 @@ export const QuickViewModal = () => {
             <div className={styles.modal__right__bottom__inner}>
               {!!selectedSize ? (
                 <ProductCounter
+                  count={count}
+                  totalCount={+product.inStock}
+                  initialCount={+(existingItem?.count || 1)}
+                  cartItem={existingItem as ICartItem}
+                  setCount={setCount}
+                  updateCountAsync={false}
                   className={`counter ${styles.modal__right__bottom__counter}`}
-                  count={0}
                 />
               ) : (
                 <div
                   className={`counter ${styles.modal__right__bottom__counter}`}
                   style={{ justifyContent: 'center' }}
                 >
-                  <span>{translations[lang].product.total_in_cart} 0</span>
+                  <span>
+                    {translations[lang].product.total_in_cart}{' '}
+                    {allCurrentCartItemCount}
+                  </span>
                 </div>
               )}
               <AddToCartBtn
