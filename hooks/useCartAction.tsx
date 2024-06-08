@@ -9,10 +9,12 @@ import {
   addItemToCart,
   addProductToCartBySizeTable,
 } from '@/lib/utils/cart'
+import { updateCartItemCount } from '@/context/cart'
 
 export const useCartAction = (isSizeTable = false) => {
   const [selectedSize, setSelectedSize] = useState('')
   const [addToCartSpinner, setAddToCartSpinner] = useState(false)
+  const [updateCountSpinner, setUpdateCountSpinner] = useState(false)
 
   const product = useUnit($currentProduct)
 
@@ -45,6 +47,13 @@ export const useCartAction = (isSizeTable = false) => {
             : +cartItemBySize.count + 1
           : +cartItemBySize.count + 1
 
+        updateCartItemCount({
+          id: cartItemBySize._id as string,
+          jwt: auth.accessToken,
+          count,
+          setSpinner: setUpdateCountSpinner,
+        })
+
         addCartItemToLS(product, selectedSize, count)
         return
       }
@@ -76,6 +85,7 @@ export const useCartAction = (isSizeTable = false) => {
     currentCartByAuth,
     cartItemBySize,
     isProductInCart,
+    updateCountSpinner,
     setSelectedSize,
     handleAddToCart,
     setAddToCartSpinner,
