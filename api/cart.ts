@@ -5,6 +5,7 @@ import { axiosInstance } from './apiInstance'
 import {
   IAddProductToCartFx,
   ICartItem,
+  IDeleteCartItemFx,
   IUpdateCartItemCountFx,
 } from '@/types/cart'
 import { handleJWTError } from '@/lib/utils/errors'
@@ -78,6 +79,33 @@ export const updateCartItemCountFx = createEffect(
         return newData
       }
 
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    } finally {
+      setSpinner(false)
+    }
+  }
+)
+
+export const deleteCartItemFx = createEffect(
+  async ({ jwt, id, setSpinner }: IDeleteCartItemFx) => {
+    try {
+      setSpinner(true)
+
+      const { data } = await axiosInstance.delete(`/api/cart/delete?id=${id}`, {
+        headers: { Authorization: `Bearer ${jwt}` },
+      })
+
+      if (data?.error) {
+        const newData: { id: string } = await handleJWTError(data.error.name, {
+          repeatRequestMethodName: 'deleteCartItemFx',
+          payload: { id, setSpinner },
+        })
+        return newData
+      }
+
+      toast.success('Товар удалён из корзины!')
       return data
     } catch (error) {
       toast.error((error as Error).message)

@@ -1,3 +1,6 @@
+import toast from 'react-hot-toast'
+import { EventCallable } from 'effector'
+
 import { closeAuthPopup, openAuthPopup, setIsAuth } from '@/context/auth'
 import { setCurrentProduct } from '@/context/goods'
 import {
@@ -139,3 +142,25 @@ export const getCartItemCountBySize = (
 ) =>
   cartItems.find((item) => item.size === currentSize.toLocaleLowerCase())
     ?.count || 0
+
+export const deleteProductFromLS = <T>(
+  id: string,
+  key: string,
+  message: string,
+  event: EventCallable<T>,
+  withToast = true
+) => {
+  let items = JSON.parse(localStorage.getItem(key) as string)
+
+  if (!items) {
+    items = []
+  }
+
+  const updatedItems = items.filter(
+    (item: { clientId: string }) => item.clientId !== id
+  )
+
+  localStorage.setItem(key, JSON.stringify(updatedItems))
+  event(updatedItems)
+  withToast && toast.success(message)
+}
