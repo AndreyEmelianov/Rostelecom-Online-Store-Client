@@ -18,8 +18,6 @@ import CartPopup from './CartPopup/CartPopup'
 import HeaderProfile from './HeaderProfile'
 import { $isAuth } from '@/context/auth'
 import { loginCheckFx } from '@/api/auth'
-import { $user } from '@/context/user'
-import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { addProductsFromLSToCart, setCartFromLS } from '@/context/cart'
 import { setLang } from '@/context/lang'
 
@@ -28,9 +26,6 @@ export const Header = () => {
 
   const isAuth = useUnit($isAuth)
   const loginCheckSpinner = useUnit(loginCheckFx.pending)
-  const user = useUnit($user)
-
-  const currentCartByAuth = useCartByAuth()
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
