@@ -16,9 +16,12 @@ import {
   closeQuickViewModal,
 } from '@/context/modals'
 import { $openAuthPopup } from '@/context/auth'
+import { CookieAlert } from '../modules/CookieAlert/CookieAlert'
+import { motion } from 'framer-motion'
 
 export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   const [isClient, setIsClient] = useState(false)
+  const [cookieAlertOpen, setCookieAlertOpen] = useState(false)
 
   useEffect(() => setIsClient(true), [])
 
@@ -32,6 +35,14 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   const handleCloseSizeTable = () => closeSizeTableByCheck(quickViewModalIsOpen)
+
+  useEffect(() => {
+    const checkCookie = document.cookie.indexOf('CookieBy=Rostelecom')
+
+    checkCookie != -1
+      ? setCookieAlertOpen(false)
+      : setTimeout(() => setCookieAlertOpen(true), 3000)
+  }, [])
 
   return (
     <>
@@ -55,6 +66,16 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
                 className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
                 onClick={handleCloseAuthPopup}
               />
+              {cookieAlertOpen && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                  className='cookie-popup'
+                >
+                  <CookieAlert setCookieAlertOpen={setCookieAlertOpen} />
+                </motion.div>
+              )}
               <Toaster position='top-center' reverseOrder={false} />
             </body>
           </html>

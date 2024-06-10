@@ -15,6 +15,7 @@ import './globalStyles/search-modal.css'
 import './globalStyles/cart-popup.css'
 import './globalStyles/footer.css'
 import './globalStyles/auth-popup.css'
+import './globalStyles/cookie-popup.css'
 
 export const metadata: Metadata = {
   title: 'Rostelecom store',

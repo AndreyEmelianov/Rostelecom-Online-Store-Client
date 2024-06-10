@@ -5,7 +5,9 @@
       "more": "More",
       "oh": "Oh...",
       "ad": "Ad",
-      "order_price": "Order price"
+      "order_price": "Order price",
+      "accept": "Accept",
+      "cookie_text": "Rostelecom processes <a href=\"https://support.google.com/accounts/answer/61416\">Cookies</a> for the correct operation of the site and personalization of services, incl. using metric programs and analytics systems. You can prevent the processing of <a href=\"https://support.google.com/accounts/answer/61416\">Cookies</a> in your browser settings."
     },
     "header": {
       "menu_btn": "Menu",
@@ -183,7 +185,9 @@
       "more": "Ещё",
       "oh": "Ой...",
       "ad": "Реклама",
-      "order_price": "Сумма заказа"
+      "order_price": "Сумма заказа",
+      "accept": "Принять",
+      "cookie_text": "ПАО «Ростелеком» обрабатывает <a href=\"https://support.google.com/accounts/answer/61416\">Cookies</a> для корректной работы сайта и персонализации сервисов, в т.ч. с использованием метрических программ и систем аналитик. Вы можете запретить обработку <a href=\"https://support.google.com/accounts/answer/61416\">Cookies</a> в настройках браузера."
     },
     "header": {
       "menu_btn": "Меню",
