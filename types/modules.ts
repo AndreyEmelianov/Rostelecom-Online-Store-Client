@@ -43,3 +43,8 @@ export interface ICrumbProps {
   last: boolean
   textGenerator: () => void
 }
+
+export interface IOrderInfoBlockProps {
+  isOrderPage?: boolean
+  isCorrectedPromotionalCode?: boolean
+}

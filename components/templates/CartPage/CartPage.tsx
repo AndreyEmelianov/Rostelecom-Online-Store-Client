@@ -1,6 +1,7 @@
 'use client'
 import { useUnit } from 'effector-react'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 
 import { getCartItemsFx } from '@/api/cart'
 import { HeadingWithCount } from '@/components/elements/HeadingWithCount/HeadingWithCount'
@@ -10,12 +11,17 @@ import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { useLang } from '@/hooks/useLang'
 import { countAllCartItemsAmount } from '@/lib/utils/cart'
 import { basePropsForMotion } from '@/constants/motion'
+import { CartList } from '@/components/modules/CartPage/CartList'
+import { OrderInfoBlock } from '@/components/modules/OrderInfoBlock/OrderInfoBlock'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { PromotionalCode } from '@/components/modules/CartPage/PromotionalCode'
 
 import styles from '@/styles/cart-page/index.module.scss'
 import cartSkeletonStyles from '@/styles/cart-skeleton/index.module.scss'
-import { CartList } from '@/components/modules/CartPage/CartList'
 
 export const CartPage = () => {
+  const [isCorrectPromotionalCode, setIsCorrectPromotionalCode] =
+    useState(false)
   const { lang, translations } = useLang()
 
   const currentCartByAuth = useCartByAuth()
@@ -23,6 +29,8 @@ export const CartPage = () => {
   const cartSpinner = useUnit(getCartItemsFx.pending)
 
   const { getTextGenerator, getDefaultTextGenerator } = useBreadcrumbs('cart')
+
+  const isMedia930 = useMediaQuery(930)
 
   return (
     <main>
@@ -64,8 +72,24 @@ export const CartPage = () => {
                 </motion.ul>
               )}
             </div>
-            <div className={styles.cart__right}>{}</div>
+            <div className={styles.cart__right}>
+              {isMedia930 && (
+                <PromotionalCode
+                  setIsCorrectPromotionalCode={setIsCorrectPromotionalCode}
+                />
+              )}
+              <div className={styles.cart__right__order}>
+                <OrderInfoBlock
+                  isCorrectedPromotionalCode={isCorrectPromotionalCode}
+                />
+              </div>
+            </div>
           </div>
+          {!isMedia930 && (
+            <PromotionalCode
+              setIsCorrectPromotionalCode={setIsCorrectPromotionalCode}
+            />
+          )}
         </div>
       </section>
     </main>
