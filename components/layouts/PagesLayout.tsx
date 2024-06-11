@@ -1,8 +1,10 @@
 'use client'
 import { useUnit } from 'effector-react'
 import { Toaster } from 'react-hot-toast'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { EarthoOneProvider } from '@eartho/one-client-react'
+import { Next13ProgressBar } from 'next13-progressbar'
 
 import { Layout } from './Layout'
 import {
@@ -17,7 +19,6 @@ import {
 } from '@/context/modals'
 import { $openAuthPopup } from '@/context/auth'
 import { CookieAlert } from '../modules/CookieAlert/CookieAlert'
-import { motion } from 'framer-motion'
 
 export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   const [isClient, setIsClient] = useState(false)
@@ -53,6 +54,7 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
         >
           <html lang='en'>
             <body>
+              <Next13ProgressBar height='4px' color='#9466ff' showOnShallow />
               <Layout>{children}</Layout>
               <div
                 className={`quick-view-modal-overlay ${quickViewModalIsOpen ? 'overlay-active' : ''}`}

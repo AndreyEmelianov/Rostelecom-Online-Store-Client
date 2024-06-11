@@ -237,6 +237,16 @@ body::-webkit-scrollbar-thumb:hover {
   font-weight: 400;
 }
 
+.not-empty {
+  position: absolute;
+  top: 9px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--system-error-day);
+  border-radius: 50%;
+}
+
 .slick-slide {
   margin: 0 9px;
 }
