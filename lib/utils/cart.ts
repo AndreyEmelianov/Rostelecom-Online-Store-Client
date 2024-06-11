@@ -132,3 +132,6 @@ export const updateCartItemCountInLS = (cartItemId: string, count: number) => {
   localStorage.setItem('rostelekomCart', JSON.stringify(updatedCart))
   setCartFromLS(updatedCart as ICartItem[])
 }
+
+export const countAllCartItemsAmount = (cart: ICartItem[]) =>
+  cart.reduce((acc, item) => acc + +item.count, 0)
