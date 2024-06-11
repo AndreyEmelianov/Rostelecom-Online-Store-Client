@@ -1,3 +1,5 @@
+import { CartPage } from '@/components/templates/CartPage/CartPage'
+
 export default function Cart() {
-  return <div>Cart</div>
+  return <CartPage />
 }
