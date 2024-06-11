@@ -33,7 +33,7 @@ export const useMenuAnimation = (zIndex: number, popupIsOpen: boolean) => {
 
     const timerId = setTimeout(() => setPopupZIndex('-1'), 1000)
 
-    return clearInterval(timerId)
+    return () => clearTimeout(timerId)
   }, [popupIsOpen, zIndex])
 
   return { popupZIndex, itemVariants, sideVariants }
