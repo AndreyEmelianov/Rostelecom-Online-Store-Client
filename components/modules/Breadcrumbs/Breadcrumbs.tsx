@@ -63,7 +63,6 @@ export const Breadcrumbs = ({
                 {...crumb}
                 last={index === breadcrumbs.length - 1}
               />
-              {console.log(crumb)}
             </li>
           ) : (
             ''

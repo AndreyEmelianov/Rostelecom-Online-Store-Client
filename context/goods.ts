@@ -19,7 +19,7 @@ const goodsStoreInstance = (effect: Effect<void, [], Error>) =>
     .createStore([])
     .on(effect.done, (_, { result }) => result)
     .on(effect.fail, (_, { error }) => {
-      console.log(error.message)
+      console.error(error.message)
     })
 
 const goodsSampleInstance = (
