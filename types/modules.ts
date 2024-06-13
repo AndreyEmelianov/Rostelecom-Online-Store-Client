@@ -54,4 +54,13 @@ export interface IEmptyPageContentProps {
   subtitle: string
   description: string
   bgClassName: string
+  title?: string
+  oopsWord?: string
+  emptyWord?: string
+  bgWordClassName?: string
+}
+
+export interface IContentTitleProps {
+  title: string
+  oopsWord: string
 }
