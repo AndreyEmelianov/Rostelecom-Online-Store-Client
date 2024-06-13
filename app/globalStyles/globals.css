@@ -247,6 +247,11 @@ body::-webkit-scrollbar-thumb:hover {
   border-radius: 50%;
 }
 
+.not-empty__mobile {
+  top: 12px;
+  right: 15px;
+}
+
 .slick-slide {
   margin: 0 9px;
 }
