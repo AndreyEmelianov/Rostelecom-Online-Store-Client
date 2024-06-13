@@ -12,6 +12,7 @@ import { setSizeTableSizes } from '@/context/sizeTable'
 import { loginCheck } from '@/context/user'
 import { ICartItem } from '@/types/cart'
 import { IProduct } from '@/types/common'
+import { setShouldShowEmptyPage } from '@/context/cart'
 
 export const addOverflowHiddenToBody = (paddingRight = '') => {
   const body = document.querySelector('body') as HTMLBodyElement
@@ -163,6 +164,10 @@ export const deleteProductFromLS = <T>(
   localStorage.setItem(key, JSON.stringify(updatedItems))
   event(updatedItems)
   withToast && toast.success(message)
+
+  if (!updatedItems.length) {
+    setShouldShowEmptyPage(true)
+  }
 }
 
 export const showCountMessage = (count: string, lang: string) => {

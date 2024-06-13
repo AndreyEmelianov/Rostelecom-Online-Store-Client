@@ -48,3 +48,10 @@ export interface IOrderInfoBlockProps {
   isOrderPage?: boolean
   isCorrectedPromotionalCode?: boolean
 }
+
+export interface IEmptyPageContentProps {
+  btnText: string
+  subtitle: string
+  description: string
+  bgClassName: string
+}

@@ -11,6 +11,7 @@ import {
 import {
   addProductToCartFx,
   deleteCartItemFx,
+  getCartItemsFx,
   updateCartItemCountFx,
 } from '@/api/cart'
 import { axiosInstance } from '@/api/apiInstance'
@@ -58,6 +59,8 @@ export const addProductsFromLSToCart =
 export const updateCartItemCount = cart.createEvent<IUpdateCartItemCountFx>()
 export const deleteProductFromCart = cart.createEvent<IDeleteCartItemFx>()
 
+export const setShouldShowEmptyPage = cart.createEvent<boolean>()
+
 export const $cart = cart
   .createStore<ICartItem[]>([])
   .on(addProductsFromLSToCartFx.done, (_, { result }) => result.items)
@@ -71,6 +74,7 @@ export const $cart = cart
       item._id === result.id ? { ...item, count: result.count } : item
     )
   )
+  .on(getCartItemsFx.done, (_, { result }) => result)
   .on(deleteCartItemFx.done, (cart, { result }) =>
     cart.filter((item) => item._id !== result.id)
   )
@@ -82,6 +86,10 @@ export const $cartFromLS = cart
 export const $totalPrice = cart
   .createStore<number>(0)
   .on(setTotalPrice, (_, value) => value)
+
+export const $shouldShowEmptyPage = cart
+  .createStore(false)
+  .on(setShouldShowEmptyPage, (_, value) => value)
 
 sample({
   clock: addProductToCart,
@@ -102,6 +110,13 @@ sample({
   source: $cart,
   fn: (_, data) => data,
   target: updateCartItemCountFx,
+})
+
+sample({
+  clock: loadCartItems,
+  source: $cart,
+  fn: (_, data) => data,
+  target: getCartItemsFx,
 })
 
 sample({

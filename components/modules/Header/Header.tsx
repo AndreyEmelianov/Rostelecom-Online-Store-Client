@@ -18,7 +18,11 @@ import CartPopup from './CartPopup/CartPopup'
 import HeaderProfile from './HeaderProfile'
 import { $isAuth } from '@/context/auth'
 import { loginCheckFx } from '@/api/auth'
-import { addProductsFromLSToCart, setCartFromLS } from '@/context/cart'
+import {
+  addProductsFromLSToCart,
+  setCartFromLS,
+  setShouldShowEmptyPage,
+} from '@/context/cart'
 import { setLang } from '@/context/lang'
 
 export const Header = () => {
@@ -46,13 +50,23 @@ export const Header = () => {
       }
     }
 
-    const cart = JSON.parse(localStorage.getItem('rostelekomCart') as string)
+    triggerLoginCheck()
 
-    if (cart) {
-      setCartFromLS(cart)
+    const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
+
+    if (auth?.accessToken) {
+      return
     }
 
-    triggerLoginCheck()
+    const cart = JSON.parse(localStorage.getItem('rostelekomCart') as string)
+
+    if (cart && Array.isArray(cart)) {
+      if (!cart.length) {
+        setShouldShowEmptyPage(true)
+        return
+      }
+      setCartFromLS(cart)
+    }
   }, [])
 
   useEffect(() => {
