@@ -24,6 +24,7 @@ import {
   setShouldShowEmptyPage,
 } from '@/context/cart'
 import { setLang } from '@/context/lang'
+import { addProductsFromLSToFavorites } from '@/context/favorites'
 
 export const Header = () => {
   const { translations, lang } = useLang()
@@ -77,10 +78,21 @@ export const Header = () => {
         localStorage.getItem('rostelekomCart') as string
       )
 
+      const favoritesFromLS = JSON.parse(
+        localStorage.getItem('rostelekomFavorites') as string
+      )
+
       if (cartFromLS && Array.isArray(cartFromLS)) {
         addProductsFromLSToCart({
           jwt: auth.accessToken,
           cartItems: cartFromLS,
+        })
+      }
+
+      if (favoritesFromLS && Array.isArray(favoritesFromLS)) {
+        addProductsFromLSToFavorites({
+          jwt: auth.accessToken,
+          favoriteItems: favoritesFromLS,
         })
       }
     }

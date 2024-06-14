@@ -60,4 +60,8 @@
       background-color: var(--system-error-night) !important;
     }
   }
+
+  &__btn_spinner::before {
+    content: none;
+  }
 }

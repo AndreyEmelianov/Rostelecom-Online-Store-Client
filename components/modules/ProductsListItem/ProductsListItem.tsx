@@ -118,7 +118,13 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
             <ProductsItemActionBtn
               text={translations[lang].product.add_to_favorites}
               spinner={addToFavoritesSpinner}
-              iconClass={`${isProductInFavorites ? 'actions__btn_favorite_checked' : 'actions__btn_favorite'}`}
+              iconClass={`${
+                addToFavoritesSpinner
+                  ? 'actions__btn_spinner'
+                  : isProductInFavorites
+                    ? 'actions__btn_favorite_checked'
+                    : 'actions__btn_favorite'
+              }`}
               callback={handleAddProductToFavorites}
             />
             <ProductsItemActionBtn

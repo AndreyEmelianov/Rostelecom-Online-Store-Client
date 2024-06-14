@@ -317,7 +317,7 @@ export const SizeTable = () => {
         </table>
       </div>
       <AddToCartBtn
-        className={styles.size_table__btn}
+        className={`${styles.size_table__btn} ${styles.size_table__btn_favorite}`}
         text={
           isAddToFavorites
             ? translations[lang].product.to_favorite

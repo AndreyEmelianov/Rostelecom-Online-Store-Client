@@ -104,6 +104,10 @@
     }
   }
 
+  &__btn_favorite {
+    min-width: 143px;
+  }
+
   &__btn_added {
     background-color: var(--secondary-green-night) !important;
     pointer-events: none;

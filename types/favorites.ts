@@ -12,3 +12,8 @@ export interface IFavoriteItem {
   color: string
   inStock: string
 }
+
+export interface IAddProductsFromLSToFavoritesFx {
+  jwt: string
+  favoriteItems: IFavoriteItem[]
+}
