@@ -44,3 +44,27 @@ export const addProductToFavoriteFx = createEffect(
     }
   }
 )
+
+export const getFavoriteItemsFx = createEffect(
+  async ({ jwt }: { jwt: string }) => {
+    try {
+      const { data } = await axiosInstance.get('/api/favorites/all', {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+
+      if (data?.error) {
+        const newData: IFavoriteItem[] = await handleJWTError(data.error.name, {
+          repeatRequestMethodName: 'getFavoriteItemsFx',
+        })
+
+        return newData
+      }
+
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    }
+  }
+)
