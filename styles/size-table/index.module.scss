@@ -147,6 +147,17 @@
       }
     }
   }
+
+  &__favorite {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 18px;
+    height: 18px;
+    background-image: url(/img/checked-favorite.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 }
 
 .size_table_headdress {

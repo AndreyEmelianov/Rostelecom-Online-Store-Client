@@ -22,6 +22,7 @@ import { productWithoutSizes } from '@/constants/product'
 import { useCartAction } from '@/hooks/useCartAction'
 import { addProductToCartBySizeTable } from '@/lib/utils/cart'
 import { setIsAddToFavorites } from '@/context/favorites'
+import { useFavoritesActions } from '@/hooks/useFavoriteActions'
 
 import styles from '@/styles/products-list-item/index.module.scss'
 import stylesAd from '@/styles/ad/index.module.scss'
@@ -31,6 +32,12 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
 
   const { addToCartSpinner, currentCartByAuth, setAddToCartSpinner } =
     useCartAction()
+
+  const {
+    addToFavoritesSpinner,
+    isProductInFavorites,
+    handleAddProductToFavorites,
+  } = useFavoritesActions(item)
 
   const isProductInCart = isItemInList(currentCartByAuth, item._id)
 
@@ -110,7 +117,9 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
           <div className={styles.list__item__actions}>
             <ProductsItemActionBtn
               text={translations[lang].product.add_to_favorites}
-              iconClass='actions__btn_favorite'
+              spinner={addToFavoritesSpinner}
+              iconClass={`${isProductInFavorites ? 'actions__btn_favorite_checked' : 'actions__btn_favorite'}`}
+              callback={handleAddProductToFavorites}
             />
             <ProductsItemActionBtn
               text={translations[lang].product.add_to_comparison}

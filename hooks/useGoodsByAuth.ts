@@ -11,7 +11,7 @@ export const useGoodsByAuth = <T>(
   const goods = useUnit(storeAsync)
   const goodsFromLS = useUnit(storeSync)
 
-  const currentFavoritesByAuth = isAuth ? goods : goodsFromLS
+  const currentGoodsByAuth = isAuth ? goods : goodsFromLS
 
-  return currentFavoritesByAuth
+  return currentGoodsByAuth
 }

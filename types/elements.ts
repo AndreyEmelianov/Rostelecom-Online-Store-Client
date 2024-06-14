@@ -11,6 +11,7 @@ export interface IProductsItemActionBtnProps {
   withTooltip?: boolean
   iconClass: string
   marginBottom?: number
+  spinner?: boolean
 }
 
 export interface IProductAvailableProps {

@@ -8,7 +8,7 @@ import { setFavoriteItemsFromLS } from '@/context/favorites'
 export const addFavoriteItemToLS = (
   product: IProduct,
   selectedSize: string,
-  withToast: true
+  withToast = true
 ) => {
   let favoritesFromLS: IFavoriteItem[] = JSON.parse(
     localStorage.getItem('rostelekomFavorites') as string
