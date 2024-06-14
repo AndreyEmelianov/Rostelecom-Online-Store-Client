@@ -3,10 +3,11 @@ import Link from 'next/link'
 
 import { useLang } from '@/hooks/useLang'
 import { IOrderInfoBlockProps } from '@/types/modules'
-import { useCartByAuth } from '@/hooks/useCartByAuth'
 import { useTotalPrice } from '@/hooks/useTotalPrice'
 import { formatPrice, showCountMessage } from '@/lib/utils/common'
 import { countAllCartItemsAmount } from '@/lib/utils/cart'
+import { $cart, $cartFromLS } from '@/context/cart'
+import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 
 import styles from '@/styles/order-block/index.module.scss'
 
@@ -18,7 +19,7 @@ export const OrderInfoBlock = ({
 
   const checkboxRef = useRef() as MutableRefObject<HTMLInputElement>
 
-  const currentCartByAuth = useCartByAuth()
+  const currentCartByAuth = useGoodsByAuth($cart, $cartFromLS)
 
   const { animatedPrice } = useTotalPrice()
   const { lang, translations } = useLang()

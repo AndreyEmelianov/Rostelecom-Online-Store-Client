@@ -10,12 +10,13 @@ import {
   openMenu,
 } from '@/context/modals'
 import { CatalogMenu } from '../Header/CatalogMenu'
-import { useCartByAuth } from '@/hooks/useCartByAuth'
+import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
+import { $cart, $cartFromLS } from '@/context/cart'
 
 export const NavbarMobile = () => {
   const { lang, translations } = useLang()
 
-  const currentCartByAuth = useCartByAuth()
+  const currentCartByAuth = useGoodsByAuth($cart, $cartFromLS)
 
   const handleOpenMenu = () => {
     openMenu()
