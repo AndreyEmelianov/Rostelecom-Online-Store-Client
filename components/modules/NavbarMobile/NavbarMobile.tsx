@@ -12,11 +12,13 @@ import {
 import { CatalogMenu } from '../Header/CatalogMenu'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 import { $cart, $cartFromLS } from '@/context/cart'
+import { $favorites, $favoritesFromLS } from '@/context/favorites'
 
 export const NavbarMobile = () => {
   const { lang, translations } = useLang()
 
   const currentCartByAuth = useGoodsByAuth($cart, $cartFromLS)
+  const currentFavoritesByAuth = useGoodsByAuth($favorites, $favoritesFromLS)
 
   const handleOpenMenu = () => {
     openMenu()
@@ -44,6 +46,9 @@ export const NavbarMobile = () => {
           {translations[lang].breadcrumbs.catalog}
         </button>
         <Link href='/favorites' className='mobile-navbar__btn'>
+          {!!currentFavoritesByAuth.length && (
+            <span className='not-empty not-empty__mobile-favorite' />
+          )}
           {translations[lang].breadcrumbs.favorites}
         </Link>
         <Link href='/cart' className='mobile-navbar__btn'>

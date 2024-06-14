@@ -252,6 +252,11 @@ body::-webkit-scrollbar-thumb:hover {
   right: 15px;
 }
 
+.not-empty__mobile-favorite {
+  top: 12px;
+  right: 25px;
+}
+
 .slick-slide {
   margin: 0 9px;
 }
