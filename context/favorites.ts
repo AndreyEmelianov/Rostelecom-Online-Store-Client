@@ -8,10 +8,14 @@ const favorites = createDomain()
 
 export const loadFavoriteItems = favorites.createEvent<{ jwt: string }>()
 
+export const setFavoriteItemsFromLS = favorites.createEvent<IFavoriteItem[]>()
+
 export const addProductToFavorite =
   favorites.createEvent<Omit<IAddProductToCartFx, 'count'>>()
 
-export const $favoritesFromLS = favorites.createStore<IFavoriteItem[]>([])
+export const $favoritesFromLS = favorites
+  .createStore<IFavoriteItem[]>([])
+  .on(setFavoriteItemsFromLS, (_, favorites) => favorites)
 
 export const $favorites = favorites
   .createStore<IFavoriteItem[]>([])
