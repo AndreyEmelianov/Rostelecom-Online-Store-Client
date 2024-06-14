@@ -21,6 +21,7 @@ import { setCurrentProduct } from '@/context/goods'
 import { productWithoutSizes } from '@/constants/product'
 import { useCartAction } from '@/hooks/useCartAction'
 import { addProductToCartBySizeTable } from '@/lib/utils/cart'
+import { setIsAddToFavorites } from '@/context/favorites'
 
 import styles from '@/styles/products-list-item/index.module.scss'
 import stylesAd from '@/styles/ad/index.module.scss'
@@ -43,8 +44,10 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
     setCurrentProduct(item)
   }
 
-  const addToCart = () =>
+  const addToCart = () => {
+    setIsAddToFavorites(false)
     addProductToCartBySizeTable(item, 1, '', setAddToCartSpinner)
+  }
 
   return (
     <>

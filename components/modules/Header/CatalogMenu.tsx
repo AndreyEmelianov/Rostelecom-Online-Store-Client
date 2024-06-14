@@ -15,10 +15,7 @@ import { CatalogMenuList } from './CatalogMenuList'
 import { Accordion } from '../Accordion/Accordion'
 
 export const CatalogMenu = () => {
-  const [showClothsList, setShowClothsList] = useState(false)
-  const [showAccessoriesList, setShowAccessoriesList] = useState(false)
-  const [showSouvenirsList, setShowSouvenirsList] = useState(false)
-  const [showOfficeList, setShowOfficeList] = useState(false)
+  const [activeListId, setActiveListId] = useState(0)
 
   const { lang, translations } = useLang()
   const catalogMenuIsOpen = useUnit($catalogMenuIsOpen)
@@ -29,42 +26,13 @@ export const CatalogMenu = () => {
 
   const isMedia450 = useMediaQuery(450)
 
-  const handleShowClothList = () => {
-    setShowClothsList(true)
-    setShowAccessoriesList(false)
-    setShowSouvenirsList(false)
-    setShowOfficeList(false)
-  }
-
-  const handleAccessoriesList = () => {
-    setShowClothsList(false)
-    setShowAccessoriesList(true)
-    setShowSouvenirsList(false)
-    setShowOfficeList(false)
-  }
-
-  const handleSouvenirsList = () => {
-    setShowClothsList(false)
-    setShowAccessoriesList(false)
-    setShowSouvenirsList(true)
-    setShowOfficeList(false)
-  }
-
-  const handleOfficeList = () => {
-    setShowClothsList(false)
-    setShowAccessoriesList(false)
-    setShowSouvenirsList(false)
-    setShowOfficeList(true)
-  }
-
   const handleCloseMenu = () => {
     removeOverflowHiddenFromBody()
     closeCatalogMenu()
-    setShowClothsList(false)
-    setShowAccessoriesList(false)
-    setShowSouvenirsList(false)
-    setShowOfficeList(false)
+    setActiveListId(0)
   }
+
+  const isActiveList = (id: number) => activeListId === id
 
   const items = [
     {
@@ -76,7 +44,7 @@ export const CatalogMenu = () => {
         translations[lang].comparison.hoodie,
         translations[lang].comparison.outerwear,
       ],
-      handler: () => handleShowClothList(),
+      handler: () => setActiveListId(1),
     },
     {
       name: translations[lang].main_menu.accessories,
@@ -86,7 +54,7 @@ export const CatalogMenu = () => {
         translations[lang].comparison.headdress,
         translations[lang].comparison.umbrella,
       ],
-      handler: () => handleAccessoriesList(),
+      handler: () => setActiveListId(2),
     },
     {
       name: translations[lang].main_menu.souvenirs,
@@ -95,7 +63,7 @@ export const CatalogMenu = () => {
         translations[lang].comparison['business-souvenirs'],
         translations[lang].comparison['promotional-souvenirs'],
       ],
-      handler: () => handleSouvenirsList(),
+      handler: () => setActiveListId(3),
     },
     {
       name: translations[lang].main_menu.office,
@@ -104,7 +72,7 @@ export const CatalogMenu = () => {
         translations[lang].comparison.notebook,
         translations[lang].comparison.pen,
       ],
-      handler: () => handleOfficeList(),
+      handler: () => setActiveListId(4),
     },
   ]
 
@@ -166,38 +134,38 @@ export const CatalogMenu = () => {
                         <>
                           {id === 1 && (
                             <CatalogMenuButton
-                              {...buttonProps(showClothsList)}
+                              {...buttonProps(isActiveList(1))}
                             />
                           )}
                           {id === 2 && (
                             <CatalogMenuButton
-                              {...buttonProps(showAccessoriesList)}
+                              {...buttonProps(isActiveList(2))}
                             />
                           )}
                           {id === 3 && (
                             <CatalogMenuButton
-                              {...buttonProps(showSouvenirsList)}
+                              {...buttonProps(isActiveList(3))}
                             />
                           )}
                           {id === 4 && (
                             <CatalogMenuButton
-                              {...buttonProps(showOfficeList)}
+                              {...buttonProps(isActiveList(4))}
                             />
                           )}
                         </>
                       )}
                       {!isMedia450 && (
                         <AnimatePresence>
-                          {isCurrentList(showClothsList, 1) && (
+                          {isCurrentList(isActiveList(1), 1) && (
                             <CatalogMenuList items={items} />
                           )}
-                          {isCurrentList(showAccessoriesList, 2) && (
+                          {isCurrentList(isActiveList(2), 2) && (
                             <CatalogMenuList items={items} />
                           )}
-                          {isCurrentList(showSouvenirsList, 3) && (
+                          {isCurrentList(isActiveList(3), 3) && (
                             <CatalogMenuList items={items} />
                           )}
-                          {isCurrentList(showOfficeList, 4) && (
+                          {isCurrentList(isActiveList(4), 4) && (
                             <CatalogMenuList items={items} />
                           )}
                         </AnimatePresence>

@@ -6,10 +6,10 @@ import { addProductToFavoriteFx, getFavoriteItemsFx } from '@/api/favorites'
 
 const favorites = createDomain()
 
-export const loadFavoriteItems = favorites.createEvent<{ jwt: string }>()
-
 export const setFavoriteItemsFromLS = favorites.createEvent<IFavoriteItem[]>()
+export const setIsAddToFavorites = favorites.createEvent<boolean>()
 
+export const loadFavoriteItems = favorites.createEvent<{ jwt: string }>()
 export const addProductToFavorite =
   favorites.createEvent<Omit<IAddProductToCartFx, 'count'>>()
 
@@ -28,6 +28,10 @@ export const $favorites = favorites
       ])
     ).values(),
   ])
+
+export const $isAddToFavorites = favorites
+  .createStore(false)
+  .on(setIsAddToFavorites, (_, value) => value)
 
 sample({
   clock: loadFavoriteItems,

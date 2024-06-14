@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useUnit } from 'effector-react'
 import { usePathname } from 'next/navigation'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLang } from '@/hooks/useLang'
 import { $menuIsOpen, closeMenu } from '@/context/modals'
@@ -12,14 +13,11 @@ import { Logo } from '@/components/elements/Logo/Logo'
 import { Accordion } from '../Accordion/Accordion'
 import { MenuLinkItem } from './MenuLinkItem'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { AnimatePresence, motion } from 'framer-motion'
 import { BuyersListItems } from './BuyersListItems'
 import { ContactsListItems } from './ContactsListItems'
 
 export const Menu = () => {
-  const [showCatalogList, setShowCatalogList] = useState(false)
-  const [showBuyersList, setShowBuyersList] = useState(false)
-  const [showContactsList, setShowContactsList] = useState(false)
+  const [activeListId, setActiveListId] = useState(0)
 
   const menuIsOpen = useUnit($menuIsOpen)
   const { lang, translations } = useLang()
@@ -31,6 +29,7 @@ export const Menu = () => {
   const handleCloseMenu = () => {
     removeOverflowHiddenFromBody()
     closeMenu()
+    setActiveListId(0)
   }
 
   const handleRedirectToCatalog = (path: string) => {
@@ -42,23 +41,9 @@ export const Menu = () => {
     handleCloseMenu()
   }
 
-  const handleShowCatalogList = () => {
-    setShowCatalogList(true)
-    setShowBuyersList(false)
-    setShowContactsList(false)
-  }
-
-  const handleShowBuyersList = () => {
-    setShowCatalogList(false)
-    setShowBuyersList(true)
-    setShowContactsList(false)
-  }
-
-  const handleShowContactsList = () => {
-    setShowCatalogList(false)
-    setShowBuyersList(false)
-    setShowContactsList(true)
-  }
+  const handleShowCatalogList = () => setActiveListId(1)
+  const handleShowBuyersList = () => setActiveListId(2)
+  const handleShowContactsList = () => setActiveListId(3)
 
   const handleSwitchLanguage = (lang: string) => {
     setLang(lang as AllowedLangs)
@@ -174,7 +159,7 @@ export const Menu = () => {
                 {translations[lang].main_menu.catalog}
               </button>
               <AnimatePresence>
-                {showCatalogList && (
+                {activeListId === 1 && (
                   <motion.ul
                     initial={{ opacity: 0 }}
                     exit={{ opacity: 0 }}
@@ -261,7 +246,7 @@ export const Menu = () => {
             )}
             {!isMedia640 && (
               <AnimatePresence>
-                {showBuyersList && (
+                {activeListId === 2 && (
                   <motion.ul
                     initial={{ opacity: 0 }}
                     exit={{ opacity: 0 }}
@@ -295,7 +280,7 @@ export const Menu = () => {
             )}
             {!isMedia640 && (
               <AnimatePresence>
-                {showContactsList && (
+                {activeListId === 3 && (
                   <motion.ul
                     initial={{ opacity: 0 }}
                     exit={{ opacity: 0 }}
