@@ -1,3 +1,5 @@
+import { IBaseEffectProps } from './common'
+
 export interface IFavoriteItem {
   _id: string
   userId: string
@@ -17,3 +19,5 @@ export interface IAddProductsFromLSToFavoritesFx {
   jwt: string
   favoriteItems: IFavoriteItem[]
 }
+
+export type IDeleteFavoriteItemsFx = IBaseEffectProps

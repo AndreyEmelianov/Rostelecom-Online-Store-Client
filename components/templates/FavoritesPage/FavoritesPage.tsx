@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-indent */
+/* eslint-disable indent */
 'use client'
 import { useUnit } from 'effector-react'
 import { motion } from 'framer-motion'
@@ -16,6 +18,8 @@ import { HeadingWithCount } from '@/components/elements/HeadingWithCount/Heading
 import { EmptyPageContent } from '@/components/modules/EmptyPageContent/EmptyPageContent'
 import { basePropsForMotion } from '@/constants/motion'
 import { FavoritesList } from '@/components/modules/FavoritesPage/FavoritesList'
+import { loginCheckFx } from '@/api/auth'
+import { isUserAuth } from '@/lib/utils/common'
 
 import styles from '@/styles/favorites/index.module.scss'
 import cartSkeletonStyles from '@/styles/cart-skeleton/index.module.scss'
@@ -23,6 +27,7 @@ import cartSkeletonStyles from '@/styles/cart-skeleton/index.module.scss'
 export const FavoritesPage = () => {
   const shouldShowEmptyPageFavorites = useUnit($shouldShowEmptyPageFavorites)
   const favoritesSpinner = useUnit(getFavoriteItemsFx.pending)
+  const loginCheckSpinner = useUnit(loginCheckFx.pending)
 
   const currentFavoritesByAuth = useGoodsByAuth($favorites, $favoritesFromLS)
 
@@ -46,7 +51,9 @@ export const FavoritesPage = () => {
               spinner={favoritesSpinner}
             />
 
-            {favoritesSpinner && (
+            {(isUserAuth()
+              ? loginCheckSpinner || favoritesSpinner
+              : favoritesSpinner) && (
               <motion.ul
                 {...basePropsForMotion}
                 className={cartSkeletonStyles.skeleton}
