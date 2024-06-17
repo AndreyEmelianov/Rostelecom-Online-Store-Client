@@ -28,6 +28,8 @@ import {
   $favorites,
   $favoritesFromLS,
   addProductsFromLSToFavorites,
+  setFavoriteItemsFromLS,
+  setShouldShowEmptyPageFavorites,
 } from '@/context/favorites'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 
@@ -51,6 +53,11 @@ export const Header = () => {
 
   useEffect(() => {
     const lang = JSON.parse(localStorage.getItem('rostelecom-lang') as string)
+    const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
+    const cart = JSON.parse(localStorage.getItem('rostelekomCart') as string)
+    const favoritesFromLS = JSON.parse(
+      localStorage.getItem('rostelekomFavorites') as string
+    )
 
     if (lang) {
       if (lang === 'ru' || lang === 'en') {
@@ -60,20 +67,32 @@ export const Header = () => {
 
     triggerLoginCheck()
 
-    const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
+    if (!favoritesFromLS || !favoritesFromLS?.length) {
+      setShouldShowEmptyPageFavorites(true)
+    }
+
+    if (!cart || !cart?.length) {
+      setShouldShowEmptyPage(true)
+    }
 
     if (auth?.accessToken) {
       return
     }
 
-    const cart = JSON.parse(localStorage.getItem('rostelekomCart') as string)
-
     if (cart && Array.isArray(cart)) {
       if (!cart.length) {
         setShouldShowEmptyPage(true)
-        return
+      } else {
+        setCartFromLS(cart)
       }
-      setCartFromLS(cart)
+    }
+
+    if (favoritesFromLS && Array.isArray(favoritesFromLS)) {
+      if (!favoritesFromLS.length) {
+        setShouldShowEmptyPageFavorites(true)
+      } else {
+        setFavoriteItemsFromLS(favoritesFromLS)
+      }
     }
   }, [])
 

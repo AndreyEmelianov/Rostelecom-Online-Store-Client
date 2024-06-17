@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { IDeleteCartItemBtnProps } from '@/types/cart'
 
-export const DeleteCartItemBtn = ({
+export const DeleteItemBtn = ({
   className,
   btnDisabled,
   callback,

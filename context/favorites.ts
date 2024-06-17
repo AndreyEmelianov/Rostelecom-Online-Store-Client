@@ -114,9 +114,7 @@ export const addProductToFavorite =
 export const addProductsFromLSToFavorites =
   favorites.createEvent<IAddProductsFromLSToFavoritesFx>()
 
-export const $favoritesFromLS = favorites
-  .createStore<IFavoriteItem[]>([])
-  .on(setFavoriteItemsFromLS, (_, favorites) => favorites)
+export const setShouldShowEmptyPageFavorites = favorites.createEvent<boolean>()
 
 export const $favorites = favorites
   .createStore<IFavoriteItem[]>([])
@@ -134,6 +132,14 @@ export const $favorites = favorites
 export const $isAddToFavorites = favorites
   .createStore(false)
   .on(setIsAddToFavorites, (_, value) => value)
+
+export const $favoritesFromLS = favorites
+  .createStore<IFavoriteItem[]>([])
+  .on(setFavoriteItemsFromLS, (_, favorites) => favorites)
+
+export const $shouldShowEmptyPageFavorites = favorites
+  .createStore(false)
+  .on(setShouldShowEmptyPageFavorites, (_, value) => value)
 
 sample({
   clock: loadFavoriteItems,
