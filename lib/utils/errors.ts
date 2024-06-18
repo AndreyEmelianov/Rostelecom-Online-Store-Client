@@ -5,6 +5,10 @@ import {
   deleteCartItemFx,
   getCartItemsFx,
 } from '@/api/cart'
+import {
+  addProductToComparisonFx,
+  getComparisonItemsFx,
+} from '@/api/comparison'
 import { JWTError } from '@/constants/jwt'
 import { addProductsFromLSToCartFx } from '@/context/cart'
 import {
@@ -18,6 +22,7 @@ import {
   IAddProductsFromLSToCartFx,
   IDeleteCartItemFx,
 } from '@/types/cart'
+import { IAddProductToComparisonFx } from '@/types/comparison'
 import {
   IAddProductsFromLSToFavoritesFx,
   IDeleteFavoriteItemsFx,
@@ -88,6 +93,17 @@ export const handleJWTError = async (
         case 'deleteFavoriteItemFx':
           return deleteFavoriteItemFx({
             ...(payload as IDeleteFavoriteItemsFx),
+            jwt: newTokens.accessToken,
+          })
+
+        case 'getComparisonItemsFx':
+          return getComparisonItemsFx({
+            jwt: newTokens.accessToken,
+          })
+
+        case 'addProductToComparisonFx':
+          return addProductToComparisonFx({
+            ...(payload as IAddProductToComparisonFx),
             jwt: newTokens.accessToken,
           })
       }
