@@ -14,6 +14,9 @@ export const addProductToComparison =
 
 export const setComparisonFromLS = comparison.createEvent<IComparisonItem[]>()
 
+export const setShouldShowEmptyPageComparison =
+  comparison.createEvent<boolean>()
+
 export const $comparison = comparison
   .createStore<IComparisonItem[]>([])
   .on(getComparisonItemsFx.done, (_, { result }) => result)
@@ -25,6 +28,10 @@ export const $comparison = comparison
 export const $comparisonFromLS = comparison
   .createStore<IComparisonItem[]>([])
   .on(setComparisonFromLS, (_, comparison) => comparison)
+
+export const $shouldShowEmptyPageComparison = comparison
+  .createStore(false)
+  .on(setShouldShowEmptyPageComparison, (_, value) => value)
 
 sample({
   clock: loadComparisonItems,

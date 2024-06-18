@@ -45,6 +45,17 @@
       mask: url(/img/comparison.svg) no-repeat 50% 50%;
     }
 
+    &_comparison_checked::before {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+      height: 18px;
+      width: 18px;
+      background-color: var(--system-success-night);
+      -webkit-mask: url(/img/comparison-checked.svg) no-repeat 50% 50%;
+      mask: url(/img/comparison-checked.svg) no-repeat 50% 50%;
+    }
+
     &_quick_view::before {
       -webkit-mask: url(/img/quick-view.svg) no-repeat 50% 50%;
       mask: url(/img/quick-view.svg) no-repeat 50% 50%;

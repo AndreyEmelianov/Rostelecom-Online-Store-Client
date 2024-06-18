@@ -23,6 +23,7 @@ import { useCartAction } from '@/hooks/useCartAction'
 import { addProductToCartBySizeTable } from '@/lib/utils/cart'
 import { setIsAddToFavorites } from '@/context/favorites'
 import { useFavoritesActions } from '@/hooks/useFavoriteActions'
+import { useComparisonAction } from '@/hooks/useComparisonAction'
 
 import styles from '@/styles/products-list-item/index.module.scss'
 import stylesAd from '@/styles/ad/index.module.scss'
@@ -38,6 +39,12 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
     isProductInFavorites,
     handleAddProductToFavorites,
   } = useFavoritesActions(item)
+
+  const {
+    isProductInComparison,
+    addToComparisonSpinner,
+    handleAddToComparison,
+  } = useComparisonAction(item)
 
   const isProductInCart = isItemInList(currentCartByAuth, item._id)
 
@@ -129,7 +136,14 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
             />
             <ProductsItemActionBtn
               text={translations[lang].product.add_to_comparison}
-              iconClass='actions__btn_comparison'
+              callback={handleAddToComparison}
+              iconClass={`${
+                addToComparisonSpinner
+                  ? 'actions__btn_spinner'
+                  : isProductInComparison
+                    ? 'actions__btn_comparison_checked'
+                    : 'actions__btn_comparison'
+              }`}
             />
             {!isMedia800 && (
               <ProductsItemActionBtn
