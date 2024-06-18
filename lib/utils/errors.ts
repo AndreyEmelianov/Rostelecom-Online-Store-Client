@@ -10,6 +10,7 @@ import { addProductsFromLSToCartFx } from '@/context/cart'
 import {
   addProductToFavoriteFx,
   addProductsFromLSToFavoritesFx,
+  deleteFavoriteItemFx,
   getFavoriteItemsFx,
 } from '@/context/favorites'
 import {
@@ -17,7 +18,10 @@ import {
   IAddProductsFromLSToCartFx,
   IDeleteCartItemFx,
 } from '@/types/cart'
-import { IAddProductsFromLSToFavoritesFx } from '@/types/favorites'
+import {
+  IAddProductsFromLSToFavoritesFx,
+  IDeleteFavoriteItemsFx,
+} from '@/types/favorites'
 
 export const handleJWTError = async (
   errorName: string,
@@ -78,6 +82,12 @@ export const handleJWTError = async (
         case 'addProductsFromLSToFavoritesFx':
           return addProductsFromLSToFavoritesFx({
             ...(payload as IAddProductsFromLSToFavoritesFx),
+            jwt: newTokens.accessToken,
+          })
+
+        case 'deleteFavoriteItemFx':
+          return deleteFavoriteItemFx({
+            ...(payload as IDeleteFavoriteItemsFx),
             jwt: newTokens.accessToken,
           })
       }
