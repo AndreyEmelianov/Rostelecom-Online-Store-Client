@@ -5,12 +5,13 @@ import {
   deleteCartItemFx,
   getCartItemsFx,
 } from '@/api/cart'
-import {
-  addProductToComparisonFx,
-  getComparisonItemsFx,
-} from '@/api/comparison'
 import { JWTError } from '@/constants/jwt'
 import { addProductsFromLSToCartFx } from '@/context/cart'
+import {
+  getComparisonItemsFx,
+  addProductToComparisonFx,
+  addProductsFromLSToComparisonFx,
+} from '@/context/comparison'
 import {
   addProductToFavoriteFx,
   addProductsFromLSToFavoritesFx,
@@ -22,7 +23,10 @@ import {
   IAddProductsFromLSToCartFx,
   IDeleteCartItemFx,
 } from '@/types/cart'
-import { IAddProductToComparisonFx } from '@/types/comparison'
+import {
+  IAddProductToComparisonFx,
+  IAddProductsFromLSToComparisonFx,
+} from '@/types/comparison'
 import {
   IAddProductsFromLSToFavoritesFx,
   IDeleteFavoriteItemsFx,
@@ -104,6 +108,12 @@ export const handleJWTError = async (
         case 'addProductToComparisonFx':
           return addProductToComparisonFx({
             ...(payload as IAddProductToComparisonFx),
+            jwt: newTokens.accessToken,
+          })
+
+        case 'addProductsFromLSToComparisonFx':
+          return addProductsFromLSToComparisonFx({
+            ...(payload as IAddProductsFromLSToComparisonFx),
             jwt: newTokens.accessToken,
           })
       }

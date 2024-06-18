@@ -136,6 +136,7 @@ export const ProductsListItem = ({ item, title }: IProductsListItemProps) => {
             />
             <ProductsItemActionBtn
               text={translations[lang].product.add_to_comparison}
+              spinner={addToComparisonSpinner}
               callback={handleAddToComparison}
               iconClass={`${
                 addToComparisonSpinner

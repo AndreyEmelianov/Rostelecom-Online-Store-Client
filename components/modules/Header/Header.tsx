@@ -32,6 +32,11 @@ import {
   setShouldShowEmptyPageFavorites,
 } from '@/context/favorites'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
+import {
+  addProductsFromLSToComparison,
+  setComparisonFromLS,
+  setShouldShowEmptyPageComparison,
+} from '@/context/comparison'
 
 export const Header = () => {
   const { translations, lang } = useLang()
@@ -57,6 +62,9 @@ export const Header = () => {
     const cart = JSON.parse(localStorage.getItem('rostelekomCart') as string)
     const favoritesFromLS = JSON.parse(
       localStorage.getItem('rostelekomFavorites') as string
+    )
+    const comparisonFromLS = JSON.parse(
+      localStorage.getItem('rostelekomComparison') as string
     )
 
     if (lang) {
@@ -94,18 +102,27 @@ export const Header = () => {
         setFavoriteItemsFromLS(favoritesFromLS)
       }
     }
+
+    if (comparisonFromLS && Array.isArray(comparisonFromLS)) {
+      if (!comparisonFromLS.length) {
+        setShouldShowEmptyPageComparison(true)
+      } else {
+        setComparisonFromLS(comparisonFromLS)
+      }
+    }
   }, [])
 
   useEffect(() => {
     if (isAuth) {
       const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
-
       const cartFromLS = JSON.parse(
         localStorage.getItem('rostelekomCart') as string
       )
-
       const favoritesFromLS = JSON.parse(
         localStorage.getItem('rostelekomFavorites') as string
+      )
+      const comparisonFromLS = JSON.parse(
+        localStorage.getItem('rostelekomComparison') as string
       )
 
       if (cartFromLS && Array.isArray(cartFromLS)) {
@@ -119,6 +136,13 @@ export const Header = () => {
         addProductsFromLSToFavorites({
           jwt: auth.accessToken,
           favoriteItems: favoritesFromLS,
+        })
+      }
+
+      if (comparisonFromLS && Array.isArray(comparisonFromLS)) {
+        addProductsFromLSToComparison({
+          jwt: auth.accessToken,
+          comparisonItems: comparisonFromLS,
         })
       }
     }

@@ -22,3 +22,8 @@ export interface IComparisonItem {
   inStock: string
   characteristics: { [index: string]: string }
 }
+
+export interface IAddProductsFromLSToComparisonFx {
+  jwt: string
+  comparisonItems: IComparisonItem[]
+}

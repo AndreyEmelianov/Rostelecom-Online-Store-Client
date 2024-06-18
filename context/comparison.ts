@@ -1,10 +1,95 @@
-import { createDomain, sample } from 'effector'
+import { createDomain, createEffect, sample } from 'effector'
+import toast from 'react-hot-toast'
 
-import { IAddProductToComparisonFx, IComparisonItem } from '@/types/comparison'
 import {
-  addProductToComparisonFx,
-  getComparisonItemsFx,
-} from '@/api/comparison'
+  IAddProductToComparisonFx,
+  IAddProductsFromLSToComparisonFx,
+  IComparisonItem,
+} from '@/types/comparison'
+import { axiosInstance } from '@/api/apiInstance'
+import { handleJWTError } from '@/lib/utils/errors'
+
+export const addProductToComparisonFx = createEffect(
+  async ({ jwt, setSpinner, ...restProps }: IAddProductToComparisonFx) => {
+    try {
+      setSpinner(true)
+
+      const { data } = await axiosInstance.post(
+        '/api/comparison/add',
+        restProps,
+        {
+          headers: { Authorization: `Bearer ${jwt}` },
+        }
+      )
+
+      if (data?.error) {
+        const newData: { newComparisonItem: IComparisonItem } =
+          await handleJWTError(data.error.name, {
+            repeatRequestMethodName: 'addProductToComparisonFx',
+            payload: { ...restProps, setSpinner },
+          })
+        return newData
+      }
+
+      toast.success('Товар добавлен к сравнению!')
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    } finally {
+      setSpinner(false)
+    }
+  }
+)
+
+export const getComparisonItemsFx = createEffect(
+  async ({ jwt }: { jwt: string }) => {
+    try {
+      const { data } = await axiosInstance.get('/api/comparison/all', {
+        headers: { Authorization: `Bearer ${jwt}` },
+      })
+
+      if (data?.error) {
+        const newData: IComparisonItem[] = await handleJWTError(
+          data.error.name,
+          {
+            repeatRequestMethodName: 'getComparisonItemsFx',
+          }
+        )
+        return newData
+      }
+
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    }
+  }
+)
+
+export const addProductsFromLSToComparisonFx = createEffect(
+  async ({ jwt, comparisonItems }: IAddProductsFromLSToComparisonFx) => {
+    try {
+      const { data } = await axiosInstance.post(
+        '/api/comparison/add-many',
+        { items: comparisonItems },
+        { headers: { Authorization: `Bearer ${jwt}` } }
+      )
+
+      if (data?.error) {
+        const newData: { comparisonItems: IComparisonItem[] } =
+          await handleJWTError(data.error.name, {
+            repeatRequestMethodName: 'addProductsFromLSToComparisonFx',
+            payload: { items: comparisonItems },
+          })
+        return newData
+      }
+
+      loadComparisonItems({ jwt })
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    }
+  }
+)
 
 const comparison = createDomain()
 
@@ -13,6 +98,8 @@ export const addProductToComparison =
   comparison.createEvent<IAddProductToComparisonFx>()
 
 export const setComparisonFromLS = comparison.createEvent<IComparisonItem[]>()
+export const addProductsFromLSToComparison =
+  comparison.createEvent<IAddProductsFromLSToComparisonFx>()
 
 export const setShouldShowEmptyPageComparison =
   comparison.createEvent<boolean>()
@@ -24,6 +111,7 @@ export const $comparison = comparison
     ...state,
     result.newComparisonItem,
   ])
+  .on(addProductsFromLSToComparisonFx.done, (_, { result }) => result.items)
 
 export const $comparisonFromLS = comparison
   .createStore<IComparisonItem[]>([])
@@ -45,4 +133,11 @@ sample({
   source: $comparison,
   fn: (_, data) => data,
   target: addProductToComparisonFx,
+})
+
+sample({
+  clock: addProductsFromLSToComparison,
+  source: $comparison,
+  fn: (_, data) => data,
+  target: addProductsFromLSToComparisonFx,
 })
