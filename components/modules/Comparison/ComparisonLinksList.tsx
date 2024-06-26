@@ -10,7 +10,7 @@ export const ComparisonLinksList = ({
   links,
   className,
 }: IComparisonLinksListProps) => (
-  <motion.ul {...basePropsForMotion} className={`list-reset ${className}`}>
+  <motion.ul className={`list-reset ${className}`} {...basePropsForMotion}>
     {links.map((link) => (
       <li key={link.title} className={`${link.isActive ? styles.active : ''}`}>
         <Link href={link.href}>

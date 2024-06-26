@@ -42,6 +42,7 @@
 }
 
 .skeleton__item__light {
+  animation-name: skeleton;
   height: 100%;
   animation-duration: 1.6s;
   background: linear-gradient(
@@ -50,7 +51,6 @@
     rgba(255, 255, 255, 0.06) 60.33%,
     #ffffff0c 84.84%
   );
-  animation-name: skeleton;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }

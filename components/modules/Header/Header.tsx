@@ -32,6 +32,8 @@ import {
 } from '@/context/favorites'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 import {
+  $comparison,
+  $comparisonFromLS,
   addProductsFromLSToComparison,
   setComparisonFromLS,
   setShouldShowEmptyPageComparison,
@@ -45,6 +47,7 @@ export const Header = () => {
   const loginCheckSpinner = useUnit(loginCheckFx.pending)
 
   const currentFavoritesByAuth = useGoodsByAuth($favorites, $favoritesFromLS)
+  const currentComparisonByAuth = useGoodsByAuth($comparison, $comparisonFromLS)
 
   const handleOpenMenu = () => {
     addOverflowHiddenToBody()
@@ -179,7 +182,11 @@ export const Header = () => {
             <Link
               href='/comparison'
               className='header__links__item__btn header__links__item__btn--compare'
-            />
+            >
+              {!!currentComparisonByAuth.length && (
+                <span className='not-empty' />
+              )}
+            </Link>
           </li>
           <li className='header__links__item'>
             <CartPopup />

@@ -4,7 +4,11 @@ import { ICartItem } from '@/types/cart'
 import { usePriceAction } from './usePriceAction'
 import { usePriceAnimation } from './usePriceAnimation'
 import { deleteProductFromLS, isUserAuth } from '@/lib/utils/common'
-import { deleteProductFromCart, setCartFromLS } from '@/context/cart'
+import {
+  deleteProductFromCart,
+  setCartFromLS,
+  setShouldShowEmptyPage,
+} from '@/context/cart'
 
 export const useCartItemAction = (cartItem: ICartItem) => {
   const [count, setCount] = useState(+cartItem.count)
@@ -39,7 +43,8 @@ export const useCartItemAction = (cartItem: ICartItem) => {
         cartItem.clientId,
         'rostelekomCart',
         'Товар удалён из корзины!',
-        setCartFromLS
+        setCartFromLS,
+        setShouldShowEmptyPage
       )
       return
     }
@@ -51,6 +56,7 @@ export const useCartItemAction = (cartItem: ICartItem) => {
       'rostelekomCart',
       '',
       setCartFromLS,
+      setShouldShowEmptyPage,
       false
     )
 

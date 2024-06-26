@@ -18,6 +18,8 @@ import { ICartItem } from '@/types/cart'
 
 import styles from '@/styles/quick-view-modal/index.module.scss'
 import productStyles from '@/styles/products-list-item/index.module.scss'
+import { useComparisonAction } from '@/hooks/useComparisonAction'
+import { useFavoritesActions } from '@/hooks/useFavoriteActions'
 
 export const QuickViewModal = () => {
   const {
@@ -38,6 +40,18 @@ export const QuickViewModal = () => {
 
   const { lang, translations } = useLang()
 
+  const {
+    isProductInComparison,
+    addToComparisonSpinner,
+    handleAddToComparison,
+  } = useComparisonAction(product)
+
+  const {
+    isProductInFavorites,
+    addToFavoritesSpinner,
+    handleAddProductToFavorites,
+  } = useFavoritesActions(product)
+
   const handleCloseModal = () => {
     removeOverflowHiddenFromBody()
     closeQuickViewModal()
@@ -54,13 +68,29 @@ export const QuickViewModal = () => {
       <div className={styles.modal__actions}>
         <ProductsItemActionBtn
           text={translations[lang].product.add_to_favorites}
-          iconClass='actions__btn_favorite'
+          iconClass={`${
+            addToFavoritesSpinner
+              ? 'actions__btn_spinner'
+              : isProductInFavorites
+                ? 'actions__btn_favorite_checked'
+                : 'actions__btn_favorite'
+          }`}
           withTooltip={false}
+          spinner={addToFavoritesSpinner}
+          callback={handleAddProductToFavorites}
         />
         <ProductsItemActionBtn
           text={translations[lang].product.add_to_comparison}
-          iconClass='actions__btn_comparison'
+          iconClass={`${
+            addToComparisonSpinner
+              ? 'actions__btn_spinner'
+              : isProductInComparison
+                ? 'actions__btn_comparison_checked'
+                : 'actions__btn_comparison'
+          }`}
           withTooltip={false}
+          spinner={addToComparisonSpinner}
+          callback={handleAddToComparison}
         />
       </div>
       <div className={styles.modal__left}>

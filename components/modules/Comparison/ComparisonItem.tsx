@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
@@ -12,14 +14,78 @@ import {
   setShouldShowEmptyPageComparison,
 } from '@/context/comparison'
 import { deleteProductFromLS, isUserAuth } from '@/lib/utils/common'
+import { productWithoutSizes } from '@/constants/product'
+import { addCartItemToLS } from '@/lib/utils/cart'
+import { IProduct } from '@/types/common'
+import { $cart, $cartFromLS, addProductToCart } from '@/context/cart'
+import { loadOneProduct } from '@/context/goods'
+import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 
 import styles from '@/styles/comparison/index.module.scss'
 
 export const ComparisonItem = ({ item }: { item: IComparisonItem }) => {
+  const [addToCartSpinner, setAddToCartSpinner] = useState(false)
+  const [loadProductSpinner, setLoadProductSpinner] = useState(false)
+
   const { deleteSpinner, handleDelete } = useProductDelete(
     item._id,
     deleteProductFromComparison
   )
+
+  const currentCartByAuth = useGoodsByAuth($cart, $cartFromLS)
+
+  const isProductInCart = useMemo(
+    () =>
+      productWithoutSizes.includes(item.characteristics.type)
+        ? currentCartByAuth.find(
+            (cartItem) => cartItem.productId === item.productId
+          )
+        : currentCartByAuth.find(
+            (cartItem) =>
+              cartItem.productId === item.productId &&
+              Object.entries(item.sizes)
+                .filter(([, value]) => value)
+                .map(([key]) => key)
+                .includes(cartItem.size)
+          ),
+    [currentCartByAuth, item.characteristics.type, item.productId, item.sizes]
+  )
+
+  const addToCartFromComparison = () => {
+    if (productWithoutSizes.includes(item.characteristics.type)) {
+      const product = {
+        ...item,
+        _id: item.productId,
+        images: [item.image],
+      } as unknown as IProduct
+
+      if (!isUserAuth()) {
+        addCartItemToLS(product, '', 1)
+        return
+      }
+
+      const auth = JSON.parse(localStorage.getItem('rostelekomAuth') as string)
+      const clientId = addCartItemToLS(product, '', 1, false)
+
+      addProductToCart({
+        jwt: auth.accessToken,
+        clientId,
+        productId: item.productId,
+        category: item.category,
+        count: 1,
+        size: '',
+        setSpinner: setAddToCartSpinner,
+      })
+      return
+    }
+
+    loadOneProduct({
+      productId: item.productId,
+      category: item.category,
+      withShowingSizeTable: true,
+      setSpinner: setLoadProductSpinner,
+    })
+  }
 
   const handleDeleteItemFromComparison = () => {
     if (!isUserAuth()) {
@@ -46,8 +112,8 @@ export const ComparisonItem = ({ item }: { item: IComparisonItem }) => {
 
   return (
     <motion.li
-      {...basePropsForMotion}
       className={`${styles.comparison__list__item}`}
+      {...basePropsForMotion}
     >
       <DeleteItemBtn
         btnDisabled={deleteSpinner}
@@ -55,9 +121,9 @@ export const ComparisonItem = ({ item }: { item: IComparisonItem }) => {
         className={styles.comparison__list__item__delete}
       />
       <AddToCartIcon
-        addToCartSpinner={false}
-        isProductInCart={false}
-        callback={() => ''}
+        addToCartSpinner={addToCartSpinner || loadProductSpinner}
+        isProductInCart={!!isProductInCart}
+        callback={addToCartFromComparison}
         className={styles.comparison__list__item__cart}
         addedClassName={styles.comparison__list__item__cart_added}
       />

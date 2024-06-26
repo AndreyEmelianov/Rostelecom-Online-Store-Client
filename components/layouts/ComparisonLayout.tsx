@@ -16,9 +16,9 @@ import {
   $shouldShowEmptyPageComparison,
 } from '@/context/comparison'
 import { useComparisonLinks } from '@/hooks/useComparisonLinks'
-import { Skeleton } from '../elements/Skeleton/Skeleton'
 import { ComparisonLinksList } from '../modules/Comparison/ComparisonLinksList'
 import { EmptyPageContent } from '../modules/EmptyPageContent/EmptyPageContent'
+import { Skeleton } from '../elements/Skeleton/Skeleton'
 
 import styles from '@/styles/comparison/index.module.scss'
 import skeletonComparisonStyles from '@/styles/comparison-skeleton/index.module.scss'

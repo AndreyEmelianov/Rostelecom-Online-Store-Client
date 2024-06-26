@@ -18,6 +18,7 @@ import { IProduct } from '@/types/common'
 import {
   deleteItemFromFavorites,
   setFavoriteItemsFromLS,
+  setShouldShowEmptyPageFavorites,
 } from '@/context/favorites'
 import { useProductDelete } from '@/hooks/useProductDelete'
 
@@ -82,7 +83,8 @@ export const FavoritesListItem = ({ item }: { item: IFavoriteItem }) => {
         item.clientId,
         'rostelekomFavorites',
         'Товар удалён из избранного!',
-        setFavoriteItemsFromLS
+        setFavoriteItemsFromLS,
+        setShouldShowEmptyPageFavorites
       )
       return
     }
@@ -93,6 +95,7 @@ export const FavoritesListItem = ({ item }: { item: IFavoriteItem }) => {
       'rostelekomFavorites',
       '',
       setFavoriteItemsFromLS,
+      setShouldShowEmptyPageFavorites,
       false
     )
   }
