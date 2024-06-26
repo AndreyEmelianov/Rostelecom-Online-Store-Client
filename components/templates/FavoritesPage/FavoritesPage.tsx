@@ -18,8 +18,8 @@ import { HeadingWithCount } from '@/components/elements/HeadingWithCount/Heading
 import { EmptyPageContent } from '@/components/modules/EmptyPageContent/EmptyPageContent'
 import { basePropsForMotion } from '@/constants/motion'
 import { FavoritesList } from '@/components/modules/FavoritesPage/FavoritesList'
-import { loginCheckFx } from '@/api/auth'
 import { isUserAuth } from '@/lib/utils/common'
+import { loginCheckFx } from '@/context/user'
 
 import styles from '@/styles/favorites/index.module.scss'
 import cartSkeletonStyles from '@/styles/cart-skeleton/index.module.scss'

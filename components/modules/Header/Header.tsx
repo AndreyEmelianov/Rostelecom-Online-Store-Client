@@ -17,7 +17,6 @@ import {
 import CartPopup from './CartPopup/CartPopup'
 import HeaderProfile from './HeaderProfile'
 import { $isAuth } from '@/context/auth'
-import { loginCheckFx } from '@/api/auth'
 import {
   addProductsFromLSToCart,
   setCartFromLS,
@@ -37,6 +36,7 @@ import {
   setComparisonFromLS,
   setShouldShowEmptyPageComparison,
 } from '@/context/comparison'
+import { loginCheckFx } from '@/context/user'
 
 export const Header = () => {
   const { translations, lang } = useLang()

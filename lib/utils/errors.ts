@@ -1,11 +1,11 @@
 /* eslint-disable indent */
-import { loginCheckFx, refreshTokenFx } from '@/api/auth'
 import {
   addProductToCartFx,
   deleteCartItemFx,
   getCartItemsFx,
 } from '@/api/cart'
 import { JWTError } from '@/constants/jwt'
+import { refreshTokenFx } from '@/context/auth'
 import { addProductsFromLSToCartFx } from '@/context/cart'
 import {
   getComparisonItemsFx,
@@ -18,6 +18,7 @@ import {
   deleteFavoriteItemFx,
   getFavoriteItemsFx,
 } from '@/context/favorites'
+import { loginCheckFx } from '@/context/user'
 import {
   IAddProductToCartFx,
   IAddProductsFromLSToCartFx,

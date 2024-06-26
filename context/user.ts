@@ -1,7 +1,31 @@
-import { createDomain, sample } from 'effector'
+import { createDomain, createEffect, sample } from 'effector'
+import toast from 'react-hot-toast'
 
 import { IUser } from '@/types/user'
-import { loginCheckFx } from '@/api/auth'
+import { axiosInstance } from '@/api/apiInstance'
+import { handleJWTError } from '@/lib/utils/errors'
+import { setIsAuth } from './auth'
+
+export const loginCheckFx = createEffect(async ({ jwt }: { jwt: string }) => {
+  try {
+    const { data } = await axiosInstance.get('/api/users/login-check', {
+      headers: { Authorization: `Bearer ${jwt}` },
+    })
+
+    if (data?.error) {
+      handleJWTError(data.error.name, {
+        repeatRequestMethodName: 'loginCheckFx',
+      })
+      return
+    }
+
+    setIsAuth(true)
+
+    return data.user
+  } catch (error) {
+    toast.error((error as Error).message)
+  }
+})
 
 const user = createDomain()
 

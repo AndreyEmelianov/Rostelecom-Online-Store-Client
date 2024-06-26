@@ -36,3 +36,10 @@ export interface IAddToCartIconProps {
   addedClassName: string
   callback: VoidFunction
 }
+
+export interface ISkeletonProps {
+  styles: {
+    readonly [key: string]: string
+  }
+  count?: number
+}
