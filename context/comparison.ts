@@ -5,6 +5,7 @@ import {
   IAddProductToComparisonFx,
   IAddProductsFromLSToComparisonFx,
   IComparisonItem,
+  IDeleteComparisonItemsFx,
 } from '@/types/comparison'
 import { axiosInstance } from '@/api/apiInstance'
 import { handleJWTError } from '@/lib/utils/errors'
@@ -91,6 +92,38 @@ export const addProductsFromLSToComparisonFx = createEffect(
   }
 )
 
+export const deleteComparisonItemsFx = createEffect(
+  async ({ jwt, id, setSpinner }: IDeleteComparisonItemsFx) => {
+    try {
+      setSpinner(true)
+
+      const { data } = await axiosInstance.delete(
+        `/api/comparison/delete?id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
+
+      if (data?.error) {
+        const newData: { id: string } = await handleJWTError(data.error.name, {
+          repeatRequestMethodName: 'deleteComparisonItemsFx',
+          payload: { id, setSpinner },
+        })
+
+        return newData
+      }
+      toast.success('Товар удалён из сравнения!')
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    } finally {
+      setSpinner(false)
+    }
+  }
+)
+
 const comparison = createDomain()
 
 export const loadComparisonItems = comparison.createEvent<{ jwt: string }>()
@@ -100,6 +133,9 @@ export const addProductToComparison =
 export const setComparisonFromLS = comparison.createEvent<IComparisonItem[]>()
 export const addProductsFromLSToComparison =
   comparison.createEvent<IAddProductsFromLSToComparisonFx>()
+
+export const deleteProductFromComparison =
+  comparison.createEvent<IDeleteComparisonItemsFx>()
 
 export const setShouldShowEmptyPageComparison =
   comparison.createEvent<boolean>()
@@ -112,6 +148,9 @@ export const $comparison = comparison
     result.newComparisonItem,
   ])
   .on(addProductsFromLSToComparisonFx.done, (_, { result }) => result.items)
+  .on(deleteComparisonItemsFx.done, (state, { result }) =>
+    state.filter((item) => item._id !== result.id)
+  )
 
 export const $comparisonFromLS = comparison
   .createStore<IComparisonItem[]>([])
@@ -140,4 +179,11 @@ sample({
   source: $comparison,
   fn: (_, data) => data,
   target: addProductsFromLSToComparisonFx,
+})
+
+sample({
+  clock: deleteProductFromComparison,
+  source: $comparison,
+  fn: (_, data) => data,
+  target: deleteComparisonItemsFx,
 })

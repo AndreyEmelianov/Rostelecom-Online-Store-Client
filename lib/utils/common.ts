@@ -150,6 +150,7 @@ export const deleteProductFromLS = <T>(
   key: string,
   message: string,
   event: EventCallable<T>,
+  setShouldShowEmpty: (arg0: boolean) => void,
   withToast = true
 ) => {
   let items = JSON.parse(localStorage.getItem(key) as string)
@@ -167,6 +168,7 @@ export const deleteProductFromLS = <T>(
   withToast && toast.success(message)
 
   if (!updatedItems.length) {
+    setShouldShowEmpty(true)
     setShouldShowEmptyPage(true)
     setShouldShowEmptyPageFavorites(true)
   }

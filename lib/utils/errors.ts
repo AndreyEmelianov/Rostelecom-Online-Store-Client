@@ -11,6 +11,7 @@ import {
   getComparisonItemsFx,
   addProductToComparisonFx,
   addProductsFromLSToComparisonFx,
+  deleteComparisonItemsFx,
 } from '@/context/comparison'
 import {
   addProductToFavoriteFx,
@@ -27,6 +28,7 @@ import {
 import {
   IAddProductToComparisonFx,
   IAddProductsFromLSToComparisonFx,
+  IDeleteComparisonItemsFx,
 } from '@/types/comparison'
 import {
   IAddProductsFromLSToFavoritesFx,
@@ -115,6 +117,12 @@ export const handleJWTError = async (
         case 'addProductsFromLSToComparisonFx':
           return addProductsFromLSToComparisonFx({
             ...(payload as IAddProductsFromLSToComparisonFx),
+            jwt: newTokens.accessToken,
+          })
+
+        case 'deleteComparisonItemsFx':
+          return deleteComparisonItemsFx({
+            ...(payload as IDeleteComparisonItemsFx),
             jwt: newTokens.accessToken,
           })
       }
