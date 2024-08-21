@@ -1,8 +1,6 @@
 import { useLang } from '@/hooks/useLang'
 import { IProductSubtitleProps } from '@/types/elements'
 
-import styles from '@/styles/productSubtitle/index.module.scss'
-
 export const ProductSubtitle = ({
   subtitleClassName,
   subtitleRectClassName,
@@ -11,12 +9,8 @@ export const ProductSubtitle = ({
   const descriptionSlicePosition = lang === 'ru' ? 5 : 2
 
   return (
-    <div
-      className={`${styles.product_subtitle__subtitle} ${subtitleClassName}`}
-    >
-      <div
-        className={`${styles.product_subtitle__subtitle__rect} ${subtitleRectClassName}`}
-      />
+    <div className={`${subtitleClassName}`}>
+      <div className={`${subtitleRectClassName}`} />
       <span>
         {translations[lang].main_page.hero_description.slice(
           0,

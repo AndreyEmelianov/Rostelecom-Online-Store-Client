@@ -201,8 +201,7 @@ export const updateSearchParams = (
   value: string | number,
   pathname: string
 ) => {
-  const paramsString = window.location.search
-  const urlParams = new URLSearchParams(paramsString)
+  const urlParams = getSearchParamsUrl()
 
   urlParams.set(key, `${value}`)
   const newPath = `${pathname}?${urlParams.toString()}`

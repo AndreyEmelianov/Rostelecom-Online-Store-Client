@@ -322,3 +322,16 @@ body::-webkit-scrollbar-thumb:hover {
     left: 195px;
   }
 }
+
+.catalog-pagination-prev.disabled,
+.catalog-pagination-next.disabled {
+  display: none;
+}
+
+.catalog-pagination-item.selected {
+  background-color: var(--primary-purple-night);
+}
+
+.catalog-pagination-item:hover.selected a {
+  background-color: var(--primary-purple-night);
+}

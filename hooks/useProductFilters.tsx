@@ -63,6 +63,23 @@ export const useProductFilters = (
     setCurrentPage(+(searchParams.offset || 0))
   }, [])
 
+  const handlePageChange = ({ selected }: { selected: number }) => {
+    const urlParams = getSearchParamsUrl()
+
+    urlParams.delete('offset')
+
+    loadProductsByFilter({
+      limit: 12 * selected + 12,
+      offset: selected * 12,
+      category,
+      additionalParam: urlParams.toString(),
+      isCatalog,
+    })
+
+    updateSearchParams('offset', selected, pathname)
+    setCurrentPage(selected)
+  }
+
   const paginationProps = {
     containerClassName: `list-reset ${styles.catalog__bottom__list}`,
     pageClassName: `catalog-pagination-item ${styles.catalog__bottom__list__item}`,
@@ -81,5 +98,6 @@ export const useProductFilters = (
     products,
     pagesCount,
     productsSpinner,
+    handlePageChange,
   }
 }

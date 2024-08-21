@@ -15,11 +15,12 @@ import { ProductCounter } from '../ProductsListItem/ProductCounter'
 import { AddToCartBtn } from '../ProductsListItem/AddToCartBtn'
 import { ProductsItemActionBtn } from '@/components/elements/ProductsItemActionBtn/ProductsItemActionBtn'
 import { ICartItem } from '@/types/cart'
+import { useComparisonAction } from '@/hooks/useComparisonAction'
+import { useFavoritesActions } from '@/hooks/useFavoriteActions'
+import { setIsAddToFavorites } from '@/context/favorites'
 
 import styles from '@/styles/quick-view-modal/index.module.scss'
 import productStyles from '@/styles/products-list-item/index.module.scss'
-import { useComparisonAction } from '@/hooks/useComparisonAction'
-import { useFavoritesActions } from '@/hooks/useFavoriteActions'
 
 export const QuickViewModal = () => {
   const {
@@ -57,7 +58,10 @@ export const QuickViewModal = () => {
     closeQuickViewModal()
   }
 
-  const addToCart = () => handleAddToCart(count)
+  const addToCart = () => {
+    setIsAddToFavorites(false)
+    handleAddToCart(count)
+  }
 
   return (
     <div className={`${styles.modal}`}>

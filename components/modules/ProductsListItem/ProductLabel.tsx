@@ -15,7 +15,10 @@ export const ProductLabel = ({ isNew, isBestseller }: IProductLabelProps) => {
   )
 
   const newLabel = (
-    <span className={`${styles.list__item__label} ${styles.list__item__new}`}>
+    <span
+      className={`${styles.list__item__label} ${styles.list__item__new}`}
+      style={{ left: isNew && isBestseller ? (lang === 'ru' ? 60 : 100) : 16 }}
+    >
       {translations[lang].main_page.is_new}
     </span>
   )
