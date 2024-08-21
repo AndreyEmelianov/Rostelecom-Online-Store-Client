@@ -5,7 +5,11 @@ import toast from 'react-hot-toast'
 
 import { getBestsellerProductsFx, getNewProductsFx } from '@/api/main-page'
 import { IProduct } from '@/types/common'
-import { ILoadOneProductFx } from '@/types/goods'
+import {
+  ILoadOneProductFx,
+  ILoadProductsByFilterFx,
+  IProducts,
+} from '@/types/goods'
 import { axiosInstance } from '@/api/apiInstance'
 import { handleShowSizeTable } from '@/lib/utils/common'
 
@@ -40,12 +44,34 @@ export const loadOneProductFx = createEffect(
   }
 )
 
+export const loadProductsByFilterFx = createEffect(
+  async ({
+    limit,
+    offset,
+    category,
+    additionalParam,
+    isCatalog,
+  }: ILoadProductsByFilterFx) => {
+    try {
+      const { data } = await axiosInstance.get(
+        `/api/goods/filter?limit=${limit}&offset=${offset}&category=${category}
+        &${additionalParam}${isCatalog ? '&catalog=true' : ''}`
+      )
+
+      return data
+    } catch (error) {
+      toast.error((error as Error).message)
+    }
+  }
+)
+
 const goods = createDomain()
 
 export const MainPageGate = createGate()
 
 export const setCurrentProduct = goods.createEvent<IProduct>()
 export const loadOneProduct = goods.createEvent<ILoadOneProductFx>()
+export const loadProductsByFilter = goods.createEvent<ILoadProductsByFilterFx>()
 
 const goodsStoreInstance = (effect: Effect<void, [], Error>) =>
   goods
@@ -75,9 +101,20 @@ export const $currentProduct = goods
   .on(setCurrentProduct, (_, product) => product)
   .on(loadOneProductFx.done, (_, { result }) => result.productItem)
 
+export const $products = goods
+  .createStore<IProducts>({} as IProducts)
+  .on(loadProductsByFilterFx.done, (_, { result }) => result)
+
 sample({
   clock: loadOneProduct,
   source: $currentProduct,
   fn: (_, data) => data,
   target: loadOneProductFx,
+})
+
+sample({
+  clock: loadProductsByFilter,
+  source: $products,
+  fn: (_, data) => data,
+  target: loadProductsByFilterFx,
 })
