@@ -19,3 +19,5 @@ export const productTypes = [
   't-shirts',
   'umbrella',
 ]
+
+export const productCategories = ['cloth', 'accessories', 'office', 'souvenirs']
