@@ -1,13 +1,8 @@
-import {
-  ForwardRefExoticComponent,
-  MutableRefObject,
-  RefAttributes,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+'use client'
+import { ForwardRefExoticComponent, RefAttributes } from 'react'
 
 import { IWrappedComponentProps } from '@/types/hocs'
+import { useClickOutside } from '@/hooks/useClickOutside'
 
 export const withClickOutside = (
   WrappedComponent: ForwardRefExoticComponent<
@@ -15,20 +10,7 @@ export const withClickOutside = (
   >
 ) => {
   const Component = () => {
-    const [open, setOpen] = useState(false)
-    const ref = useRef() as MutableRefObject<HTMLDivElement>
-
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (!ref.current.contains(event.target as HTMLDivElement)) {
-          setOpen(false)
-        }
-      }
-
-      document.addEventListener('mousedown', handleClickOutside)
-
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [ref])
+    const { open, ref, setOpen } = useClickOutside()
 
     return <WrappedComponent open={open} setOpen={setOpen} ref={ref} />
   }
