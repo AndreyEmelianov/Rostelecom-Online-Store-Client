@@ -11,18 +11,23 @@ import { ProductsListItem } from '@/components/modules/ProductsListItem/Products
 import { useLang } from '@/hooks/useLang'
 import { HeadingWithCount } from '@/components/elements/HeadingWithCount/HeadingWithCount'
 import { setCatalogCategoryOptions } from '@/context/catalog'
+import { CatalogFilters } from '@/components/modules/CatalogFilters/CatalogFilters'
 
 import styles from '@/styles/catalog/index.module.scss'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'
-import { CatalogFilters } from '@/components/modules/CatalogFilters/CatalogFilters'
 
 export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
   const isCatalogPage = pageName === 'catalog'
 
   const { lang, translations } = useLang()
 
-  const { products, productsSpinner, paginationProps, handlePageChange } =
-    useProductFilters(searchParams, pageName, isCatalogPage)
+  const {
+    products,
+    productsSpinner,
+    paginationProps,
+    handlePageChange,
+    handleApplyFiltersWithCategory,
+  } = useProductFilters(searchParams, pageName, isCatalogPage)
 
   useEffect(() => {
     switch (pageName) {
@@ -59,22 +64,23 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
             {
               id: 1,
               title: translations[lang].comparison['t-shirts'],
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('t-shirts'),
             },
             {
               id: 2,
               title: translations[lang].comparison['long-sleeves'],
-              filterHandler: () => '',
+              filterHandler: () =>
+                handleApplyFiltersWithCategory('long-sleeves'),
             },
             {
               id: 3,
               title: translations[lang].comparison.hoodie,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('hoodie'),
             },
             {
               id: 4,
               title: translations[lang].comparison.outerwear,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('outerwear'),
             },
           ],
         })
@@ -86,17 +92,17 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
             {
               id: 1,
               title: translations[lang].comparison.bags,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('bags'),
             },
             {
               id: 2,
               title: translations[lang].comparison.headdress,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('headdress'),
             },
             {
               id: 3,
               title: translations[lang].comparison.umbrella,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('umbrella'),
             },
           ],
         })
@@ -108,12 +114,12 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
             {
               id: 1,
               title: translations[lang].comparison.pen,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('pen'),
             },
             {
               id: 2,
               title: translations[lang].comparison.notebook,
-              filterHandler: () => '',
+              filterHandler: () => handleApplyFiltersWithCategory('notebook'),
             },
           ],
         })
@@ -125,12 +131,14 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
             {
               id: 1,
               title: translations[lang].comparison['business-souvenirs'],
-              filterHandler: () => '',
+              filterHandler: () =>
+                handleApplyFiltersWithCategory('business-souvenirs'),
             },
             {
               id: 2,
               title: translations[lang].comparison['promotional-souvenirs'],
-              filterHandler: () => '',
+              filterHandler: () =>
+                handleApplyFiltersWithCategory('promotional-souvenirs'),
             },
           ],
         })
@@ -139,7 +147,7 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
       default:
         break
     }
-  }, [])
+  }, [lang])
 
   return (
     <>

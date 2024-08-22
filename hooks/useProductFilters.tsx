@@ -80,6 +80,11 @@ export const useProductFilters = (
     setCurrentPage(selected)
   }
 
+  const handleApplyFiltersWithCategory = (categoryType: string) => {
+    updateSearchParams('type', categoryType, pathname)
+    handlePageChange({ selected: 0 })
+  }
+
   const paginationProps = {
     containerClassName: `list-reset ${styles.catalog__bottom__list}`,
     pageClassName: `catalog-pagination-item ${styles.catalog__bottom__list__item}`,
@@ -99,5 +104,6 @@ export const useProductFilters = (
     pagesCount,
     productsSpinner,
     handlePageChange,
+    handleApplyFiltersWithCategory,
   }
 }

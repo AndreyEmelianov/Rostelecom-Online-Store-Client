@@ -32,3 +32,10 @@ export interface ICategoryFiltersListProps {
   handleSelectAllCategories: VoidFunction
   mobileClassName?: string
 }
+
+export interface ISelectItemProps {
+  item: ICategoryOption
+  isActive: boolean
+  setOption: (arg0: string) => void
+  mobileClassName?: string
+}

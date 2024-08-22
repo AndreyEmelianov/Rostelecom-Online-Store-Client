@@ -3,6 +3,7 @@ import Link from 'next/link'
 
 import { basePropsForMotion } from '@/constants/motion'
 import { ICategoryFiltersListProps } from '@/types/catalog'
+import { SelectItem } from './SelectItem'
 
 import styles from '@/styles/catalog/index.module.scss'
 
@@ -12,6 +13,7 @@ export const CategoryFiltersList = ({
   allCategoriesTitle,
   catalogCategoryOptions,
   mobileClassName,
+  setOption,
   handleSelectAllCategories,
 }: ICategoryFiltersListProps) => (
   <motion.ul
@@ -20,7 +22,15 @@ export const CategoryFiltersList = ({
   >
     {currentOptions &&
       Object.keys(catalogCategoryOptions)[0] !== 'rootCategoryOptions' &&
-      currentOptions.map((option) => <li key={option.id}>{option.title}</li>)}
+      currentOptions.map((currentOption) => (
+        <SelectItem
+          key={currentOption.id}
+          item={currentOption}
+          isActive={option === currentOption.title}
+          setOption={setOption}
+          mobileClassName={mobileClassName}
+        />
+      ))}
     {catalogCategoryOptions.rootCategoryOptions && (
       <>
         <li

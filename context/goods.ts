@@ -54,8 +54,9 @@ export const loadProductsByFilterFx = createEffect(
   }: ILoadProductsByFilterFx) => {
     try {
       const { data } = await axiosInstance.get(
-        `/api/goods/filter?limit=${limit}&offset=${offset}&category=${category}
-        &${additionalParam}${isCatalog ? '&catalog=true' : ''}`
+        `/api/goods/filter?limit=${limit}&offset=${offset}&category=${category}&${additionalParam}${
+          isCatalog ? '&catalog=true' : ''
+        }`
       )
 
       return data
