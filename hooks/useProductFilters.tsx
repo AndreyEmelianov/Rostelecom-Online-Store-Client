@@ -85,6 +85,12 @@ export const useProductFilters = (
     handlePageChange({ selected: 0 })
   }
 
+  const handleApplyFiltersWithPrice = (priceFrom: string, priceTo: string) => {
+    updateSearchParams('priceFrom', priceFrom, pathname)
+    updateSearchParams('priceTo', priceTo, pathname)
+    handlePageChange({ selected: 0 })
+  }
+
   const paginationProps = {
     containerClassName: `list-reset ${styles.catalog__bottom__list}`,
     pageClassName: `catalog-pagination-item ${styles.catalog__bottom__list__item}`,
@@ -105,5 +111,6 @@ export const useProductFilters = (
     productsSpinner,
     handlePageChange,
     handleApplyFiltersWithCategory,
+    handleApplyFiltersWithPrice,
   }
 }

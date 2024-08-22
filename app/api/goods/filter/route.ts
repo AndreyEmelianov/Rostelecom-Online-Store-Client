@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { clientPromise } from '@/lib/mongodb'
 import { getDbAndReqBody } from '@/lib/utils/api-routes'
+import { checkPriceParam } from '@/lib/utils/common'
 
 export async function GET(req: Request) {
   try {
@@ -14,9 +15,19 @@ export async function GET(req: Request) {
     const isCatalogParam = url.searchParams.get('catalog')
     const typeParam = url.searchParams.get('type')
     const categoryParam = url.searchParams.get('category')
+    const priceFromParam = url.searchParams.get('priceFrom')
+    const priceToParam = url.searchParams.get('priceTo')
+    const isFullPriceRangeValid =
+      priceFromParam &&
+      priceToParam &&
+      checkPriceParam(+priceFromParam) &&
+      checkPriceParam(+priceToParam)
 
     const filter = {
       ...(typeParam && { type: typeParam }),
+      ...(isFullPriceRangeValid && {
+        price: { $gt: +priceFromParam, $lt: +priceToParam },
+      }),
     }
 
     if (isCatalogParam) {

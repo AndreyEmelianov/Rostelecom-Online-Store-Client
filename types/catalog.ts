@@ -39,3 +39,15 @@ export interface ISelectItemProps {
   setOption: (arg0: string) => void
   mobileClassName?: string
 }
+
+export interface ISelectBtnProps {
+  open: boolean
+  dynamicText: string
+  defaultText: string
+  toggleOpen: VoidFunction
+  bgClassName?: string
+}
+
+export interface ICatalogFiltersProps {
+  handleApplyFiltersWithPrice: (arg0: string, arg1: string) => void
+}
