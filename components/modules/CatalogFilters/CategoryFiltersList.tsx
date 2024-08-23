@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { basePropsForMotion } from '@/constants/motion'
 import { ICategoryFiltersListProps } from '@/types/catalog'
 import { SelectItem } from './SelectItem'
+import { getSearchParamsUrl } from '@/lib/utils/common'
 
 import styles from '@/styles/catalog/index.module.scss'
 
@@ -50,7 +51,7 @@ export const CategoryFiltersList = ({
             className={`${styles.catalog__filters__list__item} ${mobileClassName}`}
           >
             <Link
-              href={rootOption.href}
+              href={`${rootOption.href}?${getSearchParamsUrl().toString()}`}
               className={styles.catalog__filters__list__item__btn}
             >
               {rootOption.title}

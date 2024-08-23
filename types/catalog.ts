@@ -50,4 +50,22 @@ export interface ISelectBtnProps {
 
 export interface ICatalogFiltersProps {
   handleApplyFiltersWithPrice: (arg0: string, arg1: string) => void
+  handleApplyFiltersWithSizes: (arg0: string[]) => void
+}
+
+export interface ISizeOption {
+  id: number
+  size: string
+  checked: boolean
+}
+
+export interface ICheckboxSelectItemProps {
+  item: {
+    id: number
+    checked: boolean
+    size?: string
+    colorText?: string
+  }
+  callback: (arg0: number) => void
+  mobileClassName?: string
 }

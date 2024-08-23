@@ -28,6 +28,7 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
     handlePageChange,
     handleApplyFiltersWithCategory,
     handleApplyFiltersWithPrice,
+    handleApplyFiltersWithSizes,
   } = useProductFilters(searchParams, pageName, isCatalogPage)
 
   useEffect(() => {
@@ -165,6 +166,7 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
       />
       <CatalogFilters
         handleApplyFiltersWithPrice={handleApplyFiltersWithPrice}
+        handleApplyFiltersWithSizes={handleApplyFiltersWithSizes}
       />
       {productsSpinner && (
         <motion.ul

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { clientPromise } from '@/lib/mongodb'
 import { getDbAndReqBody } from '@/lib/utils/api-routes'
-import { checkPriceParam } from '@/lib/utils/common'
+import { checkPriceParam, getCheckedSizesParam } from '@/lib/utils/common'
 
 export async function GET(req: Request) {
   try {
@@ -22,11 +22,18 @@ export async function GET(req: Request) {
       priceToParam &&
       checkPriceParam(+priceFromParam) &&
       checkPriceParam(+priceToParam)
+    const sizesParam = url.searchParams.get('sizes')
+    const sizesArray = getCheckedSizesParam(sizesParam as string)
 
     const filter = {
       ...(typeParam && { type: typeParam }),
       ...(isFullPriceRangeValid && {
         price: { $gt: +priceFromParam, $lt: +priceToParam },
+      }),
+      ...(sizesArray && {
+        $and: (sizesArray as string[]).map((size) => ({
+          [`sizes.${size.toLowerCase()}`]: true,
+        })),
       }),
     }
 
