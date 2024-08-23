@@ -9,7 +9,7 @@ import {
   updateSizesOptionBySize,
 } from '@/context/catalog'
 import { useLang } from './useLang'
-import { getCheckedSizesParam, getSearchParamsUrl } from '@/lib/utils/common'
+import { getCheckedArrayParam, getSearchParamsUrl } from '@/lib/utils/common'
 
 export const useSizeFilter = (
   handleApplyFiltersWithSizes: (arg0: string[]) => void
@@ -50,13 +50,19 @@ export const useSizeFilter = (
     const sizesParam = urlParams.get('sizes')
 
     if (sizesParam) {
-      const validSizes = getCheckedSizesParam(sizesParam)
+      const validSizes = getCheckedArrayParam(sizesParam)
 
       if (validSizes) {
         applySizes(validSizes)
         validSizes.forEach((size) => updateSizesOptionBySize(size))
       }
+
+      return
     }
+    setSizes([])
+    setSizesOptions(
+      sizesOptions.map((option) => ({ ...option, checked: false }))
+    )
   }, [lang])
 
   return {

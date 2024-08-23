@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { clientPromise } from '@/lib/mongodb'
 import { getDbAndReqBody } from '@/lib/utils/api-routes'
-import { checkPriceParam, getCheckedSizesParam } from '@/lib/utils/common'
+import { checkPriceParam, getCheckedArrayParam } from '@/lib/utils/common'
 
 export async function GET(req: Request) {
   try {
@@ -23,7 +23,9 @@ export async function GET(req: Request) {
       checkPriceParam(+priceFromParam) &&
       checkPriceParam(+priceToParam)
     const sizesParam = url.searchParams.get('sizes')
-    const sizesArray = getCheckedSizesParam(sizesParam as string)
+    const sizesArray = getCheckedArrayParam(sizesParam as string)
+    const colorsParam = url.searchParams.get('colors')
+    const colorsArray = getCheckedArrayParam(colorsParam as string)
 
     const filter = {
       ...(typeParam && { type: typeParam }),
@@ -33,6 +35,11 @@ export async function GET(req: Request) {
       ...(sizesArray && {
         $and: (sizesArray as string[]).map((size) => ({
           [`sizes.${size.toLowerCase()}`]: true,
+        })),
+      }),
+      ...(colorsArray && {
+        $or: (colorsArray as string[]).map((color) => ({
+          ['characteristics.color']: color.toLowerCase(),
         })),
       }),
     }

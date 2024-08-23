@@ -1,6 +1,10 @@
 import { createDomain } from 'effector'
 
-import { ICatalogCategoryOptions, ISizeOption } from '@/types/catalog'
+import {
+  ICatalogCategoryOptions,
+  IColorOption,
+  ISizeOption,
+} from '@/types/catalog'
 
 const catalog = createDomain()
 
@@ -10,6 +14,10 @@ export const setCatalogCategoryOptions =
 export const setSizesOptions = catalog.createEvent<ISizeOption[]>()
 export const updateSizesOptionBySize = catalog.createEvent<string>()
 export const setSizes = catalog.createEvent<string[]>()
+
+export const setColorsOptions = catalog.createEvent<IColorOption[]>()
+export const updateColorsOptionByCode = catalog.createEvent<string>()
+export const setColors = catalog.createEvent<string[]>()
 
 export const $catalogCategoryOptions = catalog
   .createStore<ICatalogCategoryOptions>({})
@@ -33,3 +41,22 @@ export const $sizesOptions = catalog
 export const $sizes = catalog
   .createStore<string[]>([])
   .on(setSizes, (_, sizes) => sizes)
+
+export const $colorsOptions = catalog
+  .createStore<IColorOption[]>([
+    { id: 1, colorCode: 'purpure', colorText: '', checked: false },
+    { id: 2, colorCode: 'yellow', colorText: '', checked: false },
+    { id: 3, colorCode: 'orange', colorText: '', checked: false },
+    { id: 4, colorCode: 'black', colorText: '', checked: false },
+    { id: 5, colorCode: 'white', colorText: '', checked: false },
+  ])
+  .on(setColorsOptions, (_, options) => options)
+  .on(updateColorsOptionByCode, (state, color) =>
+    state.map((item) =>
+      item.colorCode === color ? { ...item, checked: true } : item
+    )
+  )
+
+export const $colors = catalog
+  .createStore<string[]>([])
+  .on(setColors, (_, colors) => colors)

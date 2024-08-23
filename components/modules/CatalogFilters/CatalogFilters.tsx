@@ -2,12 +2,14 @@ import { ICatalogFiltersProps } from '@/types/catalog'
 import { CategorySelect } from './CategorySelect'
 import { PriceSelect } from './PriceSelect'
 import { SizesSelect } from './SizesSelect'
+import { ColorsSelect } from './ColorsSelect'
 
 import styles from '@/styles/catalog/index.module.scss'
 
 export const CatalogFilters = ({
   handleApplyFiltersWithPrice,
   handleApplyFiltersWithSizes,
+  handleApplyFiltersWithColors,
 }: ICatalogFiltersProps) => (
   <div className={styles.catalog__filters}>
     <div className={styles.catalog__filters__top}>
@@ -18,6 +20,9 @@ export const CatalogFilters = ({
         />
         <SizesSelect
           handleApplyFiltersWithSizes={handleApplyFiltersWithSizes}
+        />
+        <ColorsSelect
+          handleApplyFiltersWithColors={handleApplyFiltersWithColors}
         />
       </div>
       <div className={styles.catalog__filters__top__right}>{}</div>

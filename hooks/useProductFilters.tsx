@@ -100,6 +100,15 @@ export const useProductFilters = (
     handlePageChange({ selected: 0 })
   }
 
+  const handleApplyFiltersWithColors = (colors: string[]) => {
+    updateSearchParams(
+      'colors',
+      encodeURIComponent(JSON.stringify(colors)),
+      pathname
+    )
+    handlePageChange({ selected: 0 })
+  }
+
   const paginationProps = {
     containerClassName: `list-reset ${styles.catalog__bottom__list}`,
     pageClassName: `catalog-pagination-item ${styles.catalog__bottom__list__item}`,
@@ -122,5 +131,6 @@ export const useProductFilters = (
     handleApplyFiltersWithCategory,
     handleApplyFiltersWithPrice,
     handleApplyFiltersWithSizes,
+    handleApplyFiltersWithColors,
   }
 }
