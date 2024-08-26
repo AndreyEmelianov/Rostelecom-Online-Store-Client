@@ -31,6 +31,29 @@
           margin-right: 0;
         }
       }
+
+      &__filter_btn {
+        position: relative;
+        width: 48px;
+        height: 48px;
+        padding: 12px;
+        border-radius: 50%;
+        background-color: #333a47;
+
+        &::before {
+          background-color: #e8e9ea;
+          content: '';
+          right: 0;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          position: absolute;
+          -webkit-mask: url(/img/filters.svg) no-repeat 50% 50%;
+          mask: url(/img/filters.svg) no-repeat 50% 50%;
+          transition: background-color 0.2s ease-in-out;
+          background-position: center center;
+        }
+      }
     }
 
     &__select {
@@ -258,6 +281,64 @@
           &:disabled {
             opacity: 0.5;
             pointer-events: none;
+          }
+        }
+      }
+    }
+
+    &__bottom {
+      &__list {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        &__item {
+          position: relative;
+          padding: 6px 12px;
+          border-radius: 24px;
+          background-color: var(--transparent-10);
+          padding-right: 25px;
+          border: 1px solid transparent;
+          transition: border-color 0.2s ease-in-out;
+          margin-bottom: 40px;
+
+          @media (max-width: 610px) {
+            margin-bottom: 24px;
+          }
+
+          &:hover {
+            border-color: var(--primary-purple-night);
+            transition: border-color 0.2s ease-in-out;
+          }
+
+          &:not(:last-child) {
+            margin-right: 12px;
+          }
+
+          &__text {
+            color: var(--transparent-90);
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 8px;
+          }
+
+          &__close {
+            background-color: #fff;
+            opacity: 0.4;
+            content: '';
+            position: absolute;
+            height: 14px;
+            width: 14px;
+            right: 12px;
+            top: 8px;
+            -webkit-mask: url(/img/close-small.svg) no-repeat 50% 50%;
+            mask: url(/img/close-small.svg) no-repeat 50% 50%;
+            transition: opacity 0.2s ease-in-out;
+
+            &:hover {
+              opacity: 1;
+              transition: opacity 0.2s ease-in-out;
+            }
           }
         }
       }

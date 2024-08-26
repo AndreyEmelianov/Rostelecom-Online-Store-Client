@@ -78,3 +78,9 @@ export interface IColorOption {
   colorCode: string
   checked: boolean
 }
+
+export interface ISelectInfoItemProps {
+  id: number
+  text: string
+  handleRemoveItem: (arg0: number) => void
+}
