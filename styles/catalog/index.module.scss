@@ -84,12 +84,17 @@
         transform: rotate(-180deg);
       }
 
-      &.bg_category {
+      &.bg_category,
+      &.bg_sort {
         padding-left: 45px;
       }
 
       &.bg_category {
         background-image: url('/img/category-filter.svg');
+      }
+
+      &.bg_sort {
+        background-image: url('/img/sort.svg');
       }
 
       &__inner {

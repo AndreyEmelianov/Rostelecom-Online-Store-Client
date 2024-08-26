@@ -21,3 +21,7 @@ export const productTypes = [
 ]
 
 export const productCategories = ['cloth', 'accessories', 'office', 'souvenirs']
+
+export const allowedColors = ['purpure', 'yellow', 'orange', 'black', 'white']
+
+export const allowedSizes = ['S', 'M', 'L', 'XL', 'XXL']
