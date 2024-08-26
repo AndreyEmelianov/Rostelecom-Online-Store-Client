@@ -13,11 +13,14 @@ import {
   $sizesOptions,
   setColors,
   setColorsOptions,
+  setFiltersPopup,
   setSizes,
   setSizesOptions,
 } from '@/context/catalog'
 import { basePropsForMotion } from '@/constants/motion'
 import { SelectInfoItem } from './SelectInfoItem'
+import { FiltersPopup } from './FiltersPopup/FiltersPopup'
+import { addOverflowHiddenToBody } from '@/lib/utils/common'
 
 import styles from '@/styles/catalog/index.module.scss'
 
@@ -67,72 +70,87 @@ export const CatalogFilters = ({
     handleApplyFiltersWithColors(updatedColorsByCode)
   }
 
+  const handleOpenFiltersPopup = () => {
+    addOverflowHiddenToBody()
+    setFiltersPopup(true)
+  }
+
   return (
-    <div className={styles.catalog__filters}>
-      <div className={styles.catalog__filters__top}>
-        {!isMedia610 && (
-          <>
-            <div className={styles.catalog__filters__top__left}>
-              <CategorySelect />
-              {isMedia910 && (
+    <>
+      <FiltersPopup
+        handleApplyFiltersWithPrice={handleApplyFiltersWithPrice}
+        handleApplyFiltersWithSizes={handleApplyFiltersWithSizes}
+        handleApplyFiltersWithColors={handleApplyFiltersWithColors}
+      />
+      <div className={styles.catalog__filters}>
+        <div className={styles.catalog__filters__top}>
+          {!isMedia610 && (
+            <>
+              <div className={styles.catalog__filters__top__left}>
+                <CategorySelect />
+                {isMedia910 && (
+                  <SizesSelect
+                    handleApplyFiltersWithSizes={handleApplyFiltersWithSizes}
+                  />
+                )}
+                <PriceSelect
+                  handleApplyFiltersWithPrice={handleApplyFiltersWithPrice}
+                />
+              </div>
+              {!isMedia910 && (
                 <SizesSelect
                   handleApplyFiltersWithSizes={handleApplyFiltersWithSizes}
                 />
               )}
-              <PriceSelect
-                handleApplyFiltersWithPrice={handleApplyFiltersWithPrice}
-              />
-            </div>
-            {!isMedia910 && (
-              <SizesSelect
-                handleApplyFiltersWithSizes={handleApplyFiltersWithSizes}
-              />
-            )}
-            <div className={styles.catalog__filters__top__right}>
-              <ColorsSelect
-                handleApplyFiltersWithColors={handleApplyFiltersWithColors}
-              />
+              <div className={styles.catalog__filters__top__right}>
+                <ColorsSelect
+                  handleApplyFiltersWithColors={handleApplyFiltersWithColors}
+                />
+                <SortSelect
+                  handleApplyFiltersBySort={handleApplyFiltersBySort}
+                />
+              </div>
+            </>
+          )}
+          {isMedia610 && (
+            <>
               <SortSelect handleApplyFiltersBySort={handleApplyFiltersBySort} />
-            </div>
-          </>
-        )}
-        {isMedia610 && (
-          <>
-            <SortSelect handleApplyFiltersBySort={handleApplyFiltersBySort} />
-            <button
-              className={`btn-reset ${styles.catalog__filters__top__filter_btn}`}
-            />
-          </>
-        )}
-      </div>
-      <div className={styles.catalog__filters__bottom}>
-        <motion.ul
-          {...basePropsForMotion}
-          className={`list-reset ${styles.catalog__filters__bottom__list}`}
-        >
-          {sizesOptions
-            .filter((item) => item.checked)
-            .map((item) => (
-              <SelectInfoItem
-                key={item.id}
-                id={item.id}
-                text={item.size}
-                handleRemoveItem={handleRemoveSizeOption}
+              <button
+                onClick={handleOpenFiltersPopup}
+                className={`btn-reset ${styles.catalog__filters__top__filter_btn}`}
               />
-            ))}
+            </>
+          )}
+        </div>
+        <div className={styles.catalog__filters__bottom}>
+          <motion.ul
+            {...basePropsForMotion}
+            className={`list-reset ${styles.catalog__filters__bottom__list}`}
+          >
+            {sizesOptions
+              .filter((item) => item.checked)
+              .map((item) => (
+                <SelectInfoItem
+                  key={item.id}
+                  id={item.id}
+                  text={item.size}
+                  handleRemoveItem={handleRemoveSizeOption}
+                />
+              ))}
 
-          {colorsOptions
-            .filter((item) => item.checked)
-            .map((item) => (
-              <SelectInfoItem
-                key={item.id}
-                id={item.id}
-                text={item.colorText}
-                handleRemoveItem={handleRemoveColorOption}
-              />
-            ))}
-        </motion.ul>
+            {colorsOptions
+              .filter((item) => item.checked)
+              .map((item) => (
+                <SelectInfoItem
+                  key={item.id}
+                  id={item.id}
+                  text={item.colorText}
+                  handleRemoveItem={handleRemoveColorOption}
+                />
+              ))}
+          </motion.ul>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

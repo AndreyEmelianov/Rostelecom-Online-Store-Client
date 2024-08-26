@@ -7,6 +7,10 @@ import { useLang } from '@/hooks/useLang'
 import { basePropsForMotion } from '@/constants/motion'
 
 import styles from '@/styles/catalog/index.module.scss'
+import {
+  getCheckedValidPriceFrom,
+  getCheckedValidPriceTo,
+} from '@/lib/utils/catalog'
 
 export const PriceSelect = ({
   handleApplyFiltersWithPrice,
@@ -31,8 +35,8 @@ export const PriceSelect = ({
   } = usePriceFilter()
 
   const handleSelectPrice = () => {
-    const validPriceFrom = +priceFrom > 10000 ? '5000' : priceFrom
-    const validPriceTo = +priceTo > 10000 ? '10000' : priceTo
+    const validPriceFrom = getCheckedValidPriceFrom(+priceFrom) as string
+    const validPriceTo = getCheckedValidPriceTo(+priceTo) as string
 
     setPriceFrom(validPriceFrom)
     setPriceTo(validPriceTo)
@@ -66,7 +70,7 @@ export const PriceSelect = ({
                   <span>{translations[lang].catalog.from}</span>
                   <input
                     type='text'
-                    placeholder='120 ₽'
+                    placeholder='99 ₽'
                     value={priceFrom}
                     onChange={handleChangePriceFrom}
                   />
@@ -76,7 +80,7 @@ export const PriceSelect = ({
                   <span>{translations[lang].catalog.to}</span>
                   <input
                     type='text'
-                    placeholder='8999 ₽'
+                    placeholder='9999 ₽'
                     value={priceTo}
                     onChange={handleChangePriceTo}
                   />
