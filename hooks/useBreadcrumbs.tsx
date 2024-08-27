@@ -46,5 +46,5 @@ export const useBreadcrumbs = (page: string) => {
     }
   }, [breadcrumbText, lang, pathname, translations, breadcrumbs, page])
 
-  return { getTextGenerator, getDefaultTextGenerator }
+  return { breadcrumbs, getTextGenerator, getDefaultTextGenerator }
 }

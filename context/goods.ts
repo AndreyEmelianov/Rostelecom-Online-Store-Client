@@ -21,7 +21,7 @@ export const loadOneProductFx = createEffect(
     setSpinner,
   }: ILoadOneProductFx) => {
     try {
-      setSpinner(true)
+      setSpinner && setSpinner(true)
       const { data } = await axiosInstance.post('/api/goods/one', {
         productId,
         category,
@@ -39,7 +39,7 @@ export const loadOneProductFx = createEffect(
     } catch (error) {
       toast.error((error as Error).message)
     } finally {
-      setSpinner(false)
+      setSpinner && setSpinner(false)
     }
   }
 )

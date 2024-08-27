@@ -5,7 +5,7 @@ export interface ILoadOneProductFx {
   productId: string
   category: string
   withShowingSizeTable?: boolean
-  setSpinner: (arg0: boolean) => void
+  setSpinner?: (arg0: boolean) => void
 }
 
 export interface IProductSizesItemProps {
