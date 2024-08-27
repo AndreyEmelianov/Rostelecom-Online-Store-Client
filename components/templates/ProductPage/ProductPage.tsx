@@ -14,6 +14,7 @@ import {
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs'
 import { useLang } from '@/hooks/useLang'
+import { ProductPageContent } from '@/components/modules/ProductPage/ProductPageContent'
 
 import styles from '@/styles/product/index.module.scss'
 
@@ -23,7 +24,6 @@ export const ProductPage = ({ category, productId }: IProductPageProps) => {
 
   usePageTitle(category, currentProduct.name)
   const { breadcrumbs } = useBreadcrumbs(category)
-  console.log(breadcrumbs)
 
   const { lang, translations } = useLang()
 
@@ -69,7 +69,7 @@ export const ProductPage = ({ category, productId }: IProductPageProps) => {
           <FontAwesomeIcon icon={faSpinner} spin size='8x' />
         </div>
       ) : (
-        <div>{currentProduct.name}</div>
+        currentProduct.name && <ProductPageContent />
       )}
     </div>
   )
