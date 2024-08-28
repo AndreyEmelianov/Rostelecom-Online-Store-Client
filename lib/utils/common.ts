@@ -223,3 +223,6 @@ export const getCheckedArrayParam = (sizesParam: string) => {
     return false
   }
 }
+
+export const capitalizeFirstLetter = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1)
