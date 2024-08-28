@@ -17,6 +17,7 @@ export async function GET(req: Request) {
     const isCatalogParam = url.searchParams.get('catalog')
     const typeParam = url.searchParams.get('type')
     const categoryParam = url.searchParams.get('category')
+    const collectionParam = url.searchParams.get('collection')
 
     const priceFromParam = url.searchParams.get('priceFrom')
     const priceToParam = url.searchParams.get('priceTo')
@@ -52,6 +53,9 @@ export async function GET(req: Request) {
         $or: (colorsArray as string[]).map((color) => ({
           ['characteristics.color']: color.toLowerCase(),
         })),
+      }),
+      ...(collectionParam && {
+        ['characteristics.collection']: collectionParam,
       }),
     }
 
