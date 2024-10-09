@@ -6,11 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { IProductPageProps } from '@/types/product'
-import {
-  $currentProduct,
-  loadOneProduct,
-  loadOneProductFx,
-} from '@/context/goods'
+import { loadOneProduct, loadOneProductFx } from '@/context/goods'
+import { $currentProduct } from '@/context/goods/state'
 import { usePageTitle } from '@/hooks/usePageTitle'
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs'
 import { useLang } from '@/hooks/useLang'

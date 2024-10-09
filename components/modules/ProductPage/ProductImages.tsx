@@ -1,10 +1,11 @@
 import Slider from 'react-slick'
 import { useUnit } from 'effector-react'
 
-import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { ProductImagesItem } from './ProductImagesItem'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useProductImages } from '@/hooks/useProductImages'
-import { $currentProduct } from '@/context/goods'
+import { $currentProduct } from '@/context/goods/state'
+import { baseSliderSettings } from '@/constants/slider'
 
 import styles from '@/styles/product/index.module.scss'
 
@@ -21,16 +22,6 @@ export const ProductImages = () => {
   const imgSize = isMedia1040 ? 230 : isMedia1420 ? 280 : 480
   const slideImgSize = isMedia420 ? 280 : 432
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToScroll: 1,
-    variableWidth: true,
-    speed: 500,
-    autoplay: true,
-    arrows: false,
-  }
-
   return (
     <>
       {!isMedia520 && (
@@ -41,7 +32,10 @@ export const ProductImages = () => {
         </ul>
       )}
       {isMedia520 && (
-        <Slider {...settings} className={styles.product__top__images__slider}>
+        <Slider
+          {...baseSliderSettings}
+          className={styles.product__top__images__slider}
+        >
           {images.map((image) => (
             <ProductImagesItem
               key={image.id}

@@ -54,3 +54,7 @@ export interface IProducts {
   count: number
   items: IProduct[]
 }
+
+export interface ILoadViewedProductsFx {
+  payload: { _id: string; category: string }[]
+}

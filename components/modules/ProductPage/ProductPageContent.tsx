@@ -1,15 +1,19 @@
 import { useUnit } from 'effector-react'
+import { useEffect } from 'react'
 
 import {
   addOverflowHiddenToBody,
   capitalizeFirstLetter,
   formatPrice,
+  getViewedProductsFromLS,
 } from '@/lib/utils/common'
-import { $currentProduct } from '@/context/goods'
 import { setIsAddToFavorites } from '@/context/favorites'
+import { $currentProduct } from '@/context/goods/state'
 import { useLang } from '@/hooks/useLang'
 import { useFavoritesActions } from '@/hooks/useFavoriteActions'
 import { useCartAction } from '@/hooks/useCartAction'
+import { useViewedProducts } from '@/hooks/useViewedProducts'
+import { ICartItem } from '@/types/cart'
 import { ProductImages } from './ProductImages'
 import { ProductsItemActionBtn } from '@/components/elements/ProductsItemActionBtn/ProductsItemActionBtn'
 import { ProductAvailable } from '@/components/elements/ProductAvailable/ProductAvailable'
@@ -20,7 +24,7 @@ import { ProductCounter } from '../ProductsListItem/ProductCounter'
 import { AddToCartBtn } from '../ProductsListItem/AddToCartBtn'
 import { ProductInfoAccordion } from './ProductInfoAccordion'
 import { ProductsByCollection } from './ProductsByCollection'
-import { ICartItem } from '@/types/cart'
+import { ViewedProducts } from '../ViewedProducts/ViewedProducts'
 
 import styles from '@/styles/product/index.module.scss'
 
@@ -46,6 +50,8 @@ export const ProductPageContent = () => {
     handleAddProductToFavorites,
   } = useFavoritesActions(currentProduct)
 
+  const { viewedProducts } = useViewedProducts(currentProduct._id)
+
   const { lang, translations } = useLang()
 
   const handleProductShare = () => {
@@ -56,6 +62,26 @@ export const ProductPageContent = () => {
     setIsAddToFavorites(false)
     handleAddToCart(count)
   }
+
+  useEffect(() => {
+    const viewedProducts = getViewedProductsFromLS()
+
+    const isAlreadyViewed = viewedProducts.find(
+      (item) => item._id === currentProduct._id
+    )
+
+    if (isAlreadyViewed) {
+      return
+    }
+
+    localStorage.setItem(
+      'rostelekomViewed',
+      JSON.stringify([
+        ...viewedProducts,
+        { category: currentProduct.category, _id: currentProduct._id },
+      ])
+    )
+  }, [currentProduct._id, currentProduct.category])
 
   return (
     <>
@@ -224,6 +250,9 @@ export const ProductPageContent = () => {
           <ProductsByCollection
             collection={currentProduct.characteristics.collection}
           />
+        )}
+        {!!viewedProducts.items?.length && (
+          <ViewedProducts viewedProducts={viewedProducts} />
         )}
       </div>
     </>

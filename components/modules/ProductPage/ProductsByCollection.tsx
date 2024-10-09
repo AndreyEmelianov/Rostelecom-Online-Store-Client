@@ -3,17 +3,14 @@ import { useUnit } from 'effector-react'
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 
-import {
-  $products,
-  loadProductsByFilter,
-  loadProductsByFilterFx,
-} from '@/context/goods'
+import { loadProductsByFilter, loadProductsByFilterFx } from '@/context/goods'
 import { allowedCollectionsCategories } from '@/constants/product'
 import { capitalizeFirstLetter } from '@/lib/utils/common'
 import { useLang } from '@/hooks/useLang'
 import { AllLink } from '@/components/elements/AllLink/AllLink'
 import { basePropsForMotion } from '@/constants/motion'
 import { ProductsListItem } from '../ProductsListItem/ProductsListItem'
+import { $products } from '@/context/goods/state'
 
 import styles from '@/styles/product/index.module.scss'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'

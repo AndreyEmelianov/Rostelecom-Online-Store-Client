@@ -8,7 +8,8 @@ import { $filtersPopup, setFiltersPopup } from '@/context/catalog'
 import { useMenuAnimation } from '@/hooks/useMenuAnimation'
 import { ICatalogFiltersProps } from '@/types/catalog'
 import { useCategoryFilter } from '@/hooks/useCategoryFilter'
-import { $products, loadProductsByFilterFx } from '@/context/goods'
+import { loadProductsByFilterFx } from '@/context/goods'
+import { $products } from '@/context/goods/state'
 import { useLang } from '@/hooks/useLang'
 import {
   removeOverflowHiddenFromBody,

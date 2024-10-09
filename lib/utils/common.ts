@@ -226,3 +226,15 @@ export const getCheckedArrayParam = (sizesParam: string) => {
 
 export const capitalizeFirstLetter = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1)
+
+export const getViewedProductsFromLS = () => {
+  let viewedProducts: IProduct[] = JSON.parse(
+    localStorage.getItem('rostelekomViewed') as string
+  )
+
+  if (!viewedProducts || !Array.isArray(viewedProducts)) {
+    viewedProducts = []
+  }
+
+  return viewedProducts
+}
