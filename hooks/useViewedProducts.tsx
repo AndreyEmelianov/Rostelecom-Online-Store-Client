@@ -5,7 +5,7 @@ import { loadViewedProducts } from '@/context/goods'
 import { getViewedProductsFromLS } from '@/lib/utils/common'
 import { $viewedProducts } from '@/context/goods/state'
 
-export const useViewedProducts = (excludedProductId: string) => {
+export const useViewedProducts = (excludedProductId?: string) => {
   const viewedProducts = useUnit($viewedProducts)
 
   useEffect(() => {
