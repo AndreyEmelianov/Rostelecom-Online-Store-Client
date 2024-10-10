@@ -27,3 +27,11 @@ export const allowedColors = ['purpure', 'yellow', 'orange', 'black', 'white']
 export const allowedSizes = ['S', 'M', 'L', 'XL', 'XXL']
 
 export const allowedCollectionsCategories = ['cloth', 'accessories']
+
+export const allowedCollections = [
+  'street',
+  'black',
+  'casual',
+  'orange',
+  'line',
+]
