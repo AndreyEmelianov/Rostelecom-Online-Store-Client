@@ -13,6 +13,8 @@ import {
   allowedCollections,
   allowedCollectionsCategories,
 } from '@/constants/product'
+import { Breadcrumbs } from '@/components/modules/Breadcrumbs/Breadcrumbs'
+import { useBreadcrumbs } from '@/hooks/useBreadcrumbs'
 
 import styles from '@/styles/viewed-products-page/index.module.scss'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'
@@ -22,6 +24,10 @@ export const CollectionProductsPage = () => {
 
   const { products, productsSpinner, title } =
     useProductsByCollection(currentCollection)
+
+  const { getTextGenerator, getDefaultTextGenerator } = useBreadcrumbs(
+    'collection-products'
+  )
 
   useEffect(() => {
     const urlParams = getSearchParamsUrl()
@@ -50,6 +56,10 @@ export const CollectionProductsPage = () => {
 
   return (
     <main>
+      <Breadcrumbs
+        getTextGenerator={getTextGenerator}
+        getDefaultTextGenerator={getDefaultTextGenerator}
+      />
       <section className={styles.viewed_products}>
         <div className='container'>
           <h1

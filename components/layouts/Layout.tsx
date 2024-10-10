@@ -10,6 +10,7 @@ import { SearchModal } from '../modules/Header/SearchModal'
 import {
   $quickViewModalIsOpen,
   $searchModalIsOpen,
+  $shareModal,
   $sizeTableIsOpen,
 } from '@/context/modals/state'
 import {
@@ -21,6 +22,8 @@ import { QuickViewModal } from '../modules/QuickViewModal/QuickViewModal'
 import { SizeTable } from '../modules/SizeTable/SizeTable'
 import { $openAuthPopup } from '@/context/auth/state'
 import { AuthPopup } from '../modules/AuthPopup/AuthPopup'
+import { ShareModal } from '../modules/ShareModal/ShareModal'
+import { basePropsForMotion } from '@/constants/motion'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -33,6 +36,7 @@ export const Layout = ({ children }: LayoutProps) => {
   const sizeTableIsOpen = useUnit($sizeTableIsOpen)
   const quickViewModalIsOpen = useUnit($quickViewModalIsOpen)
   const openAuthPopup = useUnit($openAuthPopup)
+  const shareModal = useUnit($shareModal)
 
   const authWrapperRef = useRef() as MutableRefObject<HTMLDivElement>
 
@@ -74,12 +78,13 @@ export const Layout = ({ children }: LayoutProps) => {
             <SearchModal />
           </motion.div>
         )}
+        {shareModal && (
+          <motion.div {...basePropsForMotion}>
+            <ShareModal />
+          </motion.div>
+        )}
         {sizeTableIsOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+          <motion.div {...basePropsForMotion}>
             <SizeTable />
           </motion.div>
         )}
@@ -88,9 +93,8 @@ export const Layout = ({ children }: LayoutProps) => {
         <AnimatePresence>
           {quickViewModalIsOpen && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              {...basePropsForMotion}
+              initial={{ opacity: 0, zIndex: 6 }}
             >
               <QuickViewModal />
             </motion.div>

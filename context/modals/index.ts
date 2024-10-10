@@ -17,3 +17,6 @@ export const closeQuickViewModal = modals.createEvent()
 
 export const openSizeTable = modals.createEvent()
 export const closeSizeTable = modals.createEvent()
+
+export const openShareModal = modals.createEvent()
+export const closeShareModal = modals.createEvent()

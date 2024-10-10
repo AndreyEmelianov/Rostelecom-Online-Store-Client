@@ -10,10 +10,15 @@ import { Layout } from './Layout'
 import {
   closeSizeTableByCheck,
   handleCloseAuthPopup,
+  handleCloseShareModal,
   removeOverflowHiddenFromBody,
 } from '@/lib/utils/common'
 import { closeQuickViewModal } from '@/context/modals'
-import { $quickViewModalIsOpen, $sizeTableIsOpen } from '@/context/modals/state'
+import {
+  $quickViewModalIsOpen,
+  $shareModal,
+  $sizeTableIsOpen,
+} from '@/context/modals/state'
 import { $openAuthPopup } from '@/context/auth/state'
 import { CookieAlert } from '../modules/CookieAlert/CookieAlert'
 
@@ -33,6 +38,7 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   const quickViewModalIsOpen = useUnit($quickViewModalIsOpen)
   const sizeTableIsOpen = useUnit($sizeTableIsOpen)
   const openAuthPopup = useUnit($openAuthPopup)
+  const shareModal = useUnit($shareModal)
 
   const handleCloseQuickViewModal = () => {
     removeOverflowHiddenFromBody()
@@ -71,6 +77,10 @@ export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
               <div
                 className={`auth-overlay ${openAuthPopup ? 'overlay-active' : ''}`}
                 onClick={handleCloseAuthPopup}
+              />
+              <div
+                className={`share-overlay ${shareModal ? 'overlay-active' : ''}`}
+                onClick={handleCloseShareModal}
               />
               {cookieAlertOpen && (
                 <motion.div

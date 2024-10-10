@@ -25,6 +25,7 @@ import { AddToCartBtn } from '../ProductsListItem/AddToCartBtn'
 import { ProductInfoAccordion } from './ProductInfoAccordion'
 import { ProductsByCollection } from './ProductsByCollection'
 import { ViewedProducts } from '../ViewedProducts/ViewedProducts'
+import { openShareModal } from '@/context/modals'
 
 import styles from '@/styles/product/index.module.scss'
 
@@ -56,6 +57,7 @@ export const ProductPageContent = () => {
 
   const handleProductShare = () => {
     addOverflowHiddenToBody()
+    openShareModal()
   }
 
   const addToCart = () => {
