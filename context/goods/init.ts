@@ -1,14 +1,30 @@
-import { sample } from 'effector'
+import { Effect, sample } from 'effector'
+import { Gate } from 'effector-react'
 
 import { $currentProduct, $products, $viewedProducts } from './state'
 import {
+  getBestsellerProductsFx,
+  getNewProductsFx,
   loadOneProduct,
   loadOneProductFx,
   loadProductsByFilter,
   loadProductsByFilterFx,
   loadViewedProducts,
   loadViewedProductsFx,
+  MainPageGate,
 } from '.'
+
+const goodsSampleInstance = (
+  effect: Effect<void, [], Error>,
+  gate: Gate<unknown>
+) =>
+  sample({
+    clock: gate.open,
+    target: effect,
+  })
+
+goodsSampleInstance(getNewProductsFx, MainPageGate)
+goodsSampleInstance(getBestsellerProductsFx, MainPageGate)
 
 sample({
   clock: loadOneProduct,

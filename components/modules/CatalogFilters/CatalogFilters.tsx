@@ -9,14 +9,13 @@ import { ColorsSelect } from './ColorsSelect'
 import { SortSelect } from './SortSelect'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import {
-  $colorsOptions,
-  $sizesOptions,
   setColors,
   setColorsOptions,
   setFiltersPopup,
   setSizes,
   setSizesOptions,
 } from '@/context/catalog'
+import { $sizesOptions, $colorsOptions } from '@/context/catalog/state'
 import { basePropsForMotion } from '@/constants/motion'
 import { SelectInfoItem } from './SelectInfoItem'
 import { FiltersPopup } from './FiltersPopup/FiltersPopup'

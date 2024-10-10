@@ -8,12 +8,12 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { IWrappedComponentProps } from '@/types/hocs'
 import { withClickOutside } from '@/components/hocs/withClickOutside'
 import { useLang } from '@/hooks/useLang'
-import { getCartItemsFx } from '@/api/cart'
 import { CartPopupItem } from './CartPopupItem'
 import { useTotalPrice } from '@/hooks/useTotalPrice'
 import { formatPrice } from '@/lib/utils/common'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
-import { $cart, $cartFromLS } from '@/context/cart'
+import { $cart, $cartFromLS } from '@/context/cart/state'
+import { getCartItemsFx } from '@/context/cart'
 
 const CartPopup = forwardRef<HTMLDivElement, IWrappedComponentProps>(
   ({ open, setOpen }, ref) => {

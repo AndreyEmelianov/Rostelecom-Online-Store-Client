@@ -1,21 +1,18 @@
-import { createDomain } from 'effector'
+'use client'
 
-const modals = createDomain()
-
-export const openMenu = modals.createEvent()
-export const closeMenu = modals.createEvent()
-
-export const openCatalogMenu = modals.createEvent()
-export const closeCatalogMenu = modals.createEvent()
-
-export const openSearchModal = modals.createEvent()
-export const closeSearchModal = modals.createEvent()
-
-export const openQuickViewModal = modals.createEvent()
-export const closeQuickViewModal = modals.createEvent()
-
-export const openSizeTable = modals.createEvent()
-export const closeSizeTable = modals.createEvent()
+import {
+  modals,
+  openMenu,
+  closeMenu,
+  openCatalogMenu,
+  closeCatalogMenu,
+  openSearchModal,
+  closeSearchModal,
+  openQuickViewModal,
+  closeQuickViewModal,
+  openSizeTable,
+  closeSizeTable,
+} from '.'
 
 export const $menuIsOpen = modals
   .createStore(false)

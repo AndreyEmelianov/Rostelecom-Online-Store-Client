@@ -1,7 +1,7 @@
 import { useUnit } from 'effector-react'
 import { useEffect, useState } from 'react'
 
-import { $user } from '@/context/user'
+import { $user } from '@/context/user/state'
 
 export const useUserAvatar = () => {
   const [src, setSrc] = useState('')

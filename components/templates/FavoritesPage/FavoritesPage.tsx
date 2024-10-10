@@ -5,12 +5,7 @@ import { useUnit } from 'effector-react'
 import { motion } from 'framer-motion'
 
 import { Breadcrumbs } from '@/components/modules/Breadcrumbs/Breadcrumbs'
-import {
-  $favorites,
-  $favoritesFromLS,
-  $shouldShowEmptyPageFavorites,
-  getFavoriteItemsFx,
-} from '@/context/favorites'
+import { getFavoriteItemsFx } from '@/context/favorites'
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 import { useLang } from '@/hooks/useLang'
@@ -20,6 +15,11 @@ import { basePropsForMotion } from '@/constants/motion'
 import { FavoritesList } from '@/components/modules/FavoritesPage/FavoritesList'
 import { isUserAuth } from '@/lib/utils/common'
 import { loginCheckFx } from '@/context/user'
+import {
+  $shouldShowEmptyPageFavorites,
+  $favorites,
+  $favoritesFromLS,
+} from '@/context/favorites/state'
 
 import styles from '@/styles/favorites/index.module.scss'
 import cartSkeletonStyles from '@/styles/cart-skeleton/index.module.scss'

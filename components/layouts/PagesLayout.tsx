@@ -12,14 +12,17 @@ import {
   handleCloseAuthPopup,
   removeOverflowHiddenFromBody,
 } from '@/lib/utils/common'
-import {
-  $quickViewModalIsOpen,
-  $sizeTableIsOpen,
-  closeQuickViewModal,
-} from '@/context/modals'
-import { $openAuthPopup } from '@/context/auth'
+import { closeQuickViewModal } from '@/context/modals'
+import { $quickViewModalIsOpen, $sizeTableIsOpen } from '@/context/modals/state'
+import { $openAuthPopup } from '@/context/auth/state'
 import { CookieAlert } from '../modules/CookieAlert/CookieAlert'
+
+import '@/context/auth/init'
+import '@/context/cart/init'
+import '@/context/comparison/init'
+import '@/context/favorites/init'
 import '@/context/goods/init'
+import '@/context/user/init'
 
 export const PagesLayout = ({ children }: { children: React.ReactNode }) => {
   const [isClient, setIsClient] = useState(false)

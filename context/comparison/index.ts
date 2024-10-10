@@ -1,14 +1,31 @@
-import { createDomain, createEffect, sample } from 'effector'
+'use client'
+import { createDomain, createEffect } from 'effector'
 import toast from 'react-hot-toast'
 
-import {
-  IAddProductToComparisonFx,
-  IAddProductsFromLSToComparisonFx,
-  IComparisonItem,
-  IDeleteComparisonItemsFx,
-} from '@/types/comparison'
 import { axiosInstance } from '@/api/apiInstance'
 import { handleJWTError } from '@/lib/utils/errors'
+import {
+  IAddProductToComparisonFx,
+  IComparisonItem,
+  IAddProductsFromLSToComparisonFx,
+  IDeleteComparisonItemsFx,
+} from '@/types/comparison'
+
+export const comparison = createDomain()
+
+export const loadComparisonItems = comparison.createEvent<{ jwt: string }>()
+export const addProductToComparison =
+  comparison.createEvent<IAddProductToComparisonFx>()
+
+export const setComparisonFromLS = comparison.createEvent<IComparisonItem[]>()
+export const addProductsFromLSToComparison =
+  comparison.createEvent<IAddProductsFromLSToComparisonFx>()
+
+export const deleteProductFromComparison =
+  comparison.createEvent<IDeleteComparisonItemsFx>()
+
+export const setShouldShowEmptyPageComparison =
+  comparison.createEvent<boolean>()
 
 export const addProductToComparisonFx = createEffect(
   async ({ jwt, setSpinner, ...restProps }: IAddProductToComparisonFx) => {
@@ -123,67 +140,3 @@ export const deleteComparisonItemsFx = createEffect(
     }
   }
 )
-
-const comparison = createDomain()
-
-export const loadComparisonItems = comparison.createEvent<{ jwt: string }>()
-export const addProductToComparison =
-  comparison.createEvent<IAddProductToComparisonFx>()
-
-export const setComparisonFromLS = comparison.createEvent<IComparisonItem[]>()
-export const addProductsFromLSToComparison =
-  comparison.createEvent<IAddProductsFromLSToComparisonFx>()
-
-export const deleteProductFromComparison =
-  comparison.createEvent<IDeleteComparisonItemsFx>()
-
-export const setShouldShowEmptyPageComparison =
-  comparison.createEvent<boolean>()
-
-export const $comparison = comparison
-  .createStore<IComparisonItem[]>([])
-  .on(getComparisonItemsFx.done, (_, { result }) => result)
-  .on(addProductToComparisonFx.done, (state, { result }) => [
-    ...state,
-    result.newComparisonItem,
-  ])
-  .on(addProductsFromLSToComparisonFx.done, (_, { result }) => result.items)
-  .on(deleteComparisonItemsFx.done, (state, { result }) =>
-    state.filter((item) => item._id !== result.id)
-  )
-
-export const $comparisonFromLS = comparison
-  .createStore<IComparisonItem[]>([])
-  .on(setComparisonFromLS, (_, comparison) => comparison)
-
-export const $shouldShowEmptyPageComparison = comparison
-  .createStore(false)
-  .on(setShouldShowEmptyPageComparison, (_, value) => value)
-
-sample({
-  clock: loadComparisonItems,
-  source: $comparison,
-  fn: (_, data) => data,
-  target: getComparisonItemsFx,
-})
-
-sample({
-  clock: addProductToComparison,
-  source: $comparison,
-  fn: (_, data) => data,
-  target: addProductToComparisonFx,
-})
-
-sample({
-  clock: addProductsFromLSToComparison,
-  source: $comparison,
-  fn: (_, data) => data,
-  target: addProductsFromLSToComparisonFx,
-})
-
-sample({
-  clock: deleteProductFromComparison,
-  source: $comparison,
-  fn: (_, data) => data,
-  target: deleteComparisonItemsFx,
-})

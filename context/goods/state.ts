@@ -1,17 +1,16 @@
 'use client'
-import { Effect, sample } from 'effector'
-import { Gate } from 'effector-react'
+import { Effect } from 'effector'
 
-import { getNewProductsFx, getBestsellerProductsFx } from '@/api/main-page'
 import { IProduct } from '@/types/common'
 import { IProducts } from '@/types/goods'
 import {
-  MainPageGate,
   setCurrentProduct,
   loadOneProductFx,
   loadProductsByFilterFx,
   goods,
   loadViewedProductsFx,
+  getNewProductsFx,
+  getBestsellerProductsFx,
 } from '.'
 
 const goodsStoreInstance = (effect: Effect<void, [], Error>) =>
@@ -22,20 +21,8 @@ const goodsStoreInstance = (effect: Effect<void, [], Error>) =>
       console.error(error.message)
     })
 
-const goodsSampleInstance = (
-  effect: Effect<void, [], Error>,
-  gate: Gate<unknown>
-) =>
-  sample({
-    clock: gate.open,
-    target: effect,
-  })
-
 export const $newProducts = goodsStoreInstance(getNewProductsFx)
 export const $bestsellerProducts = goodsStoreInstance(getBestsellerProductsFx)
-
-goodsSampleInstance(getNewProductsFx, MainPageGate)
-goodsSampleInstance(getBestsellerProductsFx, MainPageGate)
 
 export const $currentProduct = goods
   .createStore<IProduct>({} as IProduct)

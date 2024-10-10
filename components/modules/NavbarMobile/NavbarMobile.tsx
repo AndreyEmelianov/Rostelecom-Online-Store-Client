@@ -11,8 +11,8 @@ import {
 } from '@/context/modals'
 import { CatalogMenu } from '../Header/CatalogMenu'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
-import { $cart, $cartFromLS } from '@/context/cart'
-import { $favorites, $favoritesFromLS } from '@/context/favorites'
+import { $cart, $cartFromLS } from '@/context/cart/state'
+import { $favorites, $favoritesFromLS } from '@/context/favorites/state'
 
 export const NavbarMobile = () => {
   const { lang, translations } = useLang()

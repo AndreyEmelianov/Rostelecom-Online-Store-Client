@@ -7,9 +7,10 @@ import {
   addItemToCart,
   addProductToCartBySizeTable,
 } from '@/lib/utils/cart'
-import { $cart, $cartFromLS, updateCartItemCount } from '@/context/cart'
+import { updateCartItemCount } from '@/context/cart'
 import { $currentProduct } from '@/context/goods/state'
 import { useGoodsByAuth } from './useGoodsByAuth'
+import { $cart, $cartFromLS } from '@/context/cart/state'
 
 export const useCartAction = (isSizeTable = false) => {
   const [selectedSize, setSelectedSize] = useState('')

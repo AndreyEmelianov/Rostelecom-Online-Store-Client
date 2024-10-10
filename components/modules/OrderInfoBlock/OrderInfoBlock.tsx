@@ -6,7 +6,7 @@ import { IOrderInfoBlockProps } from '@/types/modules'
 import { useTotalPrice } from '@/hooks/useTotalPrice'
 import { formatPrice, showCountMessage } from '@/lib/utils/common'
 import { countAllCartItemsAmount } from '@/lib/utils/cart'
-import { $cart, $cartFromLS } from '@/context/cart'
+import { $cart, $cartFromLS } from '@/context/cart/state'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 
 import styles from '@/styles/order-block/index.module.scss'

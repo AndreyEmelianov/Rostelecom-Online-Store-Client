@@ -3,22 +3,22 @@
 import { useUnit } from 'effector-react'
 import toast from 'react-hot-toast'
 
-import { $sizeTableSizes } from '@/context/sizeTable'
+import { $sizeTableSizes } from '@/context/sizeTable/state'
 import { useCartAction } from '@/hooks/useCartAction'
-import { $quickViewModalIsOpen } from '@/context/modals'
+import { $quickViewModalIsOpen } from '@/context/modals/state'
 import { closeSizeTableByCheck, isUserAuth } from '@/lib/utils/common'
 import { useLang } from '@/hooks/useLang'
 import { AddToCartBtn } from '../ProductsListItem/AddToCartBtn'
 import { ProductCountBySize } from '../ProductsListItem/ProductCountBySize'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
+import { addProductToFavorite } from '@/context/favorites'
+import { addFavoriteItemToLS } from '@/lib/utils/favorites'
+import { useFavoritesActions } from '@/hooks/useFavoriteActions'
 import {
   $favorites,
   $favoritesFromLS,
   $isAddToFavorites,
-  addProductToFavorite,
-} from '@/context/favorites'
-import { addFavoriteItemToLS } from '@/lib/utils/favorites'
-import { useFavoritesActions } from '@/hooks/useFavoriteActions'
+} from '@/context/favorites/state'
 
 import styles from '@/styles/size-table/index.module.scss'
 

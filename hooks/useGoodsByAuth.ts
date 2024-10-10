@@ -1,6 +1,6 @@
 import { useUnit } from 'effector-react'
 
-import { $isAuth } from '@/context/auth'
+import { $isAuth } from '@/context/auth/state'
 import { UseGoodsByAuth } from '@/types/common'
 
 export const useGoodsByAuth = <T>(

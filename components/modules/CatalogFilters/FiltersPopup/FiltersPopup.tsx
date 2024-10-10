@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-import { $filtersPopup, setFiltersPopup } from '@/context/catalog'
+import { $filtersPopup } from '@/context/catalog/state'
 import { useMenuAnimation } from '@/hooks/useMenuAnimation'
 import { ICatalogFiltersProps } from '@/types/catalog'
 import { useCategoryFilter } from '@/hooks/useCategoryFilter'
@@ -19,6 +19,7 @@ import { PriceFilter } from './PriceFilter'
 import { CategoryFiltersList } from '../CategoryFiltersList'
 import { SizesFilter } from './SizesFilter'
 import { ColorsFilter } from './ColorsFilter'
+import { setFiltersPopup } from '@/context/catalog'
 
 import styles from '@/styles/catalog/index.module.scss'
 

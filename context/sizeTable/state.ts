@@ -1,10 +1,6 @@
-import { createDomain } from 'effector'
-
+'use client'
 import { ISelectedSizes } from '@/types/common'
-
-const sizeTable = createDomain()
-
-export const setSizeTableSizes = sizeTable.createEvent<ISelectedSizes>()
+import { sizeTable, setSizeTableSizes } from '.'
 
 export const $sizeTableSizes = sizeTable
   .createStore({} as ISelectedSizes)

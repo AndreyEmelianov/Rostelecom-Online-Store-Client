@@ -16,7 +16,7 @@ import {
 } from '@/lib/utils/common'
 import CartPopup from './CartPopup/CartPopup'
 import HeaderProfile from './HeaderProfile'
-import { $isAuth } from '@/context/auth'
+import { $isAuth } from '@/context/auth/state'
 import {
   addProductsFromLSToCart,
   setCartFromLS,
@@ -24,21 +24,19 @@ import {
 } from '@/context/cart'
 import { setLang } from '@/context/lang'
 import {
-  $favorites,
-  $favoritesFromLS,
   addProductsFromLSToFavorites,
   setFavoriteItemsFromLS,
   setShouldShowEmptyPageFavorites,
 } from '@/context/favorites'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 import {
-  $comparison,
-  $comparisonFromLS,
   addProductsFromLSToComparison,
   setComparisonFromLS,
   setShouldShowEmptyPageComparison,
 } from '@/context/comparison'
 import { loginCheckFx } from '@/context/user'
+import { $comparison, $comparisonFromLS } from '@/context/comparison/state'
+import { $favorites, $favoritesFromLS } from '@/context/favorites/state'
 
 export const Header = () => {
   const { translations, lang } = useLang()

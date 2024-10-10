@@ -12,7 +12,7 @@ import {
   $comparison,
   $comparisonFromLS,
   $shouldShowEmptyPageComparison,
-} from '@/context/comparison'
+} from '@/context/comparison/state'
 import { useComparisonLinks } from '@/hooks/useComparisonLinks'
 import { ComparisonLinksList } from '../modules/Comparison/ComparisonLinksList'
 import { EmptyPageContent } from '../modules/EmptyPageContent/EmptyPageContent'

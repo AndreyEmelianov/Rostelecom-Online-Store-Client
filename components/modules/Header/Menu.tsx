@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLang } from '@/hooks/useLang'
-import { $menuIsOpen, closeMenu } from '@/context/modals'
+import { closeMenu } from '@/context/modals'
 import { removeOverflowHiddenFromBody } from '@/lib/utils/common'
 import { setLang } from '@/context/lang'
 import { AllowedLangs } from '@/constants/lang'
@@ -15,6 +15,7 @@ import { MenuLinkItem } from './MenuLinkItem'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { BuyersListItems } from './BuyersListItems'
 import { ContactsListItems } from './ContactsListItems'
+import { $menuIsOpen } from '@/context/modals/state'
 
 export const Menu = () => {
   const [activeListId, setActiveListId] = useState(0)

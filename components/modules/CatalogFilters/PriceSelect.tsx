@@ -5,12 +5,12 @@ import { usePriceFilter } from '@/hooks/usePriceFilter'
 import { SelectBtn } from './SelectBtn'
 import { useLang } from '@/hooks/useLang'
 import { basePropsForMotion } from '@/constants/motion'
-
-import styles from '@/styles/catalog/index.module.scss'
 import {
   getCheckedValidPriceFrom,
   getCheckedValidPriceTo,
 } from '@/lib/utils/catalog'
+
+import styles from '@/styles/catalog/index.module.scss'
 
 export const PriceSelect = ({
   handleApplyFiltersWithPrice,

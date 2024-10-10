@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { basePropsForMotion } from '@/constants/motion'
 import { CartListItem } from './CartListItem'
 import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
-import { $cart, $cartFromLS } from '@/context/cart'
+import { $cart, $cartFromLS } from '@/context/cart/state'
 
 import styles from '@/styles/cart-page/index.module.scss'
 

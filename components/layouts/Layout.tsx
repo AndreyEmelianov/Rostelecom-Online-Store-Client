@@ -11,7 +11,7 @@ import {
   $quickViewModalIsOpen,
   $searchModalIsOpen,
   $sizeTableIsOpen,
-} from '@/context/modals'
+} from '@/context/modals/state'
 import {
   handleCloseAuthPopup,
   handleCloseSearchModal,
@@ -19,7 +19,7 @@ import {
 import { Footer } from '../modules/Footer/Footer'
 import { QuickViewModal } from '../modules/QuickViewModal/QuickViewModal'
 import { SizeTable } from '../modules/SizeTable/SizeTable'
-import { $openAuthPopup } from '@/context/auth'
+import { $openAuthPopup } from '@/context/auth/state'
 import { AuthPopup } from '../modules/AuthPopup/AuthPopup'
 
 type LayoutProps = {

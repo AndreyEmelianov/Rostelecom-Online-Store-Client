@@ -2,7 +2,7 @@ import { useUnit } from 'effector-react'
 import { useEffect, useState } from 'react'
 
 import { useLang } from './useLang'
-import { $catalogCategoryOptions } from '@/context/catalog'
+import { $catalogCategoryOptions } from '@/context/catalog/state'
 import { getSearchParamsUrl } from '@/lib/utils/common'
 
 export const useCategoryFilter = () => {
