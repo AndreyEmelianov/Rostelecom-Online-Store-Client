@@ -12,12 +12,16 @@ import { useLang } from '@/hooks/useLang'
 import { HeadingWithCount } from '@/components/elements/HeadingWithCount/HeadingWithCount'
 import { setCatalogCategoryOptions } from '@/context/catalog'
 import { CatalogFilters } from '@/components/modules/CatalogFilters/CatalogFilters'
+import { ViewedProducts } from '@/components/modules/ViewedProducts/ViewedProducts'
+import { useViewedProducts } from '@/hooks/useViewedProducts'
 
 import styles from '@/styles/catalog/index.module.scss'
 import skeletonStyles from '@/styles/skeleton/index.module.scss'
 
 export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
   const isCatalogPage = pageName === 'catalog'
+
+  const { viewedProducts } = useViewedProducts()
 
   const { lang, translations } = useLang()
 
@@ -210,6 +214,9 @@ export const ProductsPage = ({ pageName, searchParams }: IProductsPage) => {
           onPageChange={handlePageChange}
         />
       </div>
+      {!!viewedProducts.items?.length && (
+        <ViewedProducts viewedProducts={viewedProducts} />
+      )}
     </>
   )
 }
