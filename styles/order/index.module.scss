@@ -243,6 +243,61 @@
           }
         }
       }
+
+      &__nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 24px;
+
+        @media (max-width: 580px) {
+          margin-bottom: 18px;
+        }
+
+        &__item {
+          position: relative;
+          padding: 20px 0;
+          color: var(--transparent-90);
+          font-variant-numeric: lining-nums tabular-nums stacked-fractions;
+          font-weight: 500;
+          border-bottom: 2px solid var(--transparent-10);
+          transition:
+            color 0.2s ease-in-out,
+            border-color 0.2s ease-in-out;
+
+          @media (max-width: 580px) {
+            padding: 10px 0;
+            font-size: 14px;
+          }
+
+          &::after {
+            content: '';
+            display: block;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            position: absolute;
+            background-color: var(--transparent-10);
+            transition:
+              transform ease 200ms,
+              opacity ease 0ms 200ms;
+            transform: translateX(100%);
+          }
+
+          &.active ~ &::after {
+            transform: translateX(-100%);
+          }
+
+          &.active::after {
+            background-color: var(--primary-purple-night);
+            transform: translateX(0%);
+          }
+
+          &.active {
+            color: var(--primary-purple-night);
+          }
+        }
+      }
     }
   }
 }

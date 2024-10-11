@@ -10,6 +10,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { OrderCartItem } from '../../modules/OrderPage/OrderCartItem'
 
 import styles from '@/styles/order/index.module.scss'
+import { OrderDelivery } from '@/components/modules/OrderPage/OrderDelivery'
 
 export const OrderPage = () => {
   const currentCartByAuth = useGoodsByAuth($cart, $cartFromLS)
@@ -72,6 +73,9 @@ export const OrderPage = () => {
                       </tbody>
                     </table>
                   )}
+                </li>
+                <li className={styles.order__list__item}>
+                  <OrderDelivery />
                 </li>
               </ul>
             </div>
