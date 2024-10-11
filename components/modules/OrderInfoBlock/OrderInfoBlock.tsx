@@ -1,5 +1,7 @@
 import { MutableRefObject, useRef, useState } from 'react'
 import Link from 'next/link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { useLang } from '@/hooks/useLang'
 import { IOrderInfoBlockProps } from '@/types/modules'
@@ -66,7 +68,16 @@ export const OrderInfoBlock = ({
           </span>
         </p>
         {isOrderPage ? (
-          <button />
+          <button
+            disabled={!isUserAgree || !currentCartByAuth.length || false}
+            className={`btn-reset ${styles.order_block__btn}`}
+          >
+            {false ? (
+              <FontAwesomeIcon icon={faSpinner} spin color='#fff' />
+            ) : (
+              translations[lang].order.make_order
+            )}
+          </button>
         ) : (
           <Link
             href={'/order'}
