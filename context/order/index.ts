@@ -7,11 +7,14 @@ import { IGetRostelecomOfficesByCityFx } from '@/types/order'
 
 export const order = createDomain()
 
-export const getRostelecomOfficesByCity =
-  order.createEvent<IGetRostelecomOfficesByCityFx>()
-
 export const setPickupTab = order.createEvent<boolean>()
 export const setCourierTab = order.createEvent<boolean>()
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const setMapInstance = order.createEvent<any>()
+
+export const getRostelecomOfficesByCity =
+  order.createEvent<IGetRostelecomOfficesByCityFx>()
 
 export const getRostelecomOfficesByCityFx = order.createEffect(
   async ({ city, lang }: IGetRostelecomOfficesByCityFx) => {

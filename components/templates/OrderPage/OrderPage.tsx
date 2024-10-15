@@ -8,9 +8,9 @@ import { useGoodsByAuth } from '@/hooks/useGoodsByAuth'
 import { useLang } from '@/hooks/useLang'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { OrderCartItem } from '../../modules/OrderPage/OrderCartItem'
+import { OrderDelivery } from '@/components/modules/OrderPage/OrderDelivery'
 
 import styles from '@/styles/order/index.module.scss'
-import { OrderDelivery } from '@/components/modules/OrderPage/OrderDelivery'
 
 export const OrderPage = () => {
   const currentCartByAuth = useGoodsByAuth($cart, $cartFromLS)

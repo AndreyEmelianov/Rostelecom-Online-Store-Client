@@ -5,6 +5,7 @@ import {
   getRostelecomOfficesByCityFx,
   order,
   setCourierTab,
+  setMapInstance,
   setPickupTab,
 } from '.'
 
@@ -19,3 +20,8 @@ export const $pickupTab = order
 export const $courierTab = order
   .createStore<boolean>(false)
   .on(setCourierTab, (_, value) => value)
+
+export const $mapInstance = order
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  .createStore<any>({})
+  .on(setMapInstance, (_, map) => map)

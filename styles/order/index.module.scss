@@ -298,6 +298,27 @@
           }
         }
       }
+      &__delivery {
+        &__map {
+          position: relative;
+          height: 280px;
+
+          @media (max-width: 400px) {
+            margin: 0 -15px;
+          }
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            cursor: pointer;
+            z-index: 1;
+          }
+        }
+      }
     }
   }
 }

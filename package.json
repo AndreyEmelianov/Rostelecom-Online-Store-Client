@@ -7,7 +7,7 @@
   },
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,6 +19,9 @@
     "@fortawesome/free-brands-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@tomtom-international/web-sdk-maps": "^6.25.0",
+    "@tomtom-international/web-sdk-plugin-searchbox": "^3.2.0",
+    "@tomtom-international/web-sdk-services": "^6.25.0",
     "@types/mongodb": "^4.0.7",
     "@types/react-share": "^4.0.0",
     "axios": "^1.6.8",
