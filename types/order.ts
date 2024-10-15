@@ -31,10 +31,23 @@ export interface IRostelecomAddressData {
   place_id: string
   lat: number
   lon: number
-  bbox: {
-    lon1: number
-    lat1: number
-    lon2: number
-    lat2: number
-  }
+  bbox: IAddressBBox
+}
+
+export interface IAddressPosition {
+  lat: number
+  lon: number
+}
+
+export interface IAddressBBox {
+  lon1: number
+  lat1: number
+  lon2: number
+  lat2: number
+}
+
+export interface IPickupAddressListItemProps {
+  addressItem: IRostelecomAddressData
+  handleSelectAddress: (arg0: IAddressBBox, arg1: IAddressPosition) => void
+  handleChosenAddressData: (arg0: Partial<IRostelecomAddressData>) => void
 }

@@ -11,6 +11,7 @@ import { useLang } from '@/hooks/useLang'
 import { basePropsForMotion } from '@/constants/motion'
 import { OrderTitle } from './OrderTitle'
 import { OrderTabControls } from './OrderTabControls'
+import { AddressesList } from './AddressesList'
 
 import styles from '@/styles/order/index.module.scss'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
@@ -19,6 +20,7 @@ export const OrderDelivery = () => {
   const [shouldLoadMap, setShouldLoadMap] = useState(false)
 
   const mapRef = useRef() as MutableRefObject<HTMLDivElement>
+  const labelRef = useRef() as MutableRefObject<HTMLLabelElement>
 
   const pickupTab = useUnit($pickupTab)
   const courierTab = useUnit($courierTab)
@@ -118,6 +120,17 @@ export const OrderDelivery = () => {
             className={styles.order__list__item__delivery__pickup}
             {...basePropsForMotion}
           >
+            <div className={styles.order__list__item__delivery__inner}>
+              <label
+                ref={labelRef}
+                className={styles.order__list__item__delivery__label}
+              >
+                <span>{translations[lang].order.search_title}</span>
+              </label>
+              <AddressesList
+                listClassName={styles.order__list__item__delivery__list}
+              />
+            </div>
             <div
               ref={mapRef}
               className={styles.order__list__item__delivery__map}

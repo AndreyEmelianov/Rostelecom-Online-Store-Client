@@ -3,7 +3,10 @@ import { createDomain } from 'effector'
 import toast from 'react-hot-toast'
 
 import { axiosInstance } from '@/api/apiInstance'
-import { IGetRostelecomOfficesByCityFx } from '@/types/order'
+import {
+  IGetRostelecomOfficesByCityFx,
+  IRostelecomAddressData,
+} from '@/types/order'
 
 export const order = createDomain()
 
@@ -12,6 +15,12 @@ export const setCourierTab = order.createEvent<boolean>()
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const setMapInstance = order.createEvent<any>()
+
+export const setShouldLoadRostelecomData = order.createEvent<boolean>()
+export const setChosenPickupAddressData =
+  order.createEvent<Partial<IRostelecomAddressData>>()
+export const setChosenCourierAddressData =
+  order.createEvent<Partial<IRostelecomAddressData>>()
 
 export const getRostelecomOfficesByCity =
   order.createEvent<IGetRostelecomOfficesByCityFx>()

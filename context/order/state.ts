@@ -4,9 +4,12 @@ import { IRostelecomAddressData } from '@/types/order'
 import {
   getRostelecomOfficesByCityFx,
   order,
+  setChosenCourierAddressData,
+  setChosenPickupAddressData,
   setCourierTab,
   setMapInstance,
   setPickupTab,
+  setShouldLoadRostelecomData,
 } from '.'
 
 export const $rostelecomDataByCity = order
@@ -25,3 +28,15 @@ export const $mapInstance = order
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   .createStore<any>({})
   .on(setMapInstance, (_, map) => map)
+
+export const $shouldLoadRostelecomData = order
+  .createStore<boolean>(false)
+  .on(setShouldLoadRostelecomData, (_, value) => value)
+
+export const $chosenPickupAddressData = order
+  .createStore<Partial<IRostelecomAddressData>>({})
+  .on(setChosenPickupAddressData, (_, value) => value)
+
+export const $chosenCourierAddressData = order
+  .createStore<Partial<IRostelecomAddressData>>({})
+  .on(setChosenCourierAddressData, (_, value) => value)
