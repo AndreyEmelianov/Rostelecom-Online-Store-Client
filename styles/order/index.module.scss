@@ -351,6 +351,31 @@
           }
         }
 
+        &__inner {
+          @media (max-width: 1320px) {
+            margin-bottom: 24px;
+          }
+
+          @media (max-width: 580px) {
+            margin-bottom: 15зч;
+          }
+
+          &__spinner {
+            padding-top: 40px;
+            display: block;
+            text-align: center;
+          }
+        }
+
+        &__label {
+          width: 100%;
+
+          @media (max-width: 580px) {
+            font-size: 14px;
+            margin-bottom: 18px;
+          }
+        }
+
         &__list {
           padding-top: 15px;
           max-height: 200px;

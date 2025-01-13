@@ -27,12 +27,12 @@ export const useTTMap = () => {
     const ll2 = new tomtomMaps.LngLat(lon2, lat2)
     const llbounds = new tomtomMaps.LngLatBounds(ll1, ll2)
 
-    currentMap.map.fitBounds(llbounds, { padding: 130, linear: true })
+    currentMap.fitBounds(llbounds, { padding: 130, linear: true })
 
     const markerElement = document.createElement('div')
     markerElement.classList.add('map-marker')
 
-    new tomtomMaps.Marker()
+    new tomtomMaps.Marker({ element: markerElement })
       .setLngLat([position.lon, position.lat])
       .addTo(currentMap)
   }

@@ -30,7 +30,6 @@ export const getRostelecomOfficesByCityFx = order.createEffect(
     try {
       const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY
       const baseUrl = `https://api.geoapify.com/v1/geocode/search?format=json&apiKey=${apiKey}`
-
       const { data } = await axiosInstance.get(
         `${baseUrl}&text=${city}&lang=${lang}`
       )
