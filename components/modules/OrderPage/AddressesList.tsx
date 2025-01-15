@@ -11,15 +11,19 @@ import {
   getRostelecomOfficesByCityFx,
   setChosenPickupAddressData,
   setShouldLoadRostelecomData,
+  setShouldShowCourierAddressData,
 } from '@/context/order'
 import { useLang } from '@/hooks/useLang'
 import { useTTMap } from '@/hooks/useTTMap'
-import { IRostelecomAddressData } from '@/types/order'
+import { IAddressesListProps, IRostelecomAddressData } from '@/types/order'
 import { PickupAddressListItem } from './PickupAddressListItem'
 
 import styles from '@/styles/order/index.module.scss'
 
-export const AddressesList = ({ listClassName }: { listClassName: string }) => {
+export const AddressesList = ({
+  listClassName,
+  handleSelectAddressByMarkers,
+}: IAddressesListProps) => {
   const rostelecomDataByCity = useUnit($rostelecomDataByCity)
   const shouldLoadRostelecomData = useUnit($shouldLoadRostelecomData)
   const chosenPickupAddressData = useUnit($chosenPickupAddressData)
@@ -33,6 +37,7 @@ export const AddressesList = ({ listClassName }: { listClassName: string }) => {
   const handleChosenAddressData = (data: Partial<IRostelecomAddressData>) => {
     setShouldLoadRostelecomData(false)
     setChosenPickupAddressData(data)
+    setShouldShowCourierAddressData(false)
   }
 
   return (
@@ -54,7 +59,9 @@ export const AddressesList = ({ listClassName }: { listClassName: string }) => {
                     key={item.place_id}
                     addressItem={item}
                     handleChosenAddressData={handleChosenAddressData}
-                    handleSelectAddress={handleSelectAddress}
+                    handleSelectAddress={
+                      handleSelectAddressByMarkers || handleSelectAddress
+                    }
                   />
                 ))
               ) : (

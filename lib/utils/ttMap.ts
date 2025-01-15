@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import {
@@ -30,18 +31,20 @@ export const handleResultsFound = (event, searchMarkersManager, map) => {
   if (results.length === 0) {
     searchMarkersManager.clear()
   }
+
   searchMarkersManager.draw(results)
   fitToViewport(results, map)
 }
 
 //@ts-ignore
 export const fitToViewport = async (markerData, map) => {
-  const tomtomMaps = await import(`@tomtom-international/web-sdk-maps`)
+  const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
   if (!markerData || (markerData instanceof Array && !markerData.length)) {
     return
   }
-  const bounds = new tomtomMaps.LngLatBounds()
+
+  const bounds = new ttMaps.LngLatBounds()
 
   if (markerData instanceof Array) {
     markerData.forEach(function (marker) {
@@ -72,19 +75,6 @@ export const getBounds = (data) => {
 }
 
 //@ts-ignore
-export const handleResultSelection = (event, searchMarkersManager, map) => {
-  handleSelectPickupAddress(event.data.text)
-  const result = event.data.result
-
-  if (result.type === 'category' || result.type === 'brand') {
-    return
-  }
-
-  searchMarkersManager.draw([result])
-  fitToViewport(result, map)
-}
-
-//@ts-ignore
 export const handleResultClearing = (
   //@ts-ignore
   searchMarkersManager,
@@ -110,6 +100,19 @@ export const handleResultClearing = (
 
   document.querySelector('.map-marker')?.remove()
   setChosenPickupAddressData({})
+}
+
+//@ts-ignore
+export const handleResultSelection = (event, searchMarkersManager, map) => {
+  handleSelectPickupAddress(event.data.text)
+  const result = event.data.result
+
+  if (result.type === 'category' || result.type === 'brand') {
+    return
+  }
+
+  searchMarkersManager.draw([result])
+  fitToViewport(result, map)
 }
 
 //@ts-ignore

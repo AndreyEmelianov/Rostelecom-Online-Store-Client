@@ -1,38 +1,31 @@
 import { useUnit } from 'effector-react'
 
 import { $mapInstance } from '@/context/order/state'
+import { IAddressBBox, IAddressPosition } from '@/types/order'
 
 export const useTTMap = () => {
   const mapInstance = useUnit($mapInstance)
 
   const handleSelectAddress = async (
-    {
-      lon1,
-      lat1,
-      lon2,
-      lat2,
-    }: { lon1: number; lat1: number; lon2: number; lat2: number },
-    position: {
-      lat: number
-      lon: number
-    },
+    { lon1, lat1, lon2, lat2 }: IAddressBBox,
+    position: IAddressPosition,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     initialMapInstance?: any
   ) => {
-    const tomtomMaps = await import(`@tomtom-international/web-sdk-maps`)
+    const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
-    const currentMap = mapInstance || initialMapInstance
+    const currentMap = initialMapInstance || mapInstance
 
-    const ll1 = new tomtomMaps.LngLat(lon1, lat1)
-    const ll2 = new tomtomMaps.LngLat(lon2, lat2)
-    const llbounds = new tomtomMaps.LngLatBounds(ll1, ll2)
+    const sw = new ttMaps.LngLat(lon1, lat1)
+    const ne = new ttMaps.LngLat(lon2, lat2)
+    const bounds = new ttMaps.LngLatBounds(sw, ne)
 
-    currentMap.fitBounds(llbounds, { padding: 130, linear: true })
+    currentMap.fitBounds(bounds, { padding: 130, linear: true })
 
-    const markerElement = document.createElement('div')
-    markerElement.classList.add('map-marker')
+    const element = document.createElement('div')
+    element.classList.add('map-marker')
 
-    new tomtomMaps.Marker({ element: markerElement })
+    new ttMaps.Marker({ element })
       .setLngLat([position.lon, position.lat])
       .addTo(currentMap)
   }

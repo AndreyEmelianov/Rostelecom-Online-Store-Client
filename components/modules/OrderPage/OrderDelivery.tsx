@@ -1,15 +1,25 @@
+/* eslint-disable indent */
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+'use client'
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useUnit } from 'effector-react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 
 import {
+  $chosenCourierAddressData,
   $chosenPickupAddressData,
   $courierTab,
   $pickupTab,
+  $shouldShowCourierAddressData,
 } from '@/context/order/state'
-import { setCourierTab, setMapInstance, setPickupTab } from '@/context/order'
+import {
+  setCourierTab,
+  setMapInstance,
+  setPickupTab,
+  setShouldShowCourierAddressData,
+} from '@/context/order'
 import { getGeolocationFx, setUserGeolocation } from '@/context/user'
 import { $userGeolocation } from '@/context/user/state'
 import { useLang } from '@/hooks/useLang'
@@ -17,7 +27,7 @@ import { basePropsForMotion } from '@/constants/motion'
 import { OrderTitle } from './OrderTitle'
 import { OrderTabControls } from './OrderTabControls'
 import { AddressesList } from './AddressesList'
-import { addScriptToHead } from '@/lib/utils/common'
+import { addOverflowHiddenToBody, addScriptToHead } from '@/lib/utils/common'
 import {
   handleResultClearing,
   handleResultSelection,
@@ -28,10 +38,13 @@ import {
 } from '@/lib/utils/ttMap'
 import { useTTMap } from '@/hooks/useTTMap'
 import { IAddressBBox } from '@/types/order'
+import { ttMapOptions } from '@/constants/ttMap'
+import { openMapModal } from '@/context/modals'
+import { CourierAddressInfo } from './CourierAddressInfo'
 
-import styles from '@/styles/order/index.module.scss'
 import '@tomtom-international/web-sdk-maps/dist/maps.css'
 import '@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css'
+import styles from '@/styles/order/index.module.scss'
 
 export const OrderDelivery = () => {
   const [shouldLoadMap, setShouldLoadMap] = useState(false)
@@ -43,6 +56,8 @@ export const OrderDelivery = () => {
   const courierTab = useUnit($courierTab)
   const userGeolocation = useUnit($userGeolocation)
   const chosenPickupAddressData = useUnit($chosenPickupAddressData)
+  const chosenCourierAddressData = useUnit($chosenCourierAddressData)
+  const shouldShowCourierAddressData = useUnit($shouldShowCourierAddressData)
 
   const { handleSelectAddress } = useTTMap()
   const { lang, translations } = useLang()
@@ -79,8 +94,13 @@ export const OrderDelivery = () => {
     if (courierTab) {
       return
     }
-    setCourierTab(true)
     setPickupTab(false)
+    setCourierTab(true)
+  }
+
+  const handleOpenMapModal = () => {
+    openMapModal()
+    addOverflowHiddenToBody()
   }
 
   useEffect(() => {
@@ -118,7 +138,11 @@ export const OrderDelivery = () => {
       toast.error(`${error.code} ${error.message}`)
     }
 
-    navigator.geolocation.getCurrentPosition(success, errorCb)
+    navigator.geolocation.getCurrentPosition(success, errorCb, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    })
   }
 
   const handleLoadMap = async (
@@ -126,9 +150,9 @@ export const OrderDelivery = () => {
     initialPosition = { lat: 55.755819, lng: 37.617644 },
     withMarker = false
   ) => {
-    const tomtomMaps = await import(`@tomtom-international/web-sdk-maps`)
+    const ttMaps = await import(`@tomtom-international/web-sdk-maps`)
 
-    const map = tomtomMaps.map({
+    const map = ttMaps.map({
       key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY as string,
       container: mapRef.current,
       center: initialPosition,
@@ -146,47 +170,36 @@ export const OrderDelivery = () => {
         map
       )
 
-    const options = {
-      searchOptions: {
-        key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY,
-        language: 'ru-RU',
-        limit: 5,
-      },
-      autocompleteOptions: {
-        key: process.env.NEXT_PUBLIC_TOMTOM_API_KEY,
-        language: 'ru-RU',
-      },
-    }
-
-    initSearchMarker(tomtomMaps)
+    initSearchMarker(ttMaps)
 
     //@ts-ignore
-    const tomtomSearchBox = new tt.plugins.SearchBox(tt.services, options)
+    const ttSearchBox = new tt.plugins.SearchBox(tt.services, ttMapOptions)
 
-    const searchBoxHTML = tomtomSearchBox.getSearchBoxHTML()
+    const searchBoxHTML = ttSearchBox.getSearchBoxHTML()
     searchBoxHTML.classList.add('delivery-search-input')
     labelRef.current.append(searchBoxHTML)
 
-    initialSearchValue && tomtomSearchBox.setValue(initialSearchValue)
+    initialSearchValue && ttSearchBox.setValue(initialSearchValue)
 
     //@ts-ignore
     const searchMarkersManager = new SearchMarkersManager(map)
     //@ts-ignore
-    tomtomSearchBox.on('tomtom.searchbox.resultsfound', (event) =>
-      handleResultsFound(event, searchMarkersManager, map)
+    ttSearchBox.on('tomtom.searchbox.resultsfound', (e) =>
+      handleResultsFound(e, searchMarkersManager, map)
     )
     //@ts-ignore
-    tomtomSearchBox.on('tomtom.searchbox.resultselected', (event) =>
-      handleResultSelection(event, searchMarkersManager, map)
-    )
-    //@ts-ignore
-    tomtomSearchBox.on('tomtom.searchbox.resultscleared', () =>
+    ttSearchBox.on('tomtom.searchbox.resultselected', (e) => {
+      handleResultSelection(e, searchMarkersManager, map)
+      setShouldShowCourierAddressData(false)
+    })
+    ttSearchBox.on('tomtom.searchbox.resultscleared', () =>
       handleResultClearing(searchMarkersManager, map, userGeolocation)
     )
 
     if (userGeolocation?.features && !withMarker) {
-      tomtomSearchBox.setValue(userGeolocation.features[0].properties.city)
-      handleSelectPickupAddress(userGeolocation.features[0].properties.city)
+      ttSearchBox.setValue(userGeolocation?.features[0].properties.city)
+      handleSelectPickupAddress(userGeolocation?.features[0].properties.city)
+
       map
         .setCenter([
           userGeolocation?.features[0].properties.lon,
@@ -226,11 +239,29 @@ export const OrderDelivery = () => {
             </div>
             <div
               ref={mapRef}
+              onClick={handleOpenMapModal}
               className={styles.order__list__item__delivery__map}
             />
           </motion.div>
         )}
-        {courierTab && <motion.div {...basePropsForMotion}>{'net'}</motion.div>}
+
+        {courierTab && (
+          <motion.div {...basePropsForMotion}>
+            {!shouldShowCourierAddressData && (
+              <div className={styles.order__list__item__delivery__courier}>
+                <span>{translations[lang].order.where_deliver_order}</span>
+                <span>{translations[lang].order.enter_address_on_map}</span>
+                <button onClick={handleOpenMapModal} className='btn-reset'>
+                  {translations[lang].order.map}
+                </button>
+              </div>
+            )}
+            {shouldShowCourierAddressData &&
+              !!chosenCourierAddressData.address_line1 && (
+                <CourierAddressInfo />
+              )}
+          </motion.div>
+        )}
       </div>
     </>
   )

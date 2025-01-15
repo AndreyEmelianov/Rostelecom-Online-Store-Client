@@ -6,10 +6,12 @@ import {
   order,
   setChosenCourierAddressData,
   setChosenPickupAddressData,
+  setCourierAddressData,
   setCourierTab,
   setMapInstance,
   setPickupTab,
   setShouldLoadRostelecomData,
+  setShouldShowCourierAddressData,
 } from '.'
 
 export const $rostelecomDataByCity = order
@@ -40,3 +42,11 @@ export const $chosenPickupAddressData = order
 export const $chosenCourierAddressData = order
   .createStore<Partial<IRostelecomAddressData>>({})
   .on(setChosenCourierAddressData, (_, value) => value)
+
+export const $shouldShowCourierAddressData = order
+  .createStore(false)
+  .on(setShouldShowCourierAddressData, (_, value) => value)
+
+export const $courierAddressData = order
+  .createStore<IRostelecomAddressData>({} as IRostelecomAddressData)
+  .on(setCourierAddressData, (_, value) => value)

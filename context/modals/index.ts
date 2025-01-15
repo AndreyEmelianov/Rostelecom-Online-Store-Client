@@ -20,3 +20,6 @@ export const closeSizeTable = modals.createEvent()
 
 export const openShareModal = modals.createEvent()
 export const closeShareModal = modals.createEvent()
+
+export const openMapModal = modals.createEvent()
+export const closeMapModal = modals.createEvent()

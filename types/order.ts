@@ -29,9 +29,9 @@ export interface IRostelecomAddressData {
   address_line2: string
   city: string
   place_id: string
+  bbox: IAddressBBox
   lat: number
   lon: number
-  bbox: IAddressBBox
 }
 
 export interface IAddressPosition {
@@ -50,4 +50,14 @@ export interface IPickupAddressListItemProps {
   addressItem: IRostelecomAddressData
   handleSelectAddress: (arg0: IAddressBBox, arg1: IAddressPosition) => void
   handleChosenAddressData: (arg0: Partial<IRostelecomAddressData>) => void
+}
+
+export interface IAddressesListProps {
+  listClassName: string
+  handleSelectAddressByMarkers?: (
+    arg0: IAddressBBox,
+    arg1: IAddressPosition,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    arg2?: any
+  ) => void
 }

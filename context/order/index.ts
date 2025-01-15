@@ -21,6 +21,9 @@ export const setChosenPickupAddressData =
   order.createEvent<Partial<IRostelecomAddressData>>()
 export const setChosenCourierAddressData =
   order.createEvent<Partial<IRostelecomAddressData>>()
+export const setShouldShowCourierAddressData = order.createEvent<boolean>()
+
+export const setCourierAddressData = order.createEvent<IRostelecomAddressData>()
 
 export const getRostelecomOfficesByCity =
   order.createEvent<IGetRostelecomOfficesByCityFx>()
